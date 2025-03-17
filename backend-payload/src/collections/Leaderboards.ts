@@ -21,6 +21,7 @@ export const Leaderboards: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+      localized: true,
     },
     {
       name: 'socials',
@@ -36,6 +37,13 @@ export const Leaderboards: CollectionConfig = {
           name: 'url',
           type: 'text',
           required: true,
+          validate: (value) => {
+            const urlRegex =
+              /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
+            if (!urlRegex.test(value)) return 'Invalid URL'
+    
+            return true
+          },
         },
       ],
     },

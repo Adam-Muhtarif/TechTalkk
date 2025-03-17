@@ -5,7 +5,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    CREATE TYPE "public"."enum_leaderboard_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Facebook');
   CREATE TYPE "public"."enum_blog_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_events_host_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook');
-  CREATE TYPE "public"."enum_instructors_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook');
+  CREATE TYPE "public"."enum_instructors_instructor_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook');
   CREATE TABLE IF NOT EXISTS "users" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -146,11 +146,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"sponsors_id" uuid
   );
   
-  CREATE TABLE IF NOT EXISTS "instructors_socials" (
+  CREATE TABLE IF NOT EXISTS "instructors_instructor_socials" (
   	"_order" integer NOT NULL,
   	"_parent_id" uuid NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
-  	"platform" "enum_instructors_socials_platform",
+  	"platform" "enum_instructors_instructor_socials_platform",
   	"url" varchar NOT NULL
   );
   
@@ -303,7 +303,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "instructors_socials" ADD CONSTRAINT "instructors_socials_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."instructors"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "instructors_instructor_socials" ADD CONSTRAINT "instructors_instructor_socials_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."instructors"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -440,8 +440,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "events_rels_parent_idx" ON "events_rels" USING btree ("parent_id");
   CREATE INDEX IF NOT EXISTS "events_rels_path_idx" ON "events_rels" USING btree ("path");
   CREATE INDEX IF NOT EXISTS "events_rels_sponsors_id_idx" ON "events_rels" USING btree ("sponsors_id");
-  CREATE INDEX IF NOT EXISTS "instructors_socials_order_idx" ON "instructors_socials" USING btree ("_order");
-  CREATE INDEX IF NOT EXISTS "instructors_socials_parent_id_idx" ON "instructors_socials" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "instructors_instructor_socials_order_idx" ON "instructors_instructor_socials" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "instructors_instructor_socials_parent_id_idx" ON "instructors_instructor_socials" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "instructors_image_idx" ON "instructors" USING btree ("image_id");
   CREATE INDEX IF NOT EXISTS "instructors_updated_at_idx" ON "instructors" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "instructors_created_at_idx" ON "instructors" USING btree ("created_at");
@@ -488,7 +488,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "events_host_socials" CASCADE;
   DROP TABLE "events" CASCADE;
   DROP TABLE "events_rels" CASCADE;
-  DROP TABLE "instructors_socials" CASCADE;
+  DROP TABLE "instructors_instructor_socials" CASCADE;
   DROP TABLE "instructors" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
@@ -498,5 +498,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_leaderboard_socials_platform";
   DROP TYPE "public"."enum_blog_status";
   DROP TYPE "public"."enum_events_host_socials_platform";
-  DROP TYPE "public"."enum_instructors_socials_platform";`)
+  DROP TYPE "public"."enum_instructors_instructor_socials_platform";`)
 }

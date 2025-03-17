@@ -19,9 +19,8 @@ export const Videos: CollectionConfig = {
       required: true,
       validate: (value) => {
         const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+$/
-        if (!youtubeRegex.test(value)) {
-          return 'Invalid YouTube Link'
-        }
+        if (!youtubeRegex.test(value)) return 'Invalid YouTube Link'
+
         return true
       },
     },

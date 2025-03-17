@@ -1,5 +1,5 @@
 {
-  "id": "5f39462b-72bf-4655-af44-84c4b6f0843d",
+  "id": "d6a7f6f6-d452-4115-b50d-43d2946bf199",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1745,8 +1745,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.instructors_socials": {
-      "name": "instructors_socials",
+    "public.instructors_instructor_socials": {
+      "name": "instructors_instructor_socials",
       "schema": "",
       "columns": {
         "_order": {
@@ -1769,7 +1769,7 @@
         },
         "platform": {
           "name": "platform",
-          "type": "enum_instructors_socials_platform",
+          "type": "enum_instructors_instructor_socials_platform",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false
@@ -1782,8 +1782,8 @@
         }
       },
       "indexes": {
-        "instructors_socials_order_idx": {
-          "name": "instructors_socials_order_idx",
+        "instructors_instructor_socials_order_idx": {
+          "name": "instructors_instructor_socials_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -1797,8 +1797,8 @@
           "method": "btree",
           "with": {}
         },
-        "instructors_socials_parent_id_idx": {
-          "name": "instructors_socials_parent_id_idx",
+        "instructors_instructor_socials_parent_id_idx": {
+          "name": "instructors_instructor_socials_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -1814,9 +1814,9 @@
         }
       },
       "foreignKeys": {
-        "instructors_socials_parent_id_fk": {
-          "name": "instructors_socials_parent_id_fk",
-          "tableFrom": "instructors_socials",
+        "instructors_instructor_socials_parent_id_fk": {
+          "name": "instructors_instructor_socials_parent_id_fk",
+          "tableFrom": "instructors_instructor_socials",
           "tableTo": "instructors",
           "columnsFrom": [
             "_parent_id"
@@ -2808,8 +2808,8 @@
         "Facebook"
       ]
     },
-    "public.enum_instructors_socials_platform": {
-      "name": "enum_instructors_socials_platform",
+    "public.enum_instructors_instructor_socials_platform": {
+      "name": "enum_instructors_instructor_socials_platform",
       "schema": "public",
       "values": [
         "LinkedIn",

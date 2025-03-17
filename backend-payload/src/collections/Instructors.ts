@@ -30,7 +30,7 @@ export const Instructors: CollectionConfig = {
       localized: true,
     },
     {
-      name: 'socials',
+      name: 'instructor-socials',
       type: 'array',
       fields: [
         {
@@ -43,6 +43,13 @@ export const Instructors: CollectionConfig = {
           name: 'url',
           type: 'text',
           required: true,
+          validate: (value) => {
+            const urlRegex =
+              /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
+            if (!urlRegex.test(value)) return 'Invalid URL'
+
+            return true
+          },
         },
       ],
     },

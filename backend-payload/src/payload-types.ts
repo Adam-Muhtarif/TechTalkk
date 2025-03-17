@@ -271,7 +271,7 @@ export interface Instructor {
   title?: string | null;
   bio?: string | null;
   image?: (string | null) | Media;
-  socials?:
+  'instructor-socials'?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
         url: string;
@@ -554,7 +554,7 @@ export interface InstructorsSelect<T extends boolean = true> {
   title?: T;
   bio?: T;
   image?: T;
-  socials?:
+  'instructor-socials'?:
     | T
     | {
         platform?: T;
