@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { checkRole } from './access/checkRole'
 import { admins } from './access/admins'
-import { protectRoles } from './hooks/protectRoles'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -12,12 +11,12 @@ export const Users: CollectionConfig = {
     },
   },
   access: {
-    admin: ({ req: { user } }) => checkRole(['admin',"editor"], user ? user : undefined),
-    create: admins,
+    admin: ({ req: { user } }) => checkRole(['admin', 'editor'], user ? user : undefined),
     read: admins,
+    create: admins,
     update: admins,
   },
-  
+
   admin: {
     useAsTitle: 'fullName',
   },
@@ -31,11 +30,7 @@ export const Users: CollectionConfig = {
       name: 'role',
       type: 'select',
       required: true,
-      hasMany: true,
       saveToJWT: true,
-      hooks: {
-        beforeChange: [protectRoles],
-      },
       options: [
         { label: 'Admin', value: 'admin' },
         { label: 'Editor', value: 'editor' },
