@@ -76,6 +76,7 @@ export interface Config {
     videos: Video;
     events: Event;
     instructors: Instructor;
+    'job-posts': JobPost;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -92,6 +93,7 @@ export interface Config {
     videos: VideosSelect<false> | VideosSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     instructors: InstructorsSelect<false> | InstructorsSelect<true>;
+    'job-posts': JobPostsSelect<false> | JobPostsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -327,6 +329,54 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-posts".
+ */
+export interface JobPost {
+  id: string;
+  title: string;
+  company: string;
+  companyLogo: string | Media;
+  location: 'remote' | 'hybrid' | 'onsite';
+  jobType: 'full-time' | 'part-time' | 'contract' | 'internship';
+  salary?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  requirements: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  applyLink: string;
+  postedAt?: string | null;
+  expiresAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -371,6 +421,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'instructors';
         value: string | Instructor;
+      } | null)
+    | ({
+        relationTo: 'job-posts';
+        value: string | JobPost;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -569,6 +623,25 @@ export interface InstructorsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-posts_select".
+ */
+export interface JobPostsSelect<T extends boolean = true> {
+  title?: T;
+  company?: T;
+  companyLogo?: T;
+  location?: T;
+  jobType?: T;
+  salary?: T;
+  description?: T;
+  requirements?: T;
+  applyLink?: T;
+  postedAt?: T;
+  expiresAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
