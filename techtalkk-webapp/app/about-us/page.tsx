@@ -1,7 +1,13 @@
-import React from 'react'
+import AboutUsHhero from "@/components/ui/about-us/about-us-hero";
+import Image from "next/image";
+import React from "react";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* About */}
+      {/*About-us hero */}
+      <AboutUsHhero />
+    </section>
+  );
 }
