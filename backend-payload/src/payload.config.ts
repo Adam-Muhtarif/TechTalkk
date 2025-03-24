@@ -20,15 +20,20 @@ import { Videos } from './collections/Videos'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const corsOrigins = process.env.CORS_ORIGINS?.split(',') || [];
 
 export default buildConfig({
-  // serverURL: process.env.PAYLOAD_URL || 'http://localhost:3001',
+   serverURL: process.env.PUBLIC_EXTERNAL_SERVER_URL || 'http://localhost:5000',
 
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+  },
+  cors: {
+    origin: corsOrigins,
+    credentials: true,
   },
   collections: [
     Users,
