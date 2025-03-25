@@ -2,15 +2,20 @@ import { CollectionConfig } from 'payload'
 
 export const Blogs: CollectionConfig = {
   slug: 'blog',
+  labels: { singular: 'Blog', plural: 'Blogs'},
   admin: {
     useAsTitle: 'title',
   },
+  
 
   fields: [
     {
       name: 'title',
       type: 'text',
       required: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'slug',
@@ -18,6 +23,7 @@ export const Blogs: CollectionConfig = {
       unique: true,
       admin: {
         readOnly: true,
+        position: 'sidebar',
       },
     },
     {
@@ -29,6 +35,9 @@ export const Blogs: CollectionConfig = {
       name: 'author',
       type: 'text',
       required: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'tags',
@@ -36,6 +45,9 @@ export const Blogs: CollectionConfig = {
       relationTo: 'blog-tags',
       hasMany: true,
       localized: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'cover_image',
@@ -43,6 +55,9 @@ export const Blogs: CollectionConfig = {
       relationTo: 'media',
       required: false,
       localized: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'status',
@@ -52,6 +67,9 @@ export const Blogs: CollectionConfig = {
         { label: 'Published', value: 'published' },
       ],
       defaultValue: 'draft',
+      admin: {
+        position: 'sidebar',
+      },
     },
   ],
 

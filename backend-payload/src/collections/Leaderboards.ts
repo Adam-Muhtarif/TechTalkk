@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { validateURL } from './utils/validators'
 
 export const Leaderboards: CollectionConfig = {
   slug: 'leaderboard',
+  labels: { singular: 'Leaderboard', plural: 'Leaderboards'},
   admin: {
     useAsTitle: 'name',
   },
@@ -37,13 +39,7 @@ export const Leaderboards: CollectionConfig = {
           name: 'url',
           type: 'text',
           required: true,
-          validate: (value) => {
-            const urlRegex =
-              /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
-            if (!urlRegex.test(value)) return 'Invalid URL'
-    
-            return true
-          },
+          validate: validateURL,
         },
       ],
     },

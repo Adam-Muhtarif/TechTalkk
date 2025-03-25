@@ -335,10 +335,10 @@ export interface JobPost {
   id: string;
   title: string;
   company: string;
-  companyLogo: string | Media;
+  company_logo: string | Media;
   location: 'remote' | 'hybrid' | 'onsite';
   jobType: 'full-time' | 'part-time' | 'contract' | 'internship';
-  salary?: string | null;
+  salary?: number | null;
   description: {
     root: {
       type: string;
@@ -369,9 +369,9 @@ export interface JobPost {
     };
     [k: string]: unknown;
   };
-  applyLink: string;
-  postedAt?: string | null;
-  expiresAt?: string | null;
+  apply_link: string;
+  postedAt: string;
+  expiresAt: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -633,13 +633,13 @@ export interface InstructorsSelect<T extends boolean = true> {
 export interface JobPostsSelect<T extends boolean = true> {
   title?: T;
   company?: T;
-  companyLogo?: T;
+  company_logo?: T;
   location?: T;
   jobType?: T;
   salary?: T;
   description?: T;
   requirements?: T;
-  applyLink?: T;
+  apply_link?: T;
   postedAt?: T;
   expiresAt?: T;
   updatedAt?: T;

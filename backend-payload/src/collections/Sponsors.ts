@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload'
+import { validateURL } from './utils/validators'
 
 export const Sponsors: CollectionConfig = {
   slug: 'sponsors',
+  labels: { singular: "Sponsor", plural: "Sponsors" },
   admin: {
     useAsTitle: 'company',
   },
@@ -15,13 +17,7 @@ export const Sponsors: CollectionConfig = {
       name: 'company_link',
       type: 'text',
       required: true,
-      validate: (value) => {
-        const urlRegex =
-          /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
-        if (!urlRegex.test(value)) return 'Invalid URL'
-
-        return true
-      },
+      validate: validateURL,
     },
     {
       name: 'company_logo',

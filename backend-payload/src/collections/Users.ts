@@ -4,6 +4,7 @@ import { admins } from './access/admins'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: { singular: 'User', plural: 'Users' },
   auth: {
     tokenExpiration: 28800, // 8 hours
     cookies: {
