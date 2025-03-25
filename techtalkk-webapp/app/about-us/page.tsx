@@ -1,7 +1,6 @@
 import AboutUsHhero from "@/components/ui/about-us/about-us-hero";
 import Empower from "@/components/ui/about-us/empower";
 import TechtalkCommunity from "@/components/ui/about-us/techtalk-community";
-import Image from "next/image";
 import React from "react";
 
 export default function page() {
@@ -12,6 +11,7 @@ export default function page() {
       <AboutUsHhero />
       <TechtalkCommunity />
       <Empower />
+      {/* #E5E8FA  core values*/}
     </div>
   );
 }
