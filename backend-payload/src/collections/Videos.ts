@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { validateYoutubeLink } from './utils'
 
 export const Videos: CollectionConfig = {
   slug: 'videos',
@@ -17,12 +18,7 @@ export const Videos: CollectionConfig = {
       type: 'text',
       unique: true,
       required: true,
-      validate: (value) => {
-        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+$/
-        if (!youtubeRegex.test(value)) return 'Invalid YouTube Link'
-
-        return true
-      },
+      validate: (value: string | null | undefined) => validateYoutubeLink(value),
     },
     {
       name: 'instructor',
