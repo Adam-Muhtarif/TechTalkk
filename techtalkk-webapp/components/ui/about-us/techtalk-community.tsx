@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function TechtalkCommunity() {
   return (
-    <section className="max-w-7xl mx-auto mt-24 relative">
+    <section className="max-w-7xl mx-auto mt-24 relative px-4 sm:px-6 lg:px-8">
       {/* blured image */}
       <Image
         src="/images/about-us/about-us-Ellipse.png"
@@ -22,13 +22,13 @@ export default function TechtalkCommunity() {
           {/* paragarph */}
           <div className="text-center">
             <p className="mt-6 lg:text-xl sm:text-lg sm:text-start">
-              TechTalk is an online community where technology enthusiasts,
-              developers, and learners come together to share knowledge, discuss
-              industry trends, and work on collaborative projects. 
+              TechTalk is an online community where technology enthusiasts, developers, and learners
+              come together to share knowledge, discuss industry trends, and work on collaborative
+              projects. 
             </p>
             <p className="mt-4 lg:text-xl md:text-lg sm:text-start">
-              The community is driven by the passion for innovation and a shared
-              goal of creating impactful solutions in the tech world.
+              The community is driven by the passion for innovation and a shared goal of creating
+              impactful solutions in the tech world.
             </p>
           </div>
         </div>
@@ -41,5 +41,5 @@ export default function TechtalkCommunity() {
         </div>
       </div>
     </section>
-  );
+  )
 }

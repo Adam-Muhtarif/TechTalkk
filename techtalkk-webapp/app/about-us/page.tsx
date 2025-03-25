@@ -5,13 +5,14 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+    <div className="containe mx-auto overflow-x-hidden">
       {/* About */}
       {/*About-us hero */}
       <AboutUsHhero />
       <TechtalkCommunity />
       <Empower />
       {/* #E5E8FA  core values*/}
+      <section className="bg-[#E5E8FA] mt-24 py-16">{/* content */}</section>
     </div>
-  );
+  )
 }
