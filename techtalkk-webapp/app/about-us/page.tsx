@@ -1,6 +1,6 @@
 import AboutUsHhero from "@/components/ui/about-us/about-us-hero";
 import TechtalkCommunity from "@/components/ui/about-us/techtalk-community";
-import Image from "next/image";
+// import Image from "next/image";
 import React from "react";
 
 export default function page() {
