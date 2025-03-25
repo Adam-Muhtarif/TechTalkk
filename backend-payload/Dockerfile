@@ -1,7 +1,7 @@
-# To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.mjs file.
+# Dockerfile
 # From https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
-FROM node:22.12.0-alpine AS base
+FROM node:22-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -48,7 +48,6 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Remove this line if you do not have this folder
 COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
