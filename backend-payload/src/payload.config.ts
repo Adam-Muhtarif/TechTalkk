@@ -17,7 +17,7 @@ import { Blogs } from './collections/Blogs'
 import { Events } from './collections/Events'
 import { Instructors } from './collections/Instructors'
 import { Videos } from './collections/Videos'
-import JobPosts from './collections/jobs'
+import JobPosts from './collections/Jobs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

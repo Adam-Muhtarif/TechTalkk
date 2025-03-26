@@ -250,7 +250,7 @@ export interface Blog {
   author: string;
   tags?: (string | BlogTag)[] | null;
   cover_image?: (string | null) | Media;
-  status?: ('draft' | 'published') | null;
+  status: 'draft' | 'published';
   updatedAt: string;
   createdAt: string;
 }
@@ -335,9 +335,9 @@ export interface JobPost {
   id: string;
   title: string;
   company: string;
-  companyLogo: string | Media;
+  company_logo: string | Media;
   location: 'remote' | 'hybrid' | 'onsite';
-  jobType: 'full-time' | 'part-time' | 'contract' | 'internship';
+  job_type: 'full-time' | 'part-time' | 'contract' | 'internship';
   salary?: string | null;
   description: {
     root: {
@@ -354,24 +354,9 @@ export interface JobPost {
     };
     [k: string]: unknown;
   };
-  requirements: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  applyLink: string;
+  apply_link: string;
   postedAt?: string | null;
-  expiresAt?: string | null;
+  expiresAt: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -633,13 +618,12 @@ export interface InstructorsSelect<T extends boolean = true> {
 export interface JobPostsSelect<T extends boolean = true> {
   title?: T;
   company?: T;
-  companyLogo?: T;
+  company_logo?: T;
   location?: T;
-  jobType?: T;
+  job_type?: T;
   salary?: T;
   description?: T;
-  requirements?: T;
-  applyLink?: T;
+  apply_link?: T;
   postedAt?: T;
   expiresAt?: T;
   updatedAt?: T;

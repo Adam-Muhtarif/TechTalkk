@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { validateLink } from './utils'
+import { validateURL } from './utils'
 
 export const Leaderboards: CollectionConfig = {
   slug: 'leaderboard',
@@ -38,7 +38,7 @@ export const Leaderboards: CollectionConfig = {
           name: 'url',
           type: 'text',
           required: true,
-          validate: (value: string | null | undefined) => validateLink(value),
+          validate: validateURL,
         },
       ],
     },
