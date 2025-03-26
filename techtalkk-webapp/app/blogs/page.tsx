@@ -147,11 +147,20 @@ export default function Page() {
     <div className="bg-[#F7F7F7]">
     <div className="relative w-full h-[80vh] flex items-center justify-center ">
       {/* Background Image */}
-      <img
-        src="/images/blogs/hero.png"
-        alt="Hero Section"
-        className="absolute h-full w-full"
-      />
+   
+      
+<Image
+  src="/images/blogs/hero.png"
+  alt="Hero Section"
+  width={100}
+  height={100}
+  className="absolute"  
+  style={{
+    width: '100%', 
+    height: '80vh',  
+    objectFit: 'cover',  
+  }}
+/>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -197,9 +206,16 @@ export default function Page() {
         <div className="bg-white rounded-lg gap-10 p-6 flex flex-col md:flex-row gap-6 items-center md:items-start">
         
          <div className="md:h-[300px] md:w-1/2">
-         <img src={randomBlog.image} alt={randomBlog.title} className="object-cover rounded-lg w-full h-full" />
+          <Image
+  src={randomBlog.image}
+  alt={randomBlog.title}
+  className="object-cover rounded-lg w-full h-full"
+  width={700}  
+  height={400} 
+/>
           </div>
           <div className="md:w-1/2 flex flex-col   gap-5">
+          <Link href="" key={randomBlog.id}>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
             {randomBlog.title}
             </h1>
@@ -210,6 +226,7 @@ export default function Page() {
              
               {randomBlog.description.substring(0,100)}...
             </p>
+            </Link>
           </div>
         </div>
       </div>
@@ -235,8 +252,8 @@ export default function Page() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-5 ">
           {filteredBlogs.slice(0, visibleBlogs.length).map((blog) => (
-                <Link href="">
-            <div key={blog.id} className="bg-white rounded-lg overflow-hidden shadow-lg p-5">
+                <Link href="" key={blog.id}>
+            <div  className="bg-white rounded-lg overflow-hidden shadow-lg p-5">
           
                 <Image src={blog.image} alt={blog.title} width={400} height={250} className="w-full h-[250px]  shadow-sm rounded" />
               
@@ -256,7 +273,15 @@ export default function Page() {
             
           
               
-             <div> <p className="text-[#F1B729] text-sm mb-2 flex items-end gap-1"> <img src="/images/blogs/Calendar.png" alt="calender" /> {blog.date}</p></div>
+             <div> <p className="text-[#F1B729] text-sm mb-2 flex items-end gap-1"> 
+                <Image
+               src="/images/blogs/Calendar.png"
+                  alt="calendar"
+                  width={20}  
+                 height={20} 
+                  />
+
+              {blog.date}</p></div>
         
                 <h2 className="text-xl md:text-2xl text-gray-900 font-bold ">{blog.title}</h2>
                 <p className="text-gray-600 mt-2 ">{blog.description.substring(0, 70)}...</p>
