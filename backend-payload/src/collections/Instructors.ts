@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { validateLink } from './utils'
 
 export const Instructors: CollectionConfig = {
   slug: 'instructors',
@@ -43,13 +44,7 @@ export const Instructors: CollectionConfig = {
           name: 'url',
           type: 'text',
           required: true,
-          validate: (value) => {
-            const urlRegex =
-              /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/
-            if (!urlRegex.test(value)) return 'Invalid URL'
-
-            return true
-          },
+          validate: (value: string | null | undefined) => validateLink(value),
         },
       ],
     },
