@@ -1,8 +1,9 @@
 import type { CollectionConfig } from 'payload'
-import { validateLink } from './utils'
+import { validateURL } from './utils'
 
 export const Sponsors: CollectionConfig = {
   slug: 'sponsors',
+  labels: { singular: "Sponsor", plural: "Sponsors" },
   admin: {
     useAsTitle: 'company',
   },
@@ -16,7 +17,7 @@ export const Sponsors: CollectionConfig = {
       name: 'company_link',
       type: 'text',
       required: true,
-      validate: (value: string | null | undefined) => validateLink(value),
+      validate: validateURL,
     },
     {
       name: 'company_logo',

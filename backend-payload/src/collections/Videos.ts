@@ -1,8 +1,9 @@
 import type { CollectionConfig } from 'payload'
-import { validateYoutubeLink } from './utils'
+import { validateYoutubeURL } from './utils'
 
 export const Videos: CollectionConfig = {
   slug: 'videos',
+  labels: { singular: "Video", plural: "Videos" },
   admin: {
     useAsTitle: 'title',
   },
@@ -18,7 +19,7 @@ export const Videos: CollectionConfig = {
       type: 'text',
       unique: true,
       required: true,
-      validate: (value: string | null | undefined) => validateYoutubeLink(value),
+      validate: validateYoutubeURL,
     },
     {
       name: 'instructor',
