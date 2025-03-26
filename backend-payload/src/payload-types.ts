@@ -337,8 +337,13 @@ export interface JobPost {
   company: string;
   company_logo: string | Media;
   location: 'remote' | 'hybrid' | 'onsite';
+<<<<<<< HEAD
   job_type: 'full-time' | 'part-time' | 'contract' | 'internship';
   salary?: string | null;
+=======
+  jobType: 'full-time' | 'part-time' | 'contract' | 'internship';
+  salary?: number | null;
+>>>>>>> 608dcfb9aebcf31bb9339f56fff4b7b260986bfe
   description: {
     root: {
       type: string;
@@ -354,8 +359,28 @@ export interface JobPost {
     };
     [k: string]: unknown;
   };
+<<<<<<< HEAD
   apply_link: string;
   postedAt?: string | null;
+=======
+  requirements: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  apply_link: string;
+  postedAt: string;
+>>>>>>> 608dcfb9aebcf31bb9339f56fff4b7b260986bfe
   expiresAt: string;
   updatedAt: string;
   createdAt: string;
@@ -623,6 +648,10 @@ export interface JobPostsSelect<T extends boolean = true> {
   job_type?: T;
   salary?: T;
   description?: T;
+<<<<<<< HEAD
+=======
+  requirements?: T;
+>>>>>>> 608dcfb9aebcf31bb9339f56fff4b7b260986bfe
   apply_link?: T;
   postedAt?: T;
   expiresAt?: T;

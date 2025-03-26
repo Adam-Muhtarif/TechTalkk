@@ -6,6 +6,7 @@ export const Blogs: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+  
 
   fields: [
     {

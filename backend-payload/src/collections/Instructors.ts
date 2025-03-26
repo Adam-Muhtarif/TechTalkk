@@ -3,6 +3,7 @@ import { validateURL } from './utils'
 
 export const Instructors: CollectionConfig = {
   slug: 'instructors',
+  labels: { singular: 'Instructor', plural: 'Instructors'},
   admin: {
     useAsTitle: 'name',
   },

@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload'
-import { checkRole } from './access/checkRole'
 import { admins } from './access/admins'
 import { validateURL } from './utils'
 
