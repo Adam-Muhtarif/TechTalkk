@@ -7,7 +7,7 @@ export default function Empower() {
       <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-8">
         {/* shapes */}
         <div className="relative">
-          <div className="h-[239.5px] w-[240px] sm:h-[479px] sm:w-[480px] z-10 rounded-tl-[100px] bg-[url(/images/about-us/cabdaleXabdurahman.jpg)] bg-cover bg-center bg-no-repeat"></div>
+          <div className="h-[239.5px] w-[240px] sm:h-[479px] sm:w-[480px] z-10 rounded-tl-[100px] bg-[url(/images/about-us/cabdaleXabdurahman.jpg)] bg-cover bg-center bg-no-repeat shadow-custom"></div>
           <div className="w-[120px] h-[125px] lg:w-[327px] lg:h-[318px] rounded-4xl absolute -top-6 -left-10 bg-[#DADCFC] -z-10 sm:w-[250px] sm:h-[240px] sm:-top-15 sm:-left-15"></div>
         </div>
         {/* text */}

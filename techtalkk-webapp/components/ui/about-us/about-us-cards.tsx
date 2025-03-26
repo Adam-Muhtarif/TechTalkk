@@ -7,7 +7,6 @@ type Card = {
     icon: unknown
   }
   
-
   export default function Cards() {
     return (
       <section className="bg-[#E5E8FA] mt-24 py-16">
@@ -30,7 +29,7 @@ type Card = {
 
   function Card({ ...card }) {
     return (
-      <div className="flex flex-col items-center bg-white rounded-2xl p-8 sm:w-[calc(33.33%-32px)] flex-1 max-w-[363px]">
+      <div className="flex flex-col items-center bg-white rounded-2xl p-8 sm:w-[calc(33.33%-32px)] flex-1 max-w-[363px] shadow-card">
         <card.icon size={48} strokeWidth={1.25} />
         <h3 className="text-2xl font-bold text-center mt-2 mb-6 text-[var(--primary-color)]">
           {card.title}
