@@ -149,17 +149,14 @@ export default function Page() {
       {/* Background Image */}
    
       
-<Image
+   
+      
+      <Image
   src="/images/blogs/hero.png"
   alt="Hero Section"
-  width={100}
-  height={100}
-  className="absolute"  
-  style={{
-    width: '100%', 
-    height: '80vh',  
-    objectFit: 'cover',  
-  }}
+  layout="fill"
+  className="absolute w-full h-full"  
+ 
 />
 
       {/* Overlay */}
