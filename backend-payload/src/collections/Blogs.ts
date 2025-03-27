@@ -73,18 +73,14 @@ export const Blogs: CollectionConfig = {
     },
   ],
 
-  hooks: {
+ hooks: {
     // Automatically generate the slug from the title
     beforeChange: [
       ({ data }) => {
         if (data.title) {
-          data.slug = data.title
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '-') // REPLACE SPACES WITH DASHES
-            .replace(/[^\w-]+/g, '') // REMOVE SPECIAL CHARACTERS
+          data.slug = generateSlug(data.title); // Use the reusable function
         }
-        return data
+        return data;
       },
     ],
   },

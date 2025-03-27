@@ -20,18 +20,15 @@ export const VideoTags: CollectionConfig = {
       },
     },
   ],
-  hooks: {
-    beforeChange: [
-      ({ data }) => {
-        if (data.name) {
-          data.slug = data.name
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '-') // REPLACE SPACES WITH DASHES
-            .replace(/[^\w-]+/g, '') // REMOVE SPECIAL CHARACTERS
-        }
-        return data
-      },
-    ],
-  },
+ hooks: {
+  beforeChange: [
+    ({ data }) => {
+      if (data.name) {
+        data.slug = generateSlug(data.name); 
+      }
+      return data;
+    },
+  ],
+},
+
 }

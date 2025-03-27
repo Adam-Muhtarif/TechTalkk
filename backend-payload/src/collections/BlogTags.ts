@@ -21,17 +21,13 @@ export const BlogTags: CollectionConfig = {
       },
     },
   ],
-  hooks: {
+   hooks: {
     beforeChange: [
       ({ data }) => {
         if (data.name) {
-          data.slug = data.name
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '-') // REPLACE SPACES WITH DASHES
-            .replace(/[^\w-]+/g, '') // REMOVE SPECIAL CHARACTERS
+          data.slug = generateSlug(data.name); // Replace inline logic with the function
         }
-        return data
+        return data;
       },
     ],
   },
