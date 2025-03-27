@@ -3,12 +3,13 @@ import AboutUsHhero from '@/components/ui/about-us/about-us-hero'
 // import Image from 'next/image'
 import Empower from '@/components/ui/about-us/empower'
 import Journey from '@/components/ui/about-us/journey'
+import Members from '@/components/ui/about-us/members'
 import TechtalkCommunity from '@/components/ui/about-us/techtalk-community'
 import React from 'react'
 
 export default function page() {
   return (
-    <div className="containe mx-auto overflow-x-hidden">
+    <div className="containe mx-auto overflow-x-hidden font-geist-sans">
       {/* About */}
       {/*About-us hero */}
       <AboutUsHhero />
@@ -16,6 +17,7 @@ export default function page() {
       <Empower />
       <Cards />
       <Journey />
+      <Members />
     </div>
   )
 }
