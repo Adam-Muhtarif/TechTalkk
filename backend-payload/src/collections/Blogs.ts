@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { beforeChangeHook } from './hooks'
 
 export const Blogs: CollectionConfig = {
   slug: 'blog',
@@ -6,7 +7,6 @@ export const Blogs: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
-  
 
   fields: [
     {
@@ -42,6 +42,7 @@ export const Blogs: CollectionConfig = {
     {
       name: 'tags',
       type: 'relationship',
+      required: true,
       relationTo: 'blog-tags',
       hasMany: true,
       admin: {
@@ -73,15 +74,7 @@ export const Blogs: CollectionConfig = {
     },
   ],
 
- hooks: {
-    // Automatically generate the slug from the title
-    beforeChange: [
-      ({ data }) => {
-        if (data.title) {
-          data.slug = generateSlug(data.title); // Use the reusable function
-        }
-        return data;
-      },
-    ],
+  hooks: {
+    beforeChange: [beforeChangeHook],
   },
 }

@@ -3,10 +3,11 @@ import { validateURL } from './utils'
 
 export const Leaderboards: CollectionConfig = {
   slug: 'leaderboard',
-  labels: { singular: 'Leaderboard', plural: 'Leaderboards'},
+  labels: { singular: 'Leaderboard', plural: 'Leaderboards' },
   admin: {
     useAsTitle: 'name',
   },
+
   fields: [
     {
       name: 'name',

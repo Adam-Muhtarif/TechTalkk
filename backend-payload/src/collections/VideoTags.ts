@@ -1,10 +1,12 @@
 import { CollectionConfig } from 'payload'
+import { beforeChangeHook } from './hooks'
 
 export const VideoTags: CollectionConfig = {
   slug: 'video-tags',
   admin: {
     useAsTitle: 'name',
   },
+
   fields: [
     {
       name: 'name',
@@ -20,15 +22,8 @@ export const VideoTags: CollectionConfig = {
       },
     },
   ],
- hooks: {
-  beforeChange: [
-    ({ data }) => {
-      if (data.name) {
-        data.slug = generateSlug(data.name); 
-      }
-      return data;
-    },
-  ],
-},
 
+  hooks: {
+    beforeChange: [beforeChangeHook],
+  },
 }

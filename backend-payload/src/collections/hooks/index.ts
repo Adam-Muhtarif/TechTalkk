@@ -1,9 +1,22 @@
-export const generateSlug = (text: string): string => {
-  const lowerCaseText = text.toLowerCase();
-  const slug = lowerCaseText
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-');
-  return slug;
-};
+import { CollectionBeforeChangeHook } from 'payload'
+
+// Automatically generate the slug
+export const beforeChangeHook: CollectionBeforeChangeHook = async ({ data }) => {
+  if (data.title) {
+    data.slug = data.title
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '-') // REPLACE SPACES WITH DASHES
+      .replace(/[^\w-]+/g, '') // REMOVE SPECIAL CHARACTERS
+  }
+
+  if (data.name) {
+    data.slug = data.name
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '-') //
+      .replace(/[^\w-]+/g, '')
+  }
+  console.log('data', data)
+  return data
+}

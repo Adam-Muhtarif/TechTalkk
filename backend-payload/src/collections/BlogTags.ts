@@ -1,10 +1,12 @@
 import { CollectionConfig } from 'payload'
+import { beforeChangeHook } from './hooks'
 
 export const BlogTags: CollectionConfig = {
   slug: 'blog-tags',
   admin: {
     useAsTitle: 'name',
   },
+
   fields: [
     {
       name: 'name',
@@ -21,14 +23,8 @@ export const BlogTags: CollectionConfig = {
       },
     },
   ],
-   hooks: {
-    beforeChange: [
-      ({ data }) => {
-        if (data.name) {
-          data.slug = generateSlug(data.name); // Replace inline logic with the function
-        }
-        return data;
-      },
-    ],
+
+  hooks: {
+    beforeChange: [beforeChangeHook],
   },
 }
