@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload'
 import { admins } from './access/admins'
 import { validateURL } from './utils'
 
-const JobPosts: CollectionConfig = {
+export const JobPosts: CollectionConfig = {
   slug: 'job-posts',
   labels: { singular: 'Job Post', plural: 'Job Posts' },
   admin: { useAsTitle: 'title' },
@@ -11,6 +11,7 @@ const JobPosts: CollectionConfig = {
     create: admins,
     update: admins,
   },
+
   fields: [
     {
       name: 'title',
@@ -86,5 +87,3 @@ const JobPosts: CollectionConfig = {
     },
   ],
 }
-
-export default JobPosts

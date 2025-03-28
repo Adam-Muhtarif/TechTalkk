@@ -3,10 +3,11 @@ import { validateURL } from './utils'
 
 export const Events: CollectionConfig = {
   slug: 'events',
-  labels: { singular: 'Event', plural: 'Events'},
+  labels: { singular: 'Event', plural: 'Events' },
   admin: {
     useAsTitle: 'title',
   },
+
   fields: [
     {
       name: 'title',

@@ -3,10 +3,11 @@ import { validateURL } from './utils'
 
 export const Sponsors: CollectionConfig = {
   slug: 'sponsors',
-  labels: { singular: "Sponsor", plural: "Sponsors" },
+  labels: { singular: 'Sponsor', plural: 'Sponsors' },
   admin: {
     useAsTitle: 'company',
   },
+
   fields: [
     {
       name: 'company',

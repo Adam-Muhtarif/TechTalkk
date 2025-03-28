@@ -11,16 +11,17 @@ export const Users: CollectionConfig = {
       secure: true,
     },
   },
+
   access: {
     admin: ({ req: { user } }) => checkRole(['admin', 'editor'], user ? user : undefined),
     read: admins,
     create: admins,
     update: admins,
   },
-
   admin: {
     useAsTitle: 'fullName',
   },
+
   fields: [
     {
       name: 'fullName',
