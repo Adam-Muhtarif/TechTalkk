@@ -248,7 +248,7 @@ export interface Blog {
     [k: string]: unknown;
   };
   author: string;
-  tags?: (string | BlogTag)[] | null;
+  tags: (string | BlogTag)[];
   cover_image?: (string | null) | Media;
   status: 'draft' | 'published';
   updatedAt: string;

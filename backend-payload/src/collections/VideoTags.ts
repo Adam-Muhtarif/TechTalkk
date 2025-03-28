@@ -1,10 +1,12 @@
 import { CollectionConfig } from 'payload'
+import { beforeChangeHook } from './hooks'
 
 export const VideoTags: CollectionConfig = {
   slug: 'video-tags',
   admin: {
     useAsTitle: 'name',
   },
+
   fields: [
     {
       name: 'name',
@@ -20,18 +22,8 @@ export const VideoTags: CollectionConfig = {
       },
     },
   ],
+
   hooks: {
-    beforeChange: [
-      ({ data }) => {
-        if (data.name) {
-          data.slug = data.name
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '-') // REPLACE SPACES WITH DASHES
-            .replace(/[^\w-]+/g, '') // REMOVE SPECIAL CHARACTERS
-        }
-        return data
-      },
-    ],
+    beforeChange: [beforeChangeHook],
   },
 }
