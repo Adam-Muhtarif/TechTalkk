@@ -12,19 +12,59 @@ import {
   uniqueIndex,
   foreignKey,
   uuid,
-  timestamp,
   varchar,
+  boolean,
+  timestamp,
   numeric,
-  serial,
   integer,
   jsonb,
+  serial,
+  pgEnum,
 } from '@payloadcms/db-postgres/drizzle/pg-core'
 import { sql, relations } from '@payloadcms/db-postgres/drizzle'
+export const enum_users_role = pgEnum('enum_users_role', ['admin', 'editor'])
+export const enum_leaderboard_socials_platform = pgEnum('enum_leaderboard_socials_platform', [
+  'LinkedIn',
+  'GitHub',
+  'Twitter',
+  'Website',
+  'Facebook',
+])
+export const enum_blog_status = pgEnum('enum_blog_status', ['draft', 'published'])
+export const enum_events_host_socials_platform = pgEnum('enum_events_host_socials_platform', [
+  'LinkedIn',
+  'GitHub',
+  'Twitter',
+  'Website',
+  'Youtube',
+  'Facebook',
+])
+export const enum_instructors_instructor_socials_platform = pgEnum(
+  'enum_instructors_instructor_socials_platform',
+  ['LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook'],
+)
+export const enum_job_posts_location = pgEnum('enum_job_posts_location', [
+  'remote',
+  'hybrid',
+  'onsite',
+])
+export const enum_job_posts_job_type = pgEnum('enum_job_posts_job_type', [
+  'full-time',
+  'part-time',
+  'contract',
+  'internship',
+])
 
 export const users = pgTable(
   'users',
   {
     id: uuid('id').defaultRandom().primaryKey(),
+    fullName: varchar('full_name').notNull(),
+    role: enum_users_role('role').notNull().default('editor'),
+    avatar: uuid('avatar_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    isActive: boolean('is_active').default(false),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -44,6 +84,7 @@ export const users = pgTable(
     lockUntil: timestamp('lock_until', { mode: 'string', withTimezone: true, precision: 3 }),
   },
   (columns) => ({
+    users_avatar_idx: index('users_avatar_idx').on(columns.avatar),
     users_updated_at_idx: index('users_updated_at_idx').on(columns.updatedAt),
     users_created_at_idx: index('users_created_at_idx').on(columns.createdAt),
     users_email_idx: uniqueIndex('users_email_idx').on(columns.email),
@@ -83,6 +124,7 @@ export const sponsors = pgTable(
   {
     id: uuid('id').defaultRandom().primaryKey(),
     company: varchar('company').notNull(),
+    company_link: varchar('company_link').notNull(),
     company_logo: uuid('company_logo_id')
       .notNull()
       .references(() => media.id, {
@@ -102,6 +144,26 @@ export const sponsors = pgTable(
   }),
 )
 
+export const leaderboard_socials = pgTable(
+  'leaderboard_socials',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    platform: enum_leaderboard_socials_platform('platform'),
+    url: varchar('url').notNull(),
+  },
+  (columns) => ({
+    _orderIdx: index('leaderboard_socials_order_idx').on(columns._order),
+    _parentIDIdx: index('leaderboard_socials_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [leaderboard.id],
+      name: 'leaderboard_socials_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const leaderboard = pgTable(
   'leaderboard',
   {
@@ -113,8 +175,7 @@ export const leaderboard = pgTable(
       .references(() => media.id, {
         onDelete: 'set null',
       }),
-    linkedin: varchar('linkedin'),
-    github: varchar('github'),
+    rank: numeric('rank').notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -126,6 +187,324 @@ export const leaderboard = pgTable(
     leaderboard_image_idx: index('leaderboard_image_idx').on(columns.image),
     leaderboard_updated_at_idx: index('leaderboard_updated_at_idx').on(columns.updatedAt),
     leaderboard_created_at_idx: index('leaderboard_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const blog_tags = pgTable(
+  'blog_tags',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: varchar('name').notNull(),
+    slug: varchar('slug'),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    blog_tags_name_idx: uniqueIndex('blog_tags_name_idx').on(columns.name),
+    blog_tags_slug_idx: uniqueIndex('blog_tags_slug_idx').on(columns.slug),
+    blog_tags_updated_at_idx: index('blog_tags_updated_at_idx').on(columns.updatedAt),
+    blog_tags_created_at_idx: index('blog_tags_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const video_tags = pgTable(
+  'video_tags',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: varchar('name').notNull(),
+    slug: varchar('slug'),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    video_tags_slug_idx: uniqueIndex('video_tags_slug_idx').on(columns.slug),
+    video_tags_updated_at_idx: index('video_tags_updated_at_idx').on(columns.updatedAt),
+    video_tags_created_at_idx: index('video_tags_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const blog = pgTable(
+  'blog',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    title: varchar('title').notNull(),
+    slug: varchar('slug'),
+    content: jsonb('content').notNull(),
+    author: varchar('author').notNull(),
+    cover_image: uuid('cover_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    status: enum_blog_status('status').notNull().default('draft'),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    blog_slug_idx: uniqueIndex('blog_slug_idx').on(columns.slug),
+    blog_cover_image_idx: index('blog_cover_image_idx').on(columns.cover_image),
+    blog_updated_at_idx: index('blog_updated_at_idx').on(columns.updatedAt),
+    blog_created_at_idx: index('blog_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const blog_rels = pgTable(
+  'blog_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: uuid('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    'blog-tagsID': uuid('blog_tags_id'),
+  },
+  (columns) => ({
+    order: index('blog_rels_order_idx').on(columns.order),
+    parentIdx: index('blog_rels_parent_idx').on(columns.parent),
+    pathIdx: index('blog_rels_path_idx').on(columns.path),
+    blog_rels_blog_tags_id_idx: index('blog_rels_blog_tags_id_idx').on(columns['blog-tagsID']),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [blog.id],
+      name: 'blog_rels_parent_fk',
+    }).onDelete('cascade'),
+    'blog-tagsIdFk': foreignKey({
+      columns: [columns['blog-tagsID']],
+      foreignColumns: [blog_tags.id],
+      name: 'blog_rels_blog_tags_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const videos = pgTable(
+  'videos',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    title: varchar('title').notNull(),
+    youtube_link: varchar('youtube_link').notNull(),
+    instructor: uuid('instructor_id')
+      .notNull()
+      .references(() => instructors.id, {
+        onDelete: 'set null',
+      }),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    videos_youtube_link_idx: uniqueIndex('videos_youtube_link_idx').on(columns.youtube_link),
+    videos_instructor_idx: index('videos_instructor_idx').on(columns.instructor),
+    videos_updated_at_idx: index('videos_updated_at_idx').on(columns.updatedAt),
+    videos_created_at_idx: index('videos_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const videos_rels = pgTable(
+  'videos_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: uuid('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    'video-tagsID': uuid('video_tags_id'),
+  },
+  (columns) => ({
+    order: index('videos_rels_order_idx').on(columns.order),
+    parentIdx: index('videos_rels_parent_idx').on(columns.parent),
+    pathIdx: index('videos_rels_path_idx').on(columns.path),
+    videos_rels_video_tags_id_idx: index('videos_rels_video_tags_id_idx').on(
+      columns['video-tagsID'],
+    ),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [videos.id],
+      name: 'videos_rels_parent_fk',
+    }).onDelete('cascade'),
+    'video-tagsIdFk': foreignKey({
+      columns: [columns['video-tagsID']],
+      foreignColumns: [video_tags.id],
+      name: 'videos_rels_video_tags_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const events_host_socials = pgTable(
+  'events_host_socials',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    platform: enum_events_host_socials_platform('platform'),
+    url: varchar('url').notNull(),
+  },
+  (columns) => ({
+    _orderIdx: index('events_host_socials_order_idx').on(columns._order),
+    _parentIDIdx: index('events_host_socials_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [events.id],
+      name: 'events_host_socials_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const events = pgTable(
+  'events',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    title: varchar('title').notNull(),
+    description: jsonb('description').notNull(),
+    image: uuid('image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    host_name: varchar('host_name').notNull(),
+    host_image: uuid('host_image_id')
+      .notNull()
+      .references(() => media.id, {
+        onDelete: 'set null',
+      }),
+    location: varchar('location').notNull(),
+    location_icon: uuid('location_icon_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    start_time: timestamp('start_time', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }).notNull(),
+    duration: varchar('duration'),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    events_image_idx: index('events_image_idx').on(columns.image),
+    events_host_image_idx: index('events_host_image_idx').on(columns.host_image),
+    events_location_icon_idx: index('events_location_icon_idx').on(columns.location_icon),
+    events_updated_at_idx: index('events_updated_at_idx').on(columns.updatedAt),
+    events_created_at_idx: index('events_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const events_rels = pgTable(
+  'events_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: uuid('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    sponsorsID: uuid('sponsors_id'),
+  },
+  (columns) => ({
+    order: index('events_rels_order_idx').on(columns.order),
+    parentIdx: index('events_rels_parent_idx').on(columns.parent),
+    pathIdx: index('events_rels_path_idx').on(columns.path),
+    events_rels_sponsors_id_idx: index('events_rels_sponsors_id_idx').on(columns.sponsorsID),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [events.id],
+      name: 'events_rels_parent_fk',
+    }).onDelete('cascade'),
+    sponsorsIdFk: foreignKey({
+      columns: [columns['sponsorsID']],
+      foreignColumns: [sponsors.id],
+      name: 'events_rels_sponsors_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const instructors_instructor_socials = pgTable(
+  'instructors_instructor_socials',
+  {
+    _order: integer('_order').notNull(),
+    _parentID: uuid('_parent_id').notNull(),
+    id: varchar('id').primaryKey(),
+    platform: enum_instructors_instructor_socials_platform('platform'),
+    url: varchar('url').notNull(),
+  },
+  (columns) => ({
+    _orderIdx: index('instructors_instructor_socials_order_idx').on(columns._order),
+    _parentIDIdx: index('instructors_instructor_socials_parent_id_idx').on(columns._parentID),
+    _parentIDFk: foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [instructors.id],
+      name: 'instructors_instructor_socials_parent_id_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
+export const instructors = pgTable(
+  'instructors',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: varchar('name').notNull(),
+    title: varchar('title'),
+    bio: varchar('bio'),
+    image: uuid('image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    instructors_image_idx: index('instructors_image_idx').on(columns.image),
+    instructors_updated_at_idx: index('instructors_updated_at_idx').on(columns.updatedAt),
+    instructors_created_at_idx: index('instructors_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const job_posts = pgTable(
+  'job_posts',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    title: varchar('title').notNull(),
+    company: varchar('company').notNull(),
+    company_logo: uuid('company_logo_id')
+      .notNull()
+      .references(() => media.id, {
+        onDelete: 'set null',
+      }),
+    location: enum_job_posts_location('location').notNull(),
+    job_type: enum_job_posts_job_type('job_type').notNull(),
+    salary: numeric('salary'),
+    description: jsonb('description').notNull(),
+    apply_link: varchar('apply_link').notNull(),
+    postedAt: timestamp('posted_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    expiresAt: timestamp('expires_at', {
+      mode: 'string',
+      withTimezone: true,
+      precision: 3,
+    }).notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    job_posts_company_logo_idx: index('job_posts_company_logo_idx').on(columns.company_logo),
+    job_posts_updated_at_idx: index('job_posts_updated_at_idx').on(columns.updatedAt),
+    job_posts_created_at_idx: index('job_posts_created_at_idx').on(columns.createdAt),
   }),
 )
 
@@ -165,6 +544,13 @@ export const payload_locked_documents_rels = pgTable(
     mediaID: uuid('media_id'),
     sponsorsID: uuid('sponsors_id'),
     leaderboardID: uuid('leaderboard_id'),
+    'blog-tagsID': uuid('blog_tags_id'),
+    'video-tagsID': uuid('video_tags_id'),
+    blogID: uuid('blog_id'),
+    videosID: uuid('videos_id'),
+    eventsID: uuid('events_id'),
+    instructorsID: uuid('instructors_id'),
+    'job-postsID': uuid('job_posts_id'),
   },
   (columns) => ({
     order: index('payload_locked_documents_rels_order_idx').on(columns.order),
@@ -182,6 +568,27 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_leaderboard_id_idx: index(
       'payload_locked_documents_rels_leaderboard_id_idx',
     ).on(columns.leaderboardID),
+    payload_locked_documents_rels_blog_tags_id_idx: index(
+      'payload_locked_documents_rels_blog_tags_id_idx',
+    ).on(columns['blog-tagsID']),
+    payload_locked_documents_rels_video_tags_id_idx: index(
+      'payload_locked_documents_rels_video_tags_id_idx',
+    ).on(columns['video-tagsID']),
+    payload_locked_documents_rels_blog_id_idx: index(
+      'payload_locked_documents_rels_blog_id_idx',
+    ).on(columns.blogID),
+    payload_locked_documents_rels_videos_id_idx: index(
+      'payload_locked_documents_rels_videos_id_idx',
+    ).on(columns.videosID),
+    payload_locked_documents_rels_events_id_idx: index(
+      'payload_locked_documents_rels_events_id_idx',
+    ).on(columns.eventsID),
+    payload_locked_documents_rels_instructors_id_idx: index(
+      'payload_locked_documents_rels_instructors_id_idx',
+    ).on(columns.instructorsID),
+    payload_locked_documents_rels_job_posts_id_idx: index(
+      'payload_locked_documents_rels_job_posts_id_idx',
+    ).on(columns['job-postsID']),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [payload_locked_documents.id],
@@ -206,6 +613,41 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['leaderboardID']],
       foreignColumns: [leaderboard.id],
       name: 'payload_locked_documents_rels_leaderboard_fk',
+    }).onDelete('cascade'),
+    'blog-tagsIdFk': foreignKey({
+      columns: [columns['blog-tagsID']],
+      foreignColumns: [blog_tags.id],
+      name: 'payload_locked_documents_rels_blog_tags_fk',
+    }).onDelete('cascade'),
+    'video-tagsIdFk': foreignKey({
+      columns: [columns['video-tagsID']],
+      foreignColumns: [video_tags.id],
+      name: 'payload_locked_documents_rels_video_tags_fk',
+    }).onDelete('cascade'),
+    blogIdFk: foreignKey({
+      columns: [columns['blogID']],
+      foreignColumns: [blog.id],
+      name: 'payload_locked_documents_rels_blog_fk',
+    }).onDelete('cascade'),
+    videosIdFk: foreignKey({
+      columns: [columns['videosID']],
+      foreignColumns: [videos.id],
+      name: 'payload_locked_documents_rels_videos_fk',
+    }).onDelete('cascade'),
+    eventsIdFk: foreignKey({
+      columns: [columns['eventsID']],
+      foreignColumns: [events.id],
+      name: 'payload_locked_documents_rels_events_fk',
+    }).onDelete('cascade'),
+    instructorsIdFk: foreignKey({
+      columns: [columns['instructorsID']],
+      foreignColumns: [instructors.id],
+      name: 'payload_locked_documents_rels_instructors_fk',
+    }).onDelete('cascade'),
+    'job-postsIdFk': foreignKey({
+      columns: [columns['job-postsID']],
+      foreignColumns: [job_posts.id],
+      name: 'payload_locked_documents_rels_job_posts_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -286,7 +728,13 @@ export const payload_migrations = pgTable(
   }),
 )
 
-export const relations_users = relations(users, () => ({}))
+export const relations_users = relations(users, ({ one }) => ({
+  avatar: one(media, {
+    fields: [users.avatar],
+    references: [media.id],
+    relationName: 'avatar',
+  }),
+}))
 export const relations_media = relations(media, () => ({}))
 export const relations_sponsors = relations(sponsors, ({ one }) => ({
   company_logo: one(media, {
@@ -295,11 +743,136 @@ export const relations_sponsors = relations(sponsors, ({ one }) => ({
     relationName: 'company_logo',
   }),
 }))
-export const relations_leaderboard = relations(leaderboard, ({ one }) => ({
+export const relations_leaderboard_socials = relations(leaderboard_socials, ({ one }) => ({
+  _parentID: one(leaderboard, {
+    fields: [leaderboard_socials._parentID],
+    references: [leaderboard.id],
+    relationName: 'socials',
+  }),
+}))
+export const relations_leaderboard = relations(leaderboard, ({ one, many }) => ({
   image: one(media, {
     fields: [leaderboard.image],
     references: [media.id],
     relationName: 'image',
+  }),
+  socials: many(leaderboard_socials, {
+    relationName: 'socials',
+  }),
+}))
+export const relations_blog_tags = relations(blog_tags, () => ({}))
+export const relations_video_tags = relations(video_tags, () => ({}))
+export const relations_blog_rels = relations(blog_rels, ({ one }) => ({
+  parent: one(blog, {
+    fields: [blog_rels.parent],
+    references: [blog.id],
+    relationName: '_rels',
+  }),
+  'blog-tagsID': one(blog_tags, {
+    fields: [blog_rels['blog-tagsID']],
+    references: [blog_tags.id],
+    relationName: 'blog-tags',
+  }),
+}))
+export const relations_blog = relations(blog, ({ one, many }) => ({
+  cover_image: one(media, {
+    fields: [blog.cover_image],
+    references: [media.id],
+    relationName: 'cover_image',
+  }),
+  _rels: many(blog_rels, {
+    relationName: '_rels',
+  }),
+}))
+export const relations_videos_rels = relations(videos_rels, ({ one }) => ({
+  parent: one(videos, {
+    fields: [videos_rels.parent],
+    references: [videos.id],
+    relationName: '_rels',
+  }),
+  'video-tagsID': one(video_tags, {
+    fields: [videos_rels['video-tagsID']],
+    references: [video_tags.id],
+    relationName: 'video-tags',
+  }),
+}))
+export const relations_videos = relations(videos, ({ one, many }) => ({
+  instructor: one(instructors, {
+    fields: [videos.instructor],
+    references: [instructors.id],
+    relationName: 'instructor',
+  }),
+  _rels: many(videos_rels, {
+    relationName: '_rels',
+  }),
+}))
+export const relations_events_host_socials = relations(events_host_socials, ({ one }) => ({
+  _parentID: one(events, {
+    fields: [events_host_socials._parentID],
+    references: [events.id],
+    relationName: 'host_socials',
+  }),
+}))
+export const relations_events_rels = relations(events_rels, ({ one }) => ({
+  parent: one(events, {
+    fields: [events_rels.parent],
+    references: [events.id],
+    relationName: '_rels',
+  }),
+  sponsorsID: one(sponsors, {
+    fields: [events_rels.sponsorsID],
+    references: [sponsors.id],
+    relationName: 'sponsors',
+  }),
+}))
+export const relations_events = relations(events, ({ one, many }) => ({
+  image: one(media, {
+    fields: [events.image],
+    references: [media.id],
+    relationName: 'image',
+  }),
+  host_image: one(media, {
+    fields: [events.host_image],
+    references: [media.id],
+    relationName: 'host_image',
+  }),
+  host_socials: many(events_host_socials, {
+    relationName: 'host_socials',
+  }),
+  location_icon: one(media, {
+    fields: [events.location_icon],
+    references: [media.id],
+    relationName: 'location_icon',
+  }),
+  _rels: many(events_rels, {
+    relationName: '_rels',
+  }),
+}))
+export const relations_instructors_instructor_socials = relations(
+  instructors_instructor_socials,
+  ({ one }) => ({
+    _parentID: one(instructors, {
+      fields: [instructors_instructor_socials._parentID],
+      references: [instructors.id],
+      relationName: 'instructor-socials',
+    }),
+  }),
+)
+export const relations_instructors = relations(instructors, ({ one, many }) => ({
+  image: one(media, {
+    fields: [instructors.image],
+    references: [media.id],
+    relationName: 'image',
+  }),
+  'instructor-socials': many(instructors_instructor_socials, {
+    relationName: 'instructor-socials',
+  }),
+}))
+export const relations_job_posts = relations(job_posts, ({ one }) => ({
+  company_logo: one(media, {
+    fields: [job_posts.company_logo],
+    references: [media.id],
+    relationName: 'company_logo',
   }),
 }))
 export const relations_payload_locked_documents_rels = relations(
@@ -329,6 +902,41 @@ export const relations_payload_locked_documents_rels = relations(
       fields: [payload_locked_documents_rels.leaderboardID],
       references: [leaderboard.id],
       relationName: 'leaderboard',
+    }),
+    'blog-tagsID': one(blog_tags, {
+      fields: [payload_locked_documents_rels['blog-tagsID']],
+      references: [blog_tags.id],
+      relationName: 'blog-tags',
+    }),
+    'video-tagsID': one(video_tags, {
+      fields: [payload_locked_documents_rels['video-tagsID']],
+      references: [video_tags.id],
+      relationName: 'video-tags',
+    }),
+    blogID: one(blog, {
+      fields: [payload_locked_documents_rels.blogID],
+      references: [blog.id],
+      relationName: 'blog',
+    }),
+    videosID: one(videos, {
+      fields: [payload_locked_documents_rels.videosID],
+      references: [videos.id],
+      relationName: 'videos',
+    }),
+    eventsID: one(events, {
+      fields: [payload_locked_documents_rels.eventsID],
+      references: [events.id],
+      relationName: 'events',
+    }),
+    instructorsID: one(instructors, {
+      fields: [payload_locked_documents_rels.instructorsID],
+      references: [instructors.id],
+      relationName: 'instructors',
+    }),
+    'job-postsID': one(job_posts, {
+      fields: [payload_locked_documents_rels['job-postsID']],
+      references: [job_posts.id],
+      relationName: 'job-posts',
     }),
   }),
 )
@@ -363,10 +971,30 @@ export const relations_payload_preferences = relations(payload_preferences, ({ m
 export const relations_payload_migrations = relations(payload_migrations, () => ({}))
 
 type DatabaseSchema = {
+  enum_users_role: typeof enum_users_role
+  enum_leaderboard_socials_platform: typeof enum_leaderboard_socials_platform
+  enum_blog_status: typeof enum_blog_status
+  enum_events_host_socials_platform: typeof enum_events_host_socials_platform
+  enum_instructors_instructor_socials_platform: typeof enum_instructors_instructor_socials_platform
+  enum_job_posts_location: typeof enum_job_posts_location
+  enum_job_posts_job_type: typeof enum_job_posts_job_type
   users: typeof users
   media: typeof media
   sponsors: typeof sponsors
+  leaderboard_socials: typeof leaderboard_socials
   leaderboard: typeof leaderboard
+  blog_tags: typeof blog_tags
+  video_tags: typeof video_tags
+  blog: typeof blog
+  blog_rels: typeof blog_rels
+  videos: typeof videos
+  videos_rels: typeof videos_rels
+  events_host_socials: typeof events_host_socials
+  events: typeof events
+  events_rels: typeof events_rels
+  instructors_instructor_socials: typeof instructors_instructor_socials
+  instructors: typeof instructors
+  job_posts: typeof job_posts
   payload_locked_documents: typeof payload_locked_documents
   payload_locked_documents_rels: typeof payload_locked_documents_rels
   payload_preferences: typeof payload_preferences
@@ -375,7 +1003,20 @@ type DatabaseSchema = {
   relations_users: typeof relations_users
   relations_media: typeof relations_media
   relations_sponsors: typeof relations_sponsors
+  relations_leaderboard_socials: typeof relations_leaderboard_socials
   relations_leaderboard: typeof relations_leaderboard
+  relations_blog_tags: typeof relations_blog_tags
+  relations_video_tags: typeof relations_video_tags
+  relations_blog_rels: typeof relations_blog_rels
+  relations_blog: typeof relations_blog
+  relations_videos_rels: typeof relations_videos_rels
+  relations_videos: typeof relations_videos
+  relations_events_host_socials: typeof relations_events_host_socials
+  relations_events_rels: typeof relations_events_rels
+  relations_events: typeof relations_events
+  relations_instructors_instructor_socials: typeof relations_instructors_instructor_socials
+  relations_instructors: typeof relations_instructors
+  relations_job_posts: typeof relations_job_posts
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels
   relations_payload_locked_documents: typeof relations_payload_locked_documents
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels
