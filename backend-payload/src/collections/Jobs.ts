@@ -61,7 +61,7 @@ export const JobPosts: CollectionConfig = {
     },
     {
       name: 'salary',
-      type: 'text',
+      type: 'number',
       required: false,
       admin: { position: 'sidebar' },
     },
