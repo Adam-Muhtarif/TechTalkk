@@ -1,17 +1,21 @@
 import { CollectionConfig } from 'payload'
 import { admins } from './access/admins'
 import { validateURL } from './utils'
+import adminsAndEditors from './access/adminsAndEditors'
 
 export const JobPosts: CollectionConfig = {
   slug: 'job-posts',
   labels: { singular: 'Job Post', plural: 'Job Posts' },
   admin: { useAsTitle: 'title' },
+
   access: {
-    read: () => true, // Publicly readable
-    create: admins,
-    update: admins,
+    read: () => true,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
   },
 
+  
   fields: [
     {
       name: 'title',

@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { validateURL } from './utils'
+import adminsAndEditors from './access/adminsAndEditors'
+import { admins } from './access/admins'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -8,6 +10,12 @@ export const Events: CollectionConfig = {
     useAsTitle: 'title',
   },
 
+  access: {
+    read: () => true,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
+  },
   fields: [
     {
       name: 'title',
