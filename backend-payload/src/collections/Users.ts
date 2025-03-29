@@ -17,6 +17,7 @@ export const Users: CollectionConfig = {
     read: admins,
     create: admins,
     update: admins,
+    delete: admins,
   },
   admin: {
     useAsTitle: 'fullName',

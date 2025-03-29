@@ -1,11 +1,20 @@
 import type { CollectionConfig } from 'payload'
 import { validateURL } from './utils'
+import adminsAndEditors from './access/adminsAndEditors'
+import { admins } from './access/admins'
 
 export const Instructors: CollectionConfig = {
   slug: 'instructors',
   labels: { singular: 'Instructor', plural: 'Instructors'},
   admin: {
     useAsTitle: 'name',
+  },
+
+  access: {
+    read: () => true,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
   },
 
   fields: [

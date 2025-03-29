@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { validateURL } from './utils'
+import { admins } from './access/admins'
 
 export const Leaderboards: CollectionConfig = {
   slug: 'leaderboard',
@@ -8,6 +9,13 @@ export const Leaderboards: CollectionConfig = {
     useAsTitle: 'name',
   },
 
+
+  access: {
+    read: () => true,
+    create: admins,
+    update: admins,
+    delete: admins,
+  },
   fields: [
     {
       name: 'name',

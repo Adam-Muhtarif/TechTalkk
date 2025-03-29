@@ -1,10 +1,19 @@
 import { CollectionConfig } from 'payload'
 import { beforeChangeHook } from './hooks'
 
+import { admins } from './access/admins'
+
 export const VideoTags: CollectionConfig = {
   slug: 'video-tags',
   admin: {
     useAsTitle: 'name',
+  },
+
+  access: {
+    read: () => true,
+    create: admins,
+    update: admins,
+    delete: admins,
   },
 
   fields: [

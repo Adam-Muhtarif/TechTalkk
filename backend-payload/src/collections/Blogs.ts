@@ -1,5 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { beforeChangeHook } from './hooks'
+import adminsAndEditors from './access/adminsAndEditors'
+import { admins } from './access/admins'
 
 export const Blogs: CollectionConfig = {
   slug: 'blog',
@@ -7,6 +9,14 @@ export const Blogs: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+
+  access: {
+    read: () => true,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
+  },
+  
 
   fields: [
     {
