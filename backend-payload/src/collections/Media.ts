@@ -7,9 +7,6 @@ export const Media: CollectionConfig = {
   labels: { singular: 'Media Item', plural: 'Media Items' },
   access: {
     read: () => true,
-  },
-  access: {
-    read: () => true,
     create: adminsAndEditors,
     update: adminsAndEditors,
     delete: admins,
