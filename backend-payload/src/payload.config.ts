@@ -18,13 +18,14 @@ import { Events } from './collections/Events'
 import { Instructors } from './collections/Instructors'
 import { Videos } from './collections/Videos'
 import { JobPosts } from './collections/Jobs'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const corsOrigins = process.env.CORS_ORIGINS?.split(',') || '*'
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_URL || 'http://localhost:8000', 
+  serverURL: process.env.PAYLOAD_URL || 'http://localhost:8000',
   cors: {
     origins: corsOrigins,
   },
@@ -32,6 +33,19 @@ export default buildConfig({
     admin: '/admin',
     api: '/api',
   },
+  email: nodemailerAdapter({
+    defaultFromAddress: 'adam.muhtarif.web.dev@gmail.com',
+    defaultFromName: 'TeachTalkk',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
   admin: {
     user: Users.slug,
     importMap: {

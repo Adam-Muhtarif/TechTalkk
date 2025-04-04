@@ -6,6 +6,7 @@ export const Users: CollectionConfig = {
   slug: 'users',
   labels: { singular: 'User', plural: 'Users' },
   auth: {
+    verify: true,
     tokenExpiration: 28800, // 8 hours
     cookies: {
       secure: true,
