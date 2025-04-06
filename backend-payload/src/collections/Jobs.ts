@@ -4,7 +4,7 @@ import { validateURL } from './utils'
 import adminsAndEditors from './access/adminsAndEditors'
 
 export const JobPosts: CollectionConfig = {
-  slug: 'job-posts',
+  slug: 'jobs',
   labels: { singular: 'Job Post', plural: 'Job Posts' },
   admin: { useAsTitle: 'title' },
 
