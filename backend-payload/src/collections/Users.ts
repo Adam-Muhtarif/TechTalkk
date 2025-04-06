@@ -1,13 +1,25 @@
 import type { CollectionConfig } from 'payload'
 import { checkRole } from './access/checkRole'
 import { admins } from './access/admins'
+import { resetPasswordEmail, verifyEmail } from './utils'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   labels: { singular: 'User', plural: 'Users' },
   auth: {
-    verify: true,
-    tokenExpiration: 28800, // 8 hours
+    verify: {
+      generateEmailSubject: () => 'Verify your email',
+      generateEmailHTML: verifyEmail
+    },
+
+    forgotPassword: {
+      generateEmailSubject: (args) => {
+        return `Hey ${args?.user.fullName}, reset your password!`
+      },
+      generateEmailHTML: resetPasswordEmail,
+    },
+
+    tokenExpiration: 28800, // 8 hours after login
     cookies: {
       secure: true,
     },
