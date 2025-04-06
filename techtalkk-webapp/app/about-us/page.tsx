@@ -2,6 +2,7 @@ import Cards from '@/components/ui/about-us/about-us-cards'
 import AboutUsHhero from '@/components/ui/about-us/about-us-hero'
 // import Image from 'next/image'
 import Empower from '@/components/ui/about-us/empower'
+import JoinUs from '@/components/ui/about-us/join-us'
 import Journey from '@/components/ui/about-us/journey'
 import Members from '@/components/ui/about-us/members'
 import TechtalkCommunity from '@/components/ui/about-us/techtalk-community'
@@ -18,6 +19,7 @@ export default function page() {
       <Cards />
       <Journey />
       <Members />
+      <JoinUs />
     </div>
   )
 }
