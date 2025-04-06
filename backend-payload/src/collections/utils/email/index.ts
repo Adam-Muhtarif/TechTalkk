@@ -1,11 +1,11 @@
-import { PayloadRequest, User } from 'payload'
+import { PayloadRequest } from 'payload'
 
 export const resetPasswordEmail = (
   args:
     | {
         req?: PayloadRequest
         token?: string
-        user?: User
+        user?: any
       }
     | undefined,
 ): Promise<string> | string => {
@@ -82,7 +82,7 @@ export const verifyEmail = (
     | {
         req?: PayloadRequest
         token?: string
-        user?: User
+        user?: any
       }
     | undefined,
 ): Promise<string> | string => {
