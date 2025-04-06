@@ -34,7 +34,7 @@ export default buildConfig({
     api: '/api',
   },
   email: nodemailerAdapter({
-    defaultFromAddress: 'adam.muhtarif.web.dev@gmail.com',
+    defaultFromAddress: 'techtalkk.community@gmail.com',
     defaultFromName: 'TeachTalkk',
     transportOptions: {
       host: process.env.SMTP_HOST,
