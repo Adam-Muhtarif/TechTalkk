@@ -19,7 +19,11 @@ export default function page() {
       <Cards />
       <Journey />
       <Members />
-      <JoinUs />
+      <JoinUs
+        header="Join the TechTalk Community"
+        paragraph="Ready to connect, collaborate, and innovate with fellow tech enthusiasts? Join us today!"
+        buttonText="Join"
+      />
     </div>
   )
 }
