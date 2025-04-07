@@ -1,8 +1,17 @@
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-poppins: "Poppins", "sans-serif"; 
+}
+
+@theme {
+  --font-geist-sans: "Geist Sans", "sans-serif";
+}
 
 @theme inline {
   --color-background: var(--background);
