@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-export default function courses() {
+export default function Courses() {
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-30 overflow-x-hidden">
       {/* Nav */}
