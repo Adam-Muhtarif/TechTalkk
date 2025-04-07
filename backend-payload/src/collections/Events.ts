@@ -1,10 +1,13 @@
 import type { CollectionConfig } from 'payload'
+import { validateURL } from './utils'
 
 export const Events: CollectionConfig = {
   slug: 'events',
+  labels: { singular: 'Event', plural: 'Events' },
   admin: {
     useAsTitle: 'title',
   },
+
   fields: [
     {
       name: 'title',
@@ -49,6 +52,7 @@ export const Events: CollectionConfig = {
           name: 'url',
           type: 'text',
           required: true,
+          validate: validateURL,
         },
       ],
     },

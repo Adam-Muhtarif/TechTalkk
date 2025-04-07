@@ -17,13 +17,21 @@ import { Blogs } from './collections/Blogs'
 import { Events } from './collections/Events'
 import { Instructors } from './collections/Instructors'
 import { Videos } from './collections/Videos'
+import { JobPosts } from './collections/Jobs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const corsOrigins = process.env.CORS_ORIGINS?.split(',') || '*'
 
 export default buildConfig({
-  // serverURL: process.env.PAYLOAD_URL || 'http://localhost:3001',
-
+  serverURL: process.env.PAYLOAD_URL || 'http://localhost:8000', 
+  cors: {
+    origins: corsOrigins,
+  },
+  routes: {
+    admin: '/admin',
+    api: '/api',
+  },
   admin: {
     user: Users.slug,
     importMap: {
@@ -41,6 +49,7 @@ export default buildConfig({
     Videos,
     Events,
     Instructors,
+    JobPosts,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

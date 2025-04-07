@@ -4,22 +4,24 @@ import { admins } from './access/admins'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: { singular: 'User', plural: 'Users' },
   auth: {
     tokenExpiration: 28800, // 8 hours
     cookies: {
       secure: true,
     },
   },
+
   access: {
     admin: ({ req: { user } }) => checkRole(['admin', 'editor'], user ? user : undefined),
     read: admins,
     create: admins,
     update: admins,
   },
-
   admin: {
     useAsTitle: 'fullName',
   },
+
   fields: [
     {
       name: 'fullName',

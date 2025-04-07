@@ -1,7 +1,9 @@
 import { CollectionConfig } from 'payload'
+import { beforeChangeHook } from './hooks'
 
 export const Blogs: CollectionConfig = {
   slug: 'blog',
+  labels: { singular: 'Blog', plural: 'Blogs' },
   admin: {
     useAsTitle: 'title',
   },
@@ -11,6 +13,9 @@ export const Blogs: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'slug',
@@ -18,6 +23,7 @@ export const Blogs: CollectionConfig = {
       unique: true,
       admin: {
         readOnly: true,
+        position: 'sidebar',
       },
     },
     {
@@ -29,13 +35,19 @@ export const Blogs: CollectionConfig = {
       name: 'author',
       type: 'text',
       required: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'tags',
       type: 'relationship',
+      required: true,
       relationTo: 'blog-tags',
       hasMany: true,
-      localized: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'cover_image',
@@ -43,31 +55,26 @@ export const Blogs: CollectionConfig = {
       relationTo: 'media',
       required: false,
       localized: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'status',
       type: 'select',
+      required: true,
       options: [
         { label: 'Draft', value: 'draft' },
         { label: 'Published', value: 'published' },
       ],
       defaultValue: 'draft',
+      admin: {
+        position: 'sidebar',
+      },
     },
   ],
 
   hooks: {
-    // Automatically generate the slug from the title
-    beforeChange: [
-      ({ data }) => {
-        if (data.title) {
-          data.slug = data.title
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '-') // REPLACE SPACES WITH DASHES
-            .replace(/[^\w-]+/g, '') // REMOVE SPECIAL CHARACTERS
-        }
-        return data
-      },
-    ],
+    beforeChange: [beforeChangeHook],
   },
 }
