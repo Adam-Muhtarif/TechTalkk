@@ -147,6 +147,8 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
@@ -338,7 +340,7 @@ export interface JobPost {
   company_logo: string | Media;
   location: 'remote' | 'hybrid' | 'onsite';
   job_type: 'full-time' | 'part-time' | 'contract' | 'internship';
-  salary?: string | null;
+  salary?: number | null;
   description: {
     root: {
       type: string;
@@ -469,6 +471,8 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  _verified?: T;
+  _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
 }
