@@ -9,45 +9,45 @@ import React from 'react'
 
 export default function Members() {
   return (
-    <section className="max-w-7xl mx-auto mt-24 mb-24 relative px-4 sm:px-6 lg:px-8 overflow-clip">
-    {/* container */}
-    <div className="flex flex-col items-center justify-center">
-      {/* header */}
-      <div className="self-center">
-        <h2 className="text-center text-3xl lg:text-5xl font-bold text-[var(--primary-color)]">
-          Meet the Team
-        </h2>
-        <p className="text-center uppercase text-lg font-bold mt-2 font-poppins">
-          Meet the passionate individuals behind TechTalk.
-        </p>
+    <section className="max-w-7xl mx-auto py-24 relative px-4 sm:px-6 lg:px-8 overflow-clip">
+      {/* container */}
+      <div className="flex flex-col items-center justify-center">
+        {/* header */}
+        <div className="self-center">
+          <h2 className="text-center text-3xl lg:text-5xl font-bold text-[var(--primary-color)]">
+            Meet the Team
+          </h2>
+          <p className="text-center uppercase text-lg font-bold mt-2 font-poppins">
+            Meet the passionate individuals behind TechTalk.
+          </p>
+        </div>
+        {/* cards */}
+        <div className="flex flex-col sm:flex-row gap-8 mt-16 justify-center items-stretch">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-8 mt-16 justify-center items-stretch">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
       </div>
-      {/* cards */}
-      <div className="flex flex-col sm:flex-row gap-8 mt-16 justify-center items-stretch">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </div>
-      <div className="flex flex-col sm:flex-row gap-8 mt-16 justify-center items-stretch">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </div>
-    </div>
-  </section>
+    </section>
   )
 }
 
