@@ -1,5 +1,5 @@
 import Cards from '@/components/ui/about-us/about-us-cards'
-import AboutUsHhero from '@/components/ui/about-us/about-us-hero'
+import AboutUsHhero from '@/components/ui/about-us/hero-page'
 // import Image from 'next/image'
 import Empower from '@/components/ui/about-us/empower'
 import JoinUs from '@/components/ui/about-us/join-us'
