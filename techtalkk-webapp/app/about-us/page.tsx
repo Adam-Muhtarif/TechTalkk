@@ -13,7 +13,12 @@ export default function page() {
     <div className="containe mx-auto overflow-x-hidden font-geist-sans">
       {/* About */}
       {/*About-us hero */}
-      <AboutUsHhero />
+      <AboutUsHhero
+        header="Knowledge Shared, Knowledge Gained"
+        paragraph="At TechTalk, we believe in the power of shared learning. Join our community to explore
+            industry trends, exchange insights, and expand your tech expertise"
+        className="h-[468px] sm:h-[460px] bg-[url(/images/about-us/about-page-image.jpeg)] bg-cover bg-center bg-no-repeat"
+      />
       <TechtalkCommunity />
       <Empower />
       <Cards />
