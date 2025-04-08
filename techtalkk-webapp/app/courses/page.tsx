@@ -19,20 +19,11 @@ export default function Courses() {
       <FilterSection />
 
       {/* Cards */}
-      <section className="w-full flex items-center justify-between gap-5 flex-wrap">
-        <CourseCard
-          image="/images/blogs/article1.png"
-          title="ux design beginner"
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor vitae reprehenderit
-          laboriosam nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam
-          nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam nam autem
-          eum eos non, eaque adipisci doloribus, minima praesentium"
-          rating={4.3}
-          period={1}
-          lessons={14}
-          instructorName="John Doe"
-          instructorImage="/images/member-test.png"
-        />
+
+      <section
+        aria-label="Courses"
+        className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
+      >
         <CourseCard
           image="/images/blogs/article1.png"
           title="ux design beginner"

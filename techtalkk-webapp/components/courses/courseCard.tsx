@@ -14,7 +14,7 @@ type CourseCardProps = {
 
 export default function CourseCard(props: CourseCardProps) {
   return (
-    <div className="w-[400px] bg-gray-100 py-5 rounded-2xl flex flex-col items-center justify-center">
+    <div className="w-full bg-gray-100 py-5 rounded-2xl flex flex-col items-center justify-center">
       <Image src={props.image} alt="" width={400} height={100} className="rounded" />
 
       <div className="px-5 my-4">
