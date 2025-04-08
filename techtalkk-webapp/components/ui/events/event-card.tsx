@@ -2,6 +2,7 @@ import { MoreVertical, Play } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import Link from 'next/link'
 
 export default function EventCard() {
   return (
@@ -26,7 +27,10 @@ export default function EventCard() {
           <div className="flex items-center">
             <div className="flex -space-x-2">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative">
+                <div
+                  key={i}
+                  className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative"
+                >
                   <Image
                     src={`/placeholder.svg?height=32&width=32`}
                     alt={`Attendee ${i}`}
@@ -41,9 +45,11 @@ export default function EventCard() {
           </div>
 
           <div className="flex items-center">
-            <Button variant="outline" className="mr-2">
-              View Event
-            </Button>
+            <Link href="#">
+              <Button variant="outline" className="mr-2">
+                View Event
+              </Button>
+            </Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
