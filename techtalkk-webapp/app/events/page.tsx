@@ -2,6 +2,7 @@ import HeroPage from '@/components/ui/about-us/hero-page'
 import JoinUs from '@/components/ui/about-us/join-us'
 import { Button } from '@/components/ui/button'
 import EventCard from '@/components/ui/events/event-card'
+import PaginationComponent from '@/components/ui/events/pagination'
 import React from 'react'
 
 export default function page() {
@@ -27,6 +28,7 @@ export default function page() {
         </div>
         {/* events */}
         <EventCard />
+        <PaginationComponent />
       </section>
 
       <JoinUs
