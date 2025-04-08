@@ -1,11 +1,11 @@
-import Cards from '@/components/ui/about-us/about-us-cards'
-import AboutUsHhero from '@/components/ui/about-us/hero-page'
+import Cards from '@/components/about/about-us-cards'
+import AboutUsHhero from '@/components/about/hero-page'
 // import Image from 'next/image'
-import Empower from '@/components/ui/about-us/empower'
-import JoinUs from '@/components/ui/about-us/join-us'
-import Journey from '@/components/ui/about-us/journey'
-import Members from '@/components/ui/about-us/members'
-import TechtalkCommunity from '@/components/ui/about-us/techtalk-community'
+import Empower from '@/components/about/empower'
+import JoinUs from '@/components/about/join-us'
+import Journey from '@/components/about/journey'
+import Members from '@/components/about/members'
+import TechtalkCommunity from '@/components/about/techtalk-community'
 import React from 'react'
 
 export default function page() {

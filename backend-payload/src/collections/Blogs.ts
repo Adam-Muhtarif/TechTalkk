@@ -4,7 +4,7 @@ import adminsAndEditors from './access/adminsAndEditors'
 import { admins } from './access/admins'
 
 export const Blogs: CollectionConfig = {
-  slug: 'blog',
+  slug: 'blogs',
   labels: { singular: 'Blog', plural: 'Blogs' },
   admin: {
     useAsTitle: 'title',
