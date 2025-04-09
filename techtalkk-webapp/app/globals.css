@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --breakpoint-xs: 26.875rem;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -45,7 +49,7 @@
 }
 
 :root {
-  --primary-color:#5E16EC;
+  --primary-color: #5e16ec;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -121,4 +125,24 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+    width: 100%;
+  }
+
+  @media (min-width: 1400px) {
+    .container {
+      max-width: 1400px;
+    }
+  }
+}
+.animate-spin-slow {
+  animation: spin 5s linear infinite;
+}
+
+.social-links svg {
+  fill: #4e58ef;
 }
