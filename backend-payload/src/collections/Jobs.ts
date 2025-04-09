@@ -24,9 +24,15 @@ export const JobPosts: CollectionConfig = {
       admin: { position: 'sidebar' },
     },
     {
-      name: 'company',
+      name: 'company_name',
       type: 'text',
       required: true,
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'company_link',
+      type: 'text',
+      required: false,
       admin: { position: 'sidebar' },
     },
     {
@@ -64,11 +70,6 @@ export const JobPosts: CollectionConfig = {
       type: 'number',
       required: false,
       admin: { position: 'sidebar' },
-    },
-    {
-      name: 'description',
-      type: 'richText',
-      required: true,
     },
     {
       name: 'apply_link',

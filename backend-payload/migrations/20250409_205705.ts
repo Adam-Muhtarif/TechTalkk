@@ -4,11 +4,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_users_role" AS ENUM('admin', 'editor');
   CREATE TYPE "public"."enum_leaderboard_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Facebook');
-  CREATE TYPE "public"."enum_blog_status" AS ENUM('draft', 'published');
+  CREATE TYPE "public"."enum_blogs_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_events_host_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook');
   CREATE TYPE "public"."enum_instructors_instructor_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook');
-  CREATE TYPE "public"."enum_job_posts_location" AS ENUM('remote', 'hybrid', 'onsite');
-  CREATE TYPE "public"."enum_job_posts_job_type" AS ENUM('full-time', 'part-time', 'contract', 'internship');
+  CREATE TYPE "public"."enum_jobs_location" AS ENUM('remote', 'hybrid', 'onsite');
+  CREATE TYPE "public"."enum_jobs_job_type" AS ENUM('full-time', 'part-time', 'contract', 'internship');
   CREATE TABLE IF NOT EXISTS "users" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"full_name" varchar NOT NULL,
@@ -87,19 +87,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "blog" (
+  CREATE TABLE IF NOT EXISTS "blogs" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar NOT NULL,
   	"slug" varchar,
   	"content" jsonb NOT NULL,
   	"author" varchar NOT NULL,
   	"cover_image_id" uuid,
-  	"status" "enum_blog_status" DEFAULT 'draft' NOT NULL,
+  	"status" "enum_blogs_status" DEFAULT 'draft' NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "blog_rels" (
+  CREATE TABLE IF NOT EXISTS "blogs_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" uuid NOT NULL,
@@ -173,15 +173,15 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE IF NOT EXISTS "job_posts" (
+  CREATE TABLE IF NOT EXISTS "jobs" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar NOT NULL,
-  	"company" varchar NOT NULL,
+  	"company_name" varchar NOT NULL,
+  	"company_link" varchar,
   	"company_logo_id" uuid NOT NULL,
-  	"location" "enum_job_posts_location" NOT NULL,
-  	"job_type" "enum_job_posts_job_type" NOT NULL,
+  	"location" "enum_jobs_location" NOT NULL,
+  	"job_type" "enum_jobs_job_type" NOT NULL,
   	"salary" numeric,
-  	"description" jsonb NOT NULL,
   	"apply_link" varchar NOT NULL,
   	"posted_at" timestamp(3) with time zone,
   	"expires_at" timestamp(3) with time zone NOT NULL,
@@ -207,11 +207,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"leaderboard_id" uuid,
   	"blog_tags_id" uuid,
   	"video_tags_id" uuid,
-  	"blog_id" uuid,
+  	"blogs_id" uuid,
   	"videos_id" uuid,
   	"events_id" uuid,
   	"instructors_id" uuid,
-  	"job_posts_id" uuid
+  	"jobs_id" uuid
   );
   
   CREATE TABLE IF NOT EXISTS "payload_preferences" (
@@ -263,19 +263,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "blog" ADD CONSTRAINT "blog_cover_image_id_media_id_fk" FOREIGN KEY ("cover_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "blogs" ADD CONSTRAINT "blogs_cover_image_id_media_id_fk" FOREIGN KEY ("cover_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "blog_rels" ADD CONSTRAINT "blog_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."blog"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "blogs_rels" ADD CONSTRAINT "blogs_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."blogs"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "blog_rels" ADD CONSTRAINT "blog_rels_blog_tags_fk" FOREIGN KEY ("blog_tags_id") REFERENCES "public"."blog_tags"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "blogs_rels" ADD CONSTRAINT "blogs_rels_blog_tags_fk" FOREIGN KEY ("blog_tags_id") REFERENCES "public"."blog_tags"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -347,7 +347,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "job_posts" ADD CONSTRAINT "job_posts_company_logo_id_media_id_fk" FOREIGN KEY ("company_logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "jobs" ADD CONSTRAINT "jobs_company_logo_id_media_id_fk" FOREIGN KEY ("company_logo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -395,7 +395,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_blog_fk" FOREIGN KEY ("blog_id") REFERENCES "public"."blog"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_blogs_fk" FOREIGN KEY ("blogs_id") REFERENCES "public"."blogs"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -419,7 +419,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_job_posts_fk" FOREIGN KEY ("job_posts_id") REFERENCES "public"."job_posts"("id") ON DELETE cascade ON UPDATE no action;
+   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_jobs_fk" FOREIGN KEY ("jobs_id") REFERENCES "public"."jobs"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -458,14 +458,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE UNIQUE INDEX IF NOT EXISTS "video_tags_slug_idx" ON "video_tags" USING btree ("slug");
   CREATE INDEX IF NOT EXISTS "video_tags_updated_at_idx" ON "video_tags" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "video_tags_created_at_idx" ON "video_tags" USING btree ("created_at");
-  CREATE UNIQUE INDEX IF NOT EXISTS "blog_slug_idx" ON "blog" USING btree ("slug");
-  CREATE INDEX IF NOT EXISTS "blog_cover_image_idx" ON "blog" USING btree ("cover_image_id");
-  CREATE INDEX IF NOT EXISTS "blog_updated_at_idx" ON "blog" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "blog_created_at_idx" ON "blog" USING btree ("created_at");
-  CREATE INDEX IF NOT EXISTS "blog_rels_order_idx" ON "blog_rels" USING btree ("order");
-  CREATE INDEX IF NOT EXISTS "blog_rels_parent_idx" ON "blog_rels" USING btree ("parent_id");
-  CREATE INDEX IF NOT EXISTS "blog_rels_path_idx" ON "blog_rels" USING btree ("path");
-  CREATE INDEX IF NOT EXISTS "blog_rels_blog_tags_id_idx" ON "blog_rels" USING btree ("blog_tags_id");
+  CREATE UNIQUE INDEX IF NOT EXISTS "blogs_slug_idx" ON "blogs" USING btree ("slug");
+  CREATE INDEX IF NOT EXISTS "blogs_cover_image_idx" ON "blogs" USING btree ("cover_image_id");
+  CREATE INDEX IF NOT EXISTS "blogs_updated_at_idx" ON "blogs" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "blogs_created_at_idx" ON "blogs" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "blogs_rels_order_idx" ON "blogs_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "blogs_rels_parent_idx" ON "blogs_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "blogs_rels_path_idx" ON "blogs_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "blogs_rels_blog_tags_id_idx" ON "blogs_rels" USING btree ("blog_tags_id");
   CREATE UNIQUE INDEX IF NOT EXISTS "videos_youtube_link_idx" ON "videos" USING btree ("youtube_link");
   CREATE INDEX IF NOT EXISTS "videos_instructor_idx" ON "videos" USING btree ("instructor_id");
   CREATE INDEX IF NOT EXISTS "videos_updated_at_idx" ON "videos" USING btree ("updated_at");
@@ -490,9 +490,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "instructors_image_idx" ON "instructors" USING btree ("image_id");
   CREATE INDEX IF NOT EXISTS "instructors_updated_at_idx" ON "instructors" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "instructors_created_at_idx" ON "instructors" USING btree ("created_at");
-  CREATE INDEX IF NOT EXISTS "job_posts_company_logo_idx" ON "job_posts" USING btree ("company_logo_id");
-  CREATE INDEX IF NOT EXISTS "job_posts_updated_at_idx" ON "job_posts" USING btree ("updated_at");
-  CREATE INDEX IF NOT EXISTS "job_posts_created_at_idx" ON "job_posts" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "jobs_company_logo_idx" ON "jobs" USING btree ("company_logo_id");
+  CREATE INDEX IF NOT EXISTS "jobs_updated_at_idx" ON "jobs" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "jobs_created_at_idx" ON "jobs" USING btree ("created_at");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_created_at_idx" ON "payload_locked_documents" USING btree ("created_at");
@@ -505,11 +505,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_leaderboard_id_idx" ON "payload_locked_documents_rels" USING btree ("leaderboard_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_blog_tags_id_idx" ON "payload_locked_documents_rels" USING btree ("blog_tags_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_video_tags_id_idx" ON "payload_locked_documents_rels" USING btree ("video_tags_id");
-  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_blog_id_idx" ON "payload_locked_documents_rels" USING btree ("blog_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_blogs_id_idx" ON "payload_locked_documents_rels" USING btree ("blogs_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_videos_id_idx" ON "payload_locked_documents_rels" USING btree ("videos_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_events_id_idx" ON "payload_locked_documents_rels" USING btree ("events_id");
   CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_instructors_id_idx" ON "payload_locked_documents_rels" USING btree ("instructors_id");
-  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_job_posts_id_idx" ON "payload_locked_documents_rels" USING btree ("job_posts_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_jobs_id_idx" ON "payload_locked_documents_rels" USING btree ("jobs_id");
   CREATE INDEX IF NOT EXISTS "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
   CREATE INDEX IF NOT EXISTS "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
@@ -530,8 +530,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "leaderboard" CASCADE;
   DROP TABLE "blog_tags" CASCADE;
   DROP TABLE "video_tags" CASCADE;
-  DROP TABLE "blog" CASCADE;
-  DROP TABLE "blog_rels" CASCADE;
+  DROP TABLE "blogs" CASCADE;
+  DROP TABLE "blogs_rels" CASCADE;
   DROP TABLE "videos" CASCADE;
   DROP TABLE "videos_rels" CASCADE;
   DROP TABLE "events_host_socials" CASCADE;
@@ -539,7 +539,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "events_rels" CASCADE;
   DROP TABLE "instructors_instructor_socials" CASCADE;
   DROP TABLE "instructors" CASCADE;
-  DROP TABLE "job_posts" CASCADE;
+  DROP TABLE "jobs" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
   DROP TABLE "payload_preferences" CASCADE;
@@ -547,9 +547,9 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "payload_migrations" CASCADE;
   DROP TYPE "public"."enum_users_role";
   DROP TYPE "public"."enum_leaderboard_socials_platform";
-  DROP TYPE "public"."enum_blog_status";
+  DROP TYPE "public"."enum_blogs_status";
   DROP TYPE "public"."enum_events_host_socials_platform";
   DROP TYPE "public"."enum_instructors_instructor_socials_platform";
-  DROP TYPE "public"."enum_job_posts_location";
-  DROP TYPE "public"."enum_job_posts_job_type";`)
+  DROP TYPE "public"."enum_jobs_location";
+  DROP TYPE "public"."enum_jobs_job_type";`)
 }
