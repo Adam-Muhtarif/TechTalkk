@@ -72,11 +72,11 @@ export interface Config {
     leaderboard: Leaderboard;
     'blog-tags': BlogTag;
     'video-tags': VideoTag;
-    blog: Blog;
+    blogs: Blog;
     videos: Video;
     events: Event;
     instructors: Instructor;
-    'job-posts': JobPost;
+    jobs: Job;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,11 +89,11 @@ export interface Config {
     leaderboard: LeaderboardSelect<false> | LeaderboardSelect<true>;
     'blog-tags': BlogTagsSelect<false> | BlogTagsSelect<true>;
     'video-tags': VideoTagsSelect<false> | VideoTagsSelect<true>;
-    blog: BlogSelect<false> | BlogSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     instructors: InstructorsSelect<false> | InstructorsSelect<true>;
-    'job-posts': JobPostsSelect<false> | JobPostsSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -228,7 +228,7 @@ export interface VideoTag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog".
+ * via the `definition` "blogs".
  */
 export interface Blog {
   id: string;
@@ -331,31 +331,17 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-posts".
+ * via the `definition` "jobs".
  */
-export interface JobPost {
+export interface Job {
   id: string;
   title: string;
-  company: string;
+  company_name: string;
+  company_link?: string | null;
   company_logo: string | Media;
   location: 'remote' | 'hybrid' | 'onsite';
   job_type: 'full-time' | 'part-time' | 'contract' | 'internship';
   salary?: number | null;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
   apply_link: string;
   postedAt?: string | null;
   expiresAt: string;
@@ -394,7 +380,7 @@ export interface PayloadLockedDocument {
         value: string | VideoTag;
       } | null)
     | ({
-        relationTo: 'blog';
+        relationTo: 'blogs';
         value: string | Blog;
       } | null)
     | ({
@@ -410,8 +396,8 @@ export interface PayloadLockedDocument {
         value: string | Instructor;
       } | null)
     | ({
-        relationTo: 'job-posts';
-        value: string | JobPost;
+        relationTo: 'jobs';
+        value: string | Job;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -546,9 +532,9 @@ export interface VideoTagsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog_select".
+ * via the `definition` "blogs_select".
  */
-export interface BlogSelect<T extends boolean = true> {
+export interface BlogsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   content?: T;
@@ -617,16 +603,16 @@ export interface InstructorsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-posts_select".
+ * via the `definition` "jobs_select".
  */
-export interface JobPostsSelect<T extends boolean = true> {
+export interface JobsSelect<T extends boolean = true> {
   title?: T;
-  company?: T;
+  company_name?: T;
+  company_link?: T;
   company_logo?: T;
   location?: T;
   job_type?: T;
   salary?: T;
-  description?: T;
   apply_link?: T;
   postedAt?: T;
   expiresAt?: T;

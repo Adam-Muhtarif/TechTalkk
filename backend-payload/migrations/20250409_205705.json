@@ -1,5 +1,5 @@
 {
-  "id": "116803eb-d8d3-491b-ac29-1bf5509529ef",
+  "id": "28f6aba6-b014-45d0-be96-6ee0de2f8c97",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -853,8 +853,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.blog": {
-      "name": "blog",
+    "public.blogs": {
+      "name": "blogs",
       "schema": "",
       "columns": {
         "id": {
@@ -896,7 +896,7 @@
         },
         "status": {
           "name": "status",
-          "type": "enum_blog_status",
+          "type": "enum_blogs_status",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
@@ -918,8 +918,8 @@
         }
       },
       "indexes": {
-        "blog_slug_idx": {
-          "name": "blog_slug_idx",
+        "blogs_slug_idx": {
+          "name": "blogs_slug_idx",
           "columns": [
             {
               "expression": "slug",
@@ -933,8 +933,8 @@
           "method": "btree",
           "with": {}
         },
-        "blog_cover_image_idx": {
-          "name": "blog_cover_image_idx",
+        "blogs_cover_image_idx": {
+          "name": "blogs_cover_image_idx",
           "columns": [
             {
               "expression": "cover_image_id",
@@ -948,8 +948,8 @@
           "method": "btree",
           "with": {}
         },
-        "blog_updated_at_idx": {
-          "name": "blog_updated_at_idx",
+        "blogs_updated_at_idx": {
+          "name": "blogs_updated_at_idx",
           "columns": [
             {
               "expression": "updated_at",
@@ -963,8 +963,8 @@
           "method": "btree",
           "with": {}
         },
-        "blog_created_at_idx": {
-          "name": "blog_created_at_idx",
+        "blogs_created_at_idx": {
+          "name": "blogs_created_at_idx",
           "columns": [
             {
               "expression": "created_at",
@@ -980,9 +980,9 @@
         }
       },
       "foreignKeys": {
-        "blog_cover_image_id_media_id_fk": {
-          "name": "blog_cover_image_id_media_id_fk",
-          "tableFrom": "blog",
+        "blogs_cover_image_id_media_id_fk": {
+          "name": "blogs_cover_image_id_media_id_fk",
+          "tableFrom": "blogs",
           "tableTo": "media",
           "columnsFrom": [
             "cover_image_id"
@@ -1000,8 +1000,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.blog_rels": {
-      "name": "blog_rels",
+    "public.blogs_rels": {
+      "name": "blogs_rels",
       "schema": "",
       "columns": {
         "id": {
@@ -1036,8 +1036,8 @@
         }
       },
       "indexes": {
-        "blog_rels_order_idx": {
-          "name": "blog_rels_order_idx",
+        "blogs_rels_order_idx": {
+          "name": "blogs_rels_order_idx",
           "columns": [
             {
               "expression": "order",
@@ -1051,8 +1051,8 @@
           "method": "btree",
           "with": {}
         },
-        "blog_rels_parent_idx": {
-          "name": "blog_rels_parent_idx",
+        "blogs_rels_parent_idx": {
+          "name": "blogs_rels_parent_idx",
           "columns": [
             {
               "expression": "parent_id",
@@ -1066,8 +1066,8 @@
           "method": "btree",
           "with": {}
         },
-        "blog_rels_path_idx": {
-          "name": "blog_rels_path_idx",
+        "blogs_rels_path_idx": {
+          "name": "blogs_rels_path_idx",
           "columns": [
             {
               "expression": "path",
@@ -1081,8 +1081,8 @@
           "method": "btree",
           "with": {}
         },
-        "blog_rels_blog_tags_id_idx": {
-          "name": "blog_rels_blog_tags_id_idx",
+        "blogs_rels_blog_tags_id_idx": {
+          "name": "blogs_rels_blog_tags_id_idx",
           "columns": [
             {
               "expression": "blog_tags_id",
@@ -1098,10 +1098,10 @@
         }
       },
       "foreignKeys": {
-        "blog_rels_parent_fk": {
-          "name": "blog_rels_parent_fk",
-          "tableFrom": "blog_rels",
-          "tableTo": "blog",
+        "blogs_rels_parent_fk": {
+          "name": "blogs_rels_parent_fk",
+          "tableFrom": "blogs_rels",
+          "tableTo": "blogs",
           "columnsFrom": [
             "parent_id"
           ],
@@ -1111,9 +1111,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "blog_rels_blog_tags_fk": {
-          "name": "blog_rels_blog_tags_fk",
-          "tableFrom": "blog_rels",
+        "blogs_rels_blog_tags_fk": {
+          "name": "blogs_rels_blog_tags_fk",
+          "tableFrom": "blogs_rels",
           "tableTo": "blog_tags",
           "columnsFrom": [
             "blog_tags_id"
@@ -2020,8 +2020,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.job_posts": {
-      "name": "job_posts",
+    "public.jobs": {
+      "name": "jobs",
       "schema": "",
       "columns": {
         "id": {
@@ -2037,11 +2037,17 @@
           "primaryKey": false,
           "notNull": true
         },
-        "company": {
-          "name": "company",
+        "company_name": {
+          "name": "company_name",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "company_link": {
+          "name": "company_link",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "company_logo_id": {
           "name": "company_logo_id",
@@ -2051,14 +2057,14 @@
         },
         "location": {
           "name": "location",
-          "type": "enum_job_posts_location",
+          "type": "enum_jobs_location",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
         },
         "job_type": {
           "name": "job_type",
-          "type": "enum_job_posts_job_type",
+          "type": "enum_jobs_job_type",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
@@ -2068,12 +2074,6 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false
-        },
-        "description": {
-          "name": "description",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
         },
         "apply_link": {
           "name": "apply_link",
@@ -2109,8 +2109,8 @@
         }
       },
       "indexes": {
-        "job_posts_company_logo_idx": {
-          "name": "job_posts_company_logo_idx",
+        "jobs_company_logo_idx": {
+          "name": "jobs_company_logo_idx",
           "columns": [
             {
               "expression": "company_logo_id",
@@ -2124,8 +2124,8 @@
           "method": "btree",
           "with": {}
         },
-        "job_posts_updated_at_idx": {
-          "name": "job_posts_updated_at_idx",
+        "jobs_updated_at_idx": {
+          "name": "jobs_updated_at_idx",
           "columns": [
             {
               "expression": "updated_at",
@@ -2139,8 +2139,8 @@
           "method": "btree",
           "with": {}
         },
-        "job_posts_created_at_idx": {
-          "name": "job_posts_created_at_idx",
+        "jobs_created_at_idx": {
+          "name": "jobs_created_at_idx",
           "columns": [
             {
               "expression": "created_at",
@@ -2156,9 +2156,9 @@
         }
       },
       "foreignKeys": {
-        "job_posts_company_logo_id_media_id_fk": {
-          "name": "job_posts_company_logo_id_media_id_fk",
-          "tableFrom": "job_posts",
+        "jobs_company_logo_id_media_id_fk": {
+          "name": "jobs_company_logo_id_media_id_fk",
+          "tableFrom": "jobs",
           "tableTo": "media",
           "columnsFrom": [
             "company_logo_id"
@@ -2326,8 +2326,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "blog_id": {
-          "name": "blog_id",
+        "blogs_id": {
+          "name": "blogs_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -2350,8 +2350,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "job_posts_id": {
-          "name": "job_posts_id",
+        "jobs_id": {
+          "name": "jobs_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -2493,11 +2493,11 @@
           "method": "btree",
           "with": {}
         },
-        "payload_locked_documents_rels_blog_id_idx": {
-          "name": "payload_locked_documents_rels_blog_id_idx",
+        "payload_locked_documents_rels_blogs_id_idx": {
+          "name": "payload_locked_documents_rels_blogs_id_idx",
           "columns": [
             {
-              "expression": "blog_id",
+              "expression": "blogs_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -2553,11 +2553,11 @@
           "method": "btree",
           "with": {}
         },
-        "payload_locked_documents_rels_job_posts_id_idx": {
-          "name": "payload_locked_documents_rels_job_posts_id_idx",
+        "payload_locked_documents_rels_jobs_id_idx": {
+          "name": "payload_locked_documents_rels_jobs_id_idx",
           "columns": [
             {
-              "expression": "job_posts_id",
+              "expression": "jobs_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -2661,12 +2661,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "payload_locked_documents_rels_blog_fk": {
-          "name": "payload_locked_documents_rels_blog_fk",
+        "payload_locked_documents_rels_blogs_fk": {
+          "name": "payload_locked_documents_rels_blogs_fk",
           "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "blog",
+          "tableTo": "blogs",
           "columnsFrom": [
-            "blog_id"
+            "blogs_id"
           ],
           "columnsTo": [
             "id"
@@ -2713,12 +2713,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "payload_locked_documents_rels_job_posts_fk": {
-          "name": "payload_locked_documents_rels_job_posts_fk",
+        "payload_locked_documents_rels_jobs_fk": {
+          "name": "payload_locked_documents_rels_jobs_fk",
           "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "job_posts",
+          "tableTo": "jobs",
           "columnsFrom": [
-            "job_posts_id"
+            "jobs_id"
           ],
           "columnsTo": [
             "id"
@@ -3054,8 +3054,8 @@
         "Facebook"
       ]
     },
-    "public.enum_blog_status": {
-      "name": "enum_blog_status",
+    "public.enum_blogs_status": {
+      "name": "enum_blogs_status",
       "schema": "public",
       "values": [
         "draft",
@@ -3086,8 +3086,8 @@
         "Facebook"
       ]
     },
-    "public.enum_job_posts_location": {
-      "name": "enum_job_posts_location",
+    "public.enum_jobs_location": {
+      "name": "enum_jobs_location",
       "schema": "public",
       "values": [
         "remote",
@@ -3095,8 +3095,8 @@
         "onsite"
       ]
     },
-    "public.enum_job_posts_job_type": {
-      "name": "enum_job_posts_job_type",
+    "public.enum_jobs_job_type": {
+      "name": "enum_jobs_job_type",
       "schema": "public",
       "values": [
         "full-time",

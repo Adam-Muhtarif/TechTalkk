@@ -13,7 +13,7 @@ export default function Courses() {
 
       {/* Landing */}
       {/* Todo: make it reusable component */}
-      <LandingSection title="courses" info="find your suitable" />
+      <LandingSection title="find your suitable" info="courses" className='h-3 w-[14rem] top-[3.5rem] right-[33rem]'/>
 
       {/* Filter & search */}
       <FilterSection />
