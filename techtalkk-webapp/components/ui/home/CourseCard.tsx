@@ -7,14 +7,14 @@ import {
   Users,
   // PlayCircle,
   BarChart3,
-  BadgeIcon as Certificate,
-  ChevronRight,
+  // BadgeIcon as Certificate,
+  // ChevronRight,
   ArrowRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -54,7 +54,7 @@ export interface CourseCardProps {
   className?: string;
 }
 
-const CourseCard2 = ({
+const CourseCard = ({
   title,
   description,
   image,
@@ -230,4 +230,4 @@ const CourseCard2 = ({
   );
 };
 
-export default CourseCard2;
+export default CourseCard;

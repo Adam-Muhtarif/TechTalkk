@@ -1,5 +1,5 @@
 // import CourseCard from "./CourseCard";
-import CourseCard2 from "./CourseCard";
+import CourseCard from "./CourseCard";
 
 const Courses = () => {
   return (
@@ -9,7 +9,7 @@ const Courses = () => {
         Join Us Today & Get Valuable<span className='text-[#4E60EE] ml-2'>Courses</span>
       </h1>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        <CourseCard2
+        <CourseCard
           id='html-mastery'
           title='HTML Mastery: Build Stunning Web Interfaces from Scratch'
           description='Learn the fundamentals of web structure using HTML. From tags to semantic layout, forms to accessibility — gain hands-on experience in crafting clean, professional web pages.'
@@ -28,7 +28,7 @@ const Courses = () => {
           reviewCount={320}
         />
 
-        <CourseCard2
+        <CourseCard
           id='js-mastery'
           title='JavaScript Mastery: From Fundamentals to Advanced Concepts'
           description='Deep dive into JavaScript — master variables, loops, functions, asynchronous programming, DOM manipulation, and ES6+. Build interactive web applications and real-world projects.'
@@ -47,7 +47,7 @@ const Courses = () => {
           reviewCount={290}
         />
 
-        <CourseCard2
+        <CourseCard
           id='react-mastery'
           title='React.js Mastery: Build Professional Web Applications'
           description='Master React.js and its ecosystem. Learn component architecture, state management, React Router, hooks, Context API, and build responsive, production-ready web apps.'
