@@ -3,17 +3,17 @@
 import CourseCard from '@/components/courses/courseCard'
 import FilterSection from '@/components/courses/filterSection'
 import LandingSection from '@/components/shared/landingSection'
-import Navbar from '@/components/shared/navbar'
 
 export default function Courses() {
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-30 overflow-x-hidden">
-      {/* Nav */}
-      <Navbar />
-
       {/* Landing */}
       {/* Todo: make it reusable component */}
-      <LandingSection title="find your suitable" info="courses" className='h-3 w-[14rem] top-[3.5rem] right-[33rem]'/>
+      <LandingSection
+        title="find your suitable"
+        info="courses"
+        className="h-3 w-[14rem] top-[3.5rem] right-[33rem]"
+      />
 
       {/* Filter & search */}
       <FilterSection />
@@ -22,7 +22,7 @@ export default function Courses() {
 
       <section
         aria-label="Courses"
-        className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
+        className="w-full mb-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
       >
         <CourseCard
           image="/images/blogs/article1.png"
