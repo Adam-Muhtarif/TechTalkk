@@ -1,6 +1,6 @@
-import Image from "next/image"
-import { TickIcon } from "@/components/icons/index"
-import { AboutUsProps, mockAboutData } from "@/constants/data"
+import Image from 'next/image'
+import { TickIcon } from '@/components/icons/index'
+import { AboutUsProps, mockAboutData } from '@/constants/data'
 
 const AboutUs: React.FC<AboutUsProps> = ({ data = mockAboutData }) => {
   return (
@@ -17,7 +17,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ data = mockAboutData }) => {
               ></div>
               <div className="absolute top-[8%] left-[8%] w-[92%] h-[92%] overflow-hidden rounded-lg shadow-custom">
                 <Image
-                  src={data.image.src || "/placeholder.svg"}
+                  src={data.image.src || '/placeholder.svg'}
                   alt={data.image.alt}
                   fill
                   className="object-cover transition-transform duration-500 hover:scale-105"

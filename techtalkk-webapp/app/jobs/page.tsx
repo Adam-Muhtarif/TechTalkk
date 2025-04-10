@@ -26,7 +26,7 @@ export default function Jobs() {
       {/* Cards */}
       <section
         aria-label="job cards"
-        className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
+        className="w-full mb-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
       >
         <JobCard
           companyLogo="/images/blogs/article6.png"

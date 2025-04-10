@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { DcIcon, FbIcon, IgIcon, YtIcon } from "../icons"
-import { SocialLinks } from "@/constants/data"
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { DcIcon, FbIcon, IgIcon, YtIcon } from '../icons'
+import { SocialLinks } from '@/constants/data'
 
 const Hero = () => {
   return (
@@ -17,16 +17,16 @@ const Hero = () => {
       <div className="flex space-x-5">
         {SocialLinks.map((link, index) => (
           <Link key={index} href={link.href}>
-            {link.icon === "YtIcon" && <YtIcon pathClassName="fill-[#4E58EF]" />}
-            {link.icon === "DcIcon" && <DcIcon pathClassName="fill-[#4E58EF]" />}
-            {link.icon === "IgIcon" && <IgIcon pathClassName="fill-[#4E58EF]" />}
-            {link.icon === "FbIcon" && <FbIcon pathClassName="fill-[#4E58EF]" />}
+            {link.icon === 'YtIcon' && <YtIcon pathClassName="fill-[#4E58EF]" />}
+            {link.icon === 'DcIcon' && <DcIcon pathClassName="fill-[#4E58EF]" />}
+            {link.icon === 'IgIcon' && <IgIcon pathClassName="fill-[#4E58EF]" />}
+            {link.icon === 'FbIcon' && <FbIcon pathClassName="fill-[#4E58EF]" />}
           </Link>
         ))}
       </div>
       <div className="mb-4">
         <Link href="/#">
-          <Button variant={"btn"} className="p-[10px] w-[224px] h-[50px] font-medium text-[20px]">
+          <Button variant={'btn'} className="p-[10px] w-[224px] h-[50px] font-medium text-[20px]">
             Discover More
           </Button>
         </Link>

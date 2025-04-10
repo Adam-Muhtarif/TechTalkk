@@ -5,7 +5,7 @@ import { useState } from "react"
 import { NavLinks } from "@/constants/data"
 import { LogoPink } from "@/components/icons/index"
 import { Button } from "@/components/ui/button"
-import MenuIcon from "@/components/home/Menu"
+import MenuIcon from "@/components/home/menu"
 // import AvatarUser from "./avatar-02";
 // import { ModeToggle } from "./ui/mode-toggle";
 

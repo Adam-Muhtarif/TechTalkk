@@ -1,9 +1,9 @@
-import AboutUs from "@/components/home/AboutUs"
-import ContactForm from "@/components/home/ContactForm"
-import Courses from "@/components/home/Courses"
-// import Blogs from "@/components/home/Blogs";
-import Hero from "@/components/home/Hero"
-import MeetUps from "@/components/home/MeetUps"
+import AboutUs from '@/components/home/about'
+import ContactForm from '@/components/home/contactForm'
+import Courses from '@/components/home/courses'
+// import Blogs from "@/components/home/blogs";
+import Hero from '@/components/home/hero'
+import MeetUps from '@/components/home/meetUps'
 
 const HomePage = () => {
   return (

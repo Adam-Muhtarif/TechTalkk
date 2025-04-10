@@ -7,7 +7,7 @@ export default function FilterSection() {
   return (
     <section
       aria-label="Filter and search course"
-      className="bg-[#E5E8FA] w-full flex flex-col lg:flex-row justify-between items-center my-8 py-4 md:py-6 px-4 rounded-4xl"
+      className="bg-[#E5E8FA] w-full flex flex-col lg:flex-row justify-between items-center my-12 py-4 md:py-6 px-4 rounded-4xl"
     >
       <div className="relative w-full lg:w-1/2 flex items-center">
         <Search className="absolute right-5 text-gray-300" />
