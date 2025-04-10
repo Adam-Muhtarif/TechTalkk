@@ -5,9 +5,9 @@ import { admins } from './access/admins'
 
 export const Videos: CollectionConfig = {
   slug: 'videos',
-  labels: { singular: "Video", plural: "Videos" },
+  labels: { singular: 'Video', plural: 'Videos' },
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: 'youtube_link',
   },
 
   access: {
@@ -18,11 +18,6 @@ export const Videos: CollectionConfig = {
   },
 
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
     {
       name: 'youtube_link',
       type: 'text',
@@ -42,7 +37,7 @@ export const Videos: CollectionConfig = {
       type: 'relationship',
       relationTo: 'video-tags',
       hasMany: true,
-      required: false,
+      required: true,
       localized: true,
     },
   ],

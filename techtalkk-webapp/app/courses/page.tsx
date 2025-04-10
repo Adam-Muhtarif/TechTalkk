@@ -1,14 +1,42 @@
-'use client'
-
 import CourseCard from '@/components/courses/courseCard'
 import FilterSection from '@/components/courses/filterSection'
 import LandingSection from '@/components/shared/landingSection'
 
-export default function Courses() {
+export type Tag = {
+  id: string
+  slug: string
+}
+
+export type InstructorSocials = {
+  id: string
+  platform: string
+  url: string
+}
+
+type Instructor = {
+  name: string
+  image: string | null
+  remote_image: string | null
+  instructor_socials: InstructorSocials[]
+}
+
+export type Course = {
+  id: string
+  youtube_link: string
+  tags: Tag[]
+  instructor: Instructor
+}
+
+export default async function Courses() {
+  const res = await fetch(`${process.env.SERVER_URL}/api/videos`, {
+    cache: 'no-store',
+  })
+
+  const courses = await res.json()
+
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-30 overflow-x-hidden">
       {/* Landing */}
-      {/* Todo: make it reusable component */}
       <LandingSection
         title="find your suitable"
         info="courses"
@@ -18,77 +46,25 @@ export default function Courses() {
       {/* Filter & search */}
       <FilterSection />
 
-      {/* Cards */}
-
+      {/* Courses Cards */}
       <section
         aria-label="Courses"
         className="w-full mb-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
       >
-        <CourseCard
-          image="/images/blogs/article1.png"
-          title="ux design beginner"
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor vitae reprehenderit
-          laboriosam nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam
-          nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam nam autem
-          eum eos non, eaque adipisci doloribus, minima praesentium"
-          rating={4.3}
-          period={1}
-          lessons={14}
-          instructorName="John Doe"
-          instructorImage="/images/member-test.png"
-        />
-        <CourseCard
-          image="/images/blogs/article1.png"
-          title="ux design beginner"
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor vitae reprehenderit
-          laboriosam nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam
-          nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam nam autem
-          eum eos non, eaque adipisci doloribus, minima praesentium"
-          rating={4.3}
-          period={1}
-          lessons={14}
-          instructorName="John Doe"
-          instructorImage="/images/member-test.png"
-        />
-        <CourseCard
-          image="/images/blogs/article1.png"
-          title="ux design beginner"
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor vitae reprehenderit
-          laboriosam nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam
-          nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam nam autem
-          eum eos non, eaque adipisci doloribus, minima praesentium"
-          rating={4.3}
-          period={1}
-          lessons={14}
-          instructorName="John Doe"
-          instructorImage="/images/member-test.png"
-        />
-        <CourseCard
-          image="/images/blogs/article1.png"
-          title="ux design beginner"
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor vitae reprehenderit
-          laboriosam nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam
-          nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam nam autem
-          eum eos non, eaque adipisci doloribus, minima praesentium"
-          rating={4.3}
-          period={1}
-          lessons={14}
-          instructorName="John Doe"
-          instructorImage="/images/member-test.png"
-        />
-        <CourseCard
-          image="/images/blogs/article1.png"
-          title="ux design beginner"
-          description=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor vitae reprehenderit
-          laboriosam nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam
-          nam autem eum eos non, eaque adipisci doloribus, minima praesentium laboriosam nam autem
-          eum eos non, eaque adipisci doloribus, minima praesentium"
-          rating={4.3}
-          period={1}
-          lessons={14}
-          instructorName="John Doe"
-          instructorImage="/images/member-test.png"
-        />
+        {courses.docs.map((course: Course) => (
+          <CourseCard
+            key={course.id}
+            youtubeLink={course.youtube_link}
+            tags={course.tags}
+            instructorName={course.instructor.name}
+            instructorImage={
+              course.instructor?.remote_image ??
+              course.instructor?.image ??
+              '/images/member-test.png'
+            }
+            instructorSocials={course.instructor.instructor_socials}
+          />
+        ))}
       </section>
     </main>
   )

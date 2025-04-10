@@ -38,10 +38,14 @@ export const Instructors: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: false,
-      localized: true,
     },
     {
-      name: 'instructor-socials',
+      name: 'remote_image',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'instructor_socials',
       type: 'array',
       fields: [
         {

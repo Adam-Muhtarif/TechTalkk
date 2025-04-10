@@ -262,10 +262,9 @@ export interface Blog {
  */
 export interface Video {
   id: string;
-  title: string;
   youtube_link: string;
   instructor: string | Instructor;
-  tags?: (string | VideoTag)[] | null;
+  tags: (string | VideoTag)[];
   updatedAt: string;
   createdAt: string;
 }
@@ -279,7 +278,8 @@ export interface Instructor {
   title?: string | null;
   bio?: string | null;
   image?: (string | null) | Media;
-  'instructor-socials'?:
+  remote_image?: string | null;
+  instructor_socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
         url: string;
@@ -550,7 +550,6 @@ export interface BlogsSelect<T extends boolean = true> {
  * via the `definition` "videos_select".
  */
 export interface VideosSelect<T extends boolean = true> {
-  title?: T;
   youtube_link?: T;
   instructor?: T;
   tags?: T;
@@ -591,7 +590,8 @@ export interface InstructorsSelect<T extends boolean = true> {
   title?: T;
   bio?: T;
   image?: T;
-  'instructor-socials'?:
+  remote_image?: T;
+  instructor_socials?:
     | T
     | {
         platform?: T;
