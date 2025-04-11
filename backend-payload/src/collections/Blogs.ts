@@ -64,7 +64,14 @@ export const Blogs: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: false,
-      localized: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'cover_image_remote',
+      type: 'text',
+      required: false,
       admin: {
         position: 'sidebar',
       },

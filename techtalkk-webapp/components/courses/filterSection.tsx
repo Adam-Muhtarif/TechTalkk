@@ -1,42 +1,58 @@
-import React from 'react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import { Search } from 'lucide-react'
-import { Input } from '../ui/input'
+'use client'
 
-export default function FilterSection() {
+import { Tag } from '@/app/courses/page'
+import { Button } from '../ui/button'
+import { useEffect, useState } from 'react'
+
+type FilterSectionProps = {
+  slug: string
+  fetchVideos: (tagId: string) => void
+}
+
+export default function FilterSection({ slug, fetchVideos }: FilterSectionProps) {
+  const [tags, setTags] = useState<Tag[]>([])
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const res = await fetch(
+          slug === `videos`
+            ? `${process.env.NEXT_PUBLIC_SERVER_URL}/api/video-tags`
+            : slug === `blogs`
+              ? `${process.env.NEXT_PUBLIC_SERVER_URL}/api/blog-tags`
+              : '',
+          {
+            cache: 'no-store',
+          },
+        )
+        const data = await res.json()
+
+        setTags(data.docs)
+      } catch (error) {
+        console.error('Error fetching tags', error)
+      }
+    }
+
+    fetchTags()
+  }, [slug])
+
   return (
     <section
-      aria-label="Filter and search course"
-      className="bg-[#E5E8FA] w-full flex flex-col lg:flex-row justify-between items-center my-12 py-4 md:py-6 px-4 rounded-4xl"
+      aria-label="filter jobs"
+      className="w-full my-4 p-4 grid grid-cols-2 md:grid-cols-4 gap-2 lg:block lg:text-right lg:space-x-2"
     >
-      <div className="relative w-full lg:w-1/2 flex items-center">
-        <Search className="absolute right-5 text-gray-300" />
-        <Input placeholder="Search on your courses" className="w-full bg-white py-6 " />
-      </div>
-
-      <div className="mt-5 lg:mt-0 flex flex-col md:flex-row items-center md:space-x-4">
-        <Select>
-          <SelectTrigger className="w-full bg-white p-4 sm:p-6">
-            <SelectValue placeholder="Sort by latest" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select>
-          <SelectTrigger className="w-full bg-white p-4 sm:p-6">
-            <SelectValue placeholder="All categories" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="light">Light</SelectItem>
-            <SelectItem value="dark">Dark</SelectItem>
-            <SelectItem value="system">System</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <Button className="uppercase py-5 px-8 bg-[#4C0BF7]" onClick={() => fetchVideos('')}>
+        all
+      </Button>
+      {tags.map((tag: Tag) => (
+        <Button
+          key={tag.id}
+          className="uppercase py-5 px-8 bg-[#4C0BF7]"
+          onClick={() => fetchVideos(tag.id)}
+        >
+          {tag.slug}s
+        </Button>
+      ))}
     </section>
   )
 }

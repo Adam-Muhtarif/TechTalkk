@@ -8,6 +8,7 @@
     "postinstall": "payload migrate",
     "build": "cross-env NODE_OPTIONS=--no-deprecation payload migrate && next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation PORT=5000 next dev",
+    "seed": "payload run ./src/seed",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",

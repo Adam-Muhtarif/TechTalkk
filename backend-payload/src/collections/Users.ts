@@ -9,7 +9,7 @@ export const Users: CollectionConfig = {
   auth: {
     verify: {
       generateEmailSubject: () => 'Verify your email',
-      generateEmailHTML: verifyEmail
+      generateEmailHTML: verifyEmail,
     },
 
     forgotPassword: {
@@ -54,10 +54,15 @@ export const Users: CollectionConfig = {
       defaultValue: 'editor',
     },
     {
-      name: 'avatar',
+      name: 'image',
       type: 'upload',
       relationTo: 'media',
-      localized: true,
+      required: false,
+    },
+    {
+      name: 'image_remote',
+      type: 'text',
+      required: false,
     },
     {
       name: 'isActive',

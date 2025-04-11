@@ -1,3 +1,6 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import { InstructorSocials, Tag } from '@/app/courses/page'
 import { extractYouTubeVideoID, formatDuration } from '@/lib/utils'
 import {
@@ -12,6 +15,7 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from 'lucide-react'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -23,7 +27,7 @@ type CourseCardProps = {
   instructorSocials: InstructorSocials[]
 }
 
-const getPlatformIcon = (platform: string) => {
+function getPlatformIcon(platform: string) {
   switch (platform.toLowerCase()) {
     case 'facebook':
       return <FacebookIcon size={16} />
@@ -42,32 +46,55 @@ const getPlatformIcon = (platform: string) => {
   }
 }
 
-export default async function CourseCard(props: CourseCardProps) {
-  const videoId = extractYouTubeVideoID(props.youtubeLink)
+export default function CourseCard(props: CourseCardProps) {
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState({
+    items: [
+      {
+        snippet: { thumbnails: { medium: { url: '' } }, title: '', description: '' },
+        contentDetails: { duration: '', itemCount: '' },
+        statistics: { likeCount: '', viewCount: '' },
+      },
+    ],
+  })
 
-  const res = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${process.env.YOUTUBE_API_KEY}`,
-    {
-      cache: 'no-store',
-    },
-  )
+  useEffect(() => {
+    try {
+      const fetchVideoFromYoutube = async () => {
+        const videoId = extractYouTubeVideoID(props.youtubeLink)
+        const res = await fetch(
+          `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`,
+          {
+            cache: 'no-store',
+          },
+        )
+        const jsonData = await res.json()
+        setData(jsonData)
+        setLoading(false)
+      }
 
-  const data = await res.json()
+      fetchVideoFromYoutube()
+    } catch (error) {
+      console.error('Error fetching video data from youtube:', error)
+    }
+  }, [props.youtubeLink])
 
   return (
     <div className="w-full bg-gray-100 py-5 px-3 rounded-2xl flex flex-col items-center justify-center">
       {/* Image */}
-      <Link href={props.youtubeLink} target="_blank">
-        <Image
-          src={data.items[0].snippet.thumbnails.medium.url}
-          alt={data.items[0].snippet.title}
-          width={400}
-          height={100}
-          className="rounded"
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDEwMDAgNjAwMCIgY2xhc3M9ImZpbGwtbW9yZmluZyIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEwMDAgMCAwIDEwMDAgNjAwMCIgc3R5bGU9ImZpbGw6IzAwMDAwMCIgLz48L3N2Zz4=" // Optional base64-encoded blur image
-          priority
-        />
+      <Link href={props.youtubeLink} target="_blank" className="w-full">
+        {!loading ? (
+          <Image
+            src={data.items[0].snippet.thumbnails.medium.url}
+            alt={data.items[0].snippet.title}
+            width={400}
+            height={100}
+            loading="lazy"
+            className="rounded"
+          />
+        ) : (
+          <div className="w-full h-50 bg-gray-300 animate-pulse rounded"></div>
+        )}
       </Link>
 
       {/* Tags */}
@@ -83,7 +110,7 @@ export default async function CourseCard(props: CourseCardProps) {
       <div className="w-full my-5">
         <Link href={props.youtubeLink} target="_blank">
           <h3
-            className="font-bold text-black uppercase w-fit hover:underline line-clamp-2"
+            className="font-bold text-black uppercase w-fit h-12 hover:underline line-clamp-2"
             title={data.items[0].snippet.title}
           >
             {data.items[0].snippet.title}
@@ -97,7 +124,7 @@ export default async function CourseCard(props: CourseCardProps) {
       {/* Ratings */}
       <div className="flex items-center justify-center gap-8 text-sm font-bold">
         <span className="flex items-center justify-center gap-1">
-          <ThumbsUpIcon size={15} /> {data.items[0].statistics?.likeCount}
+          <ThumbsUpIcon size={15} /> {data.items[0].statistics.likeCount}
         </span>
         <span className="flex items-center justify-center gap-1">
           <TimerIcon size={15} /> {formatDuration(data.items[0].contentDetails.duration)}
@@ -116,16 +143,18 @@ export default async function CourseCard(props: CourseCardProps) {
 
       {/* Instructor */}
       <div className="flex gap-3 items-center self-start mx-5">
-        <Image
-          src={props.instructorImage}
-          alt=""
-          width={60}
-          height={100}
-          loading="lazy"
-          placeholder="blur"
-          className="w-15 h-15 rounded-full"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjYwMCIgdmlld0JveD0iMCAwIDEwMDAgNjAwMCIgY2xhc3M9ImZpbGwtbW9yZmluZyIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEwMDAgMCAwIDEwMDAgNjAwMCIgc3R5bGU9ImZpbGw6IzAwMDAwMCIgLz48L3N2Zz4=" // Optional base64-encoded blur image
-        />
+        {!loading ? (
+          <Image
+            src={props.instructorImage}
+            alt=""
+            width={60}
+            height={100}
+            loading="lazy"
+            className="w-15 h-15 rounded-full"
+          />
+        ) : (
+          <div className="w-15 h-15 bg-gray-300 animate-pulse rounded-full"></div>
+        )}
         <div>
           <h4 className="font-bold">{props.instructorName}</h4>
           <div className="flex items-center gap-2">
@@ -133,7 +162,7 @@ export default async function CourseCard(props: CourseCardProps) {
               <Link key={social.id} href={social.url} target="_blank" title={social.url}>
                 <span className="text-sm text-gray-500">{getPlatformIcon(social.platform)}</span>
               </Link>
-            ))} 
+            ))}
           </div>
         </div>
       </div>

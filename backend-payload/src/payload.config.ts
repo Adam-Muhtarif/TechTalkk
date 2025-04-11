@@ -10,7 +10,7 @@ import path from 'path'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Sponsors } from './collections/Sponsors'
-import { Leaderboards } from './collections/Leaderboards'
+import { Leaderboard } from './collections/Leaderboards'
 import { BlogTags } from './collections/BlogTags'
 import { VideoTags } from './collections/VideoTags'
 import { Blogs } from './collections/Blogs'
@@ -56,7 +56,7 @@ export default buildConfig({
     Users,
     Media,
     Sponsors,
-    Leaderboards,
+    Leaderboard,
     BlogTags,
     VideoTags,
     Blogs,

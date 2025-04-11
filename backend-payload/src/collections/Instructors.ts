@@ -40,7 +40,7 @@ export const Instructors: CollectionConfig = {
       required: false,
     },
     {
-      name: 'remote_image',
+      name: 'image_remote',
       type: 'text',
       required: false,
     },
