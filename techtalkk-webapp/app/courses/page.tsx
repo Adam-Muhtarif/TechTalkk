@@ -1,4 +1,3 @@
-import FilterSection from '@/components/courses/filterSection'
 import LandingSection from '@/components/shared/landingSection'
 import Pagination from '@/components/shared/pagination'
 
