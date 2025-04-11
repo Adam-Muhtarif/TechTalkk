@@ -32,8 +32,12 @@ export const Sponsors: CollectionConfig = {
       name: 'company_logo',
       type: 'upload',
       relationTo: 'media',
-      required: true,
-      localized: true,
+      required: false,
+    },
+    {
+      name: 'company_logo_remote',
+      type: 'text',
+      required: false,
     },
   ],
 }

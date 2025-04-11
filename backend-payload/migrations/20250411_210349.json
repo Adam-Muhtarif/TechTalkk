@@ -1,5 +1,5 @@
 {
-  "id": "28f6aba6-b014-45d0-be96-6ee0de2f8c97",
+  "id": "071d5ec6-b1c5-4ec6-9778-4ea521052e04",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -29,9 +29,15 @@
           "notNull": true,
           "default": "'editor'"
         },
-        "avatar_id": {
-          "name": "avatar_id",
+        "image_id": {
+          "name": "image_id",
           "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_remote": {
+          "name": "image_remote",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
@@ -113,11 +119,11 @@
         }
       },
       "indexes": {
-        "users_avatar_idx": {
-          "name": "users_avatar_idx",
+        "users_image_idx": {
+          "name": "users_image_idx",
           "columns": [
             {
-              "expression": "avatar_id",
+              "expression": "image_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -175,12 +181,12 @@
         }
       },
       "foreignKeys": {
-        "users_avatar_id_media_id_fk": {
-          "name": "users_avatar_id_media_id_fk",
+        "users_image_id_media_id_fk": {
+          "name": "users_image_id_media_id_fk",
           "tableFrom": "users",
           "tableTo": "media",
           "columnsFrom": [
-            "avatar_id"
+            "image_id"
           ],
           "columnsTo": [
             "id"
@@ -362,7 +368,13 @@
           "name": "company_logo_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "company_logo_remote": {
+          "name": "company_logo_remote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "updated_at": {
           "name": "updated_at",
@@ -563,7 +575,13 @@
           "name": "image_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "image_remote": {
+          "name": "image_remote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "rank": {
           "name": "rank",
@@ -894,6 +912,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "cover_image_remote": {
+          "name": "cover_image_remote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "status": {
           "name": "status",
           "type": "enum_blogs_status",
@@ -1141,12 +1165,6 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
-        },
-        "title": {
-          "name": "title",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
         },
         "youtube_link": {
           "name": "youtube_link",
@@ -1497,13 +1515,19 @@
         },
         "description": {
           "name": "description",
-          "type": "jsonb",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "image_id": {
           "name": "image_id",
           "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_remote": {
+          "name": "image_remote",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
@@ -1517,7 +1541,13 @@
           "name": "host_image_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "host_image_remote": {
+          "name": "host_image_remote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "location": {
           "name": "location",
@@ -1537,8 +1567,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "duration": {
-          "name": "duration",
+        "period": {
+          "name": "period",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
@@ -1937,6 +1967,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "image_remote": {
+          "name": "image_remote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
@@ -2053,7 +2089,13 @@
           "name": "company_logo_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "company_logo_remote": {
+          "name": "company_logo_remote",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "location": {
           "name": "location",

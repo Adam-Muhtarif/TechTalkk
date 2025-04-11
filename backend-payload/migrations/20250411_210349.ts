@@ -13,7 +13,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"full_name" varchar NOT NULL,
   	"role" "enum_users_role" DEFAULT 'editor' NOT NULL,
-  	"avatar_id" uuid,
+  	"image_id" uuid,
+  	"image_remote" varchar,
   	"is_active" boolean DEFAULT false,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -48,7 +49,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"company" varchar NOT NULL,
   	"company_link" varchar NOT NULL,
-  	"company_logo_id" uuid NOT NULL,
+  	"company_logo_id" uuid,
+  	"company_logo_remote" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -65,7 +67,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"name" varchar NOT NULL,
   	"title" varchar,
-  	"image_id" uuid NOT NULL,
+  	"image_id" uuid,
+  	"image_remote" varchar,
   	"rank" numeric NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
@@ -94,6 +97,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"content" jsonb NOT NULL,
   	"author" varchar NOT NULL,
   	"cover_image_id" uuid,
+  	"cover_image_remote" varchar,
   	"status" "enum_blogs_status" DEFAULT 'draft' NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
@@ -109,7 +113,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE IF NOT EXISTS "videos" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-  	"title" varchar NOT NULL,
   	"youtube_link" varchar NOT NULL,
   	"instructor_id" uuid NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -135,14 +138,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE IF NOT EXISTS "events" (
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar NOT NULL,
-  	"description" jsonb NOT NULL,
+  	"description" varchar NOT NULL,
   	"image_id" uuid,
+  	"image_remote" varchar,
   	"host_name" varchar NOT NULL,
-  	"host_image_id" uuid NOT NULL,
+  	"host_image_id" uuid,
+  	"host_image_remote" varchar,
   	"location" varchar NOT NULL,
   	"location_icon_id" uuid,
   	"start_time" timestamp(3) with time zone NOT NULL,
-  	"duration" varchar,
+  	"period" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -169,6 +174,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"title" varchar,
   	"bio" varchar,
   	"image_id" uuid,
+  	"image_remote" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -178,7 +184,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"title" varchar NOT NULL,
   	"company_name" varchar NOT NULL,
   	"company_link" varchar,
-  	"company_logo_id" uuid NOT NULL,
+  	"company_logo_id" uuid,
+  	"company_logo_remote" varchar,
   	"location" "enum_jobs_location" NOT NULL,
   	"job_type" "enum_jobs_job_type" NOT NULL,
   	"salary" numeric,
@@ -239,7 +246,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   DO $$ BEGIN
-   ALTER TABLE "users" ADD CONSTRAINT "users_avatar_id_media_id_fk" FOREIGN KEY ("avatar_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+   ALTER TABLE "users" ADD CONSTRAINT "users_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
   END $$;
@@ -436,7 +443,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    WHEN duplicate_object THEN null;
   END $$;
   
-  CREATE INDEX IF NOT EXISTS "users_avatar_idx" ON "users" USING btree ("avatar_id");
+  CREATE INDEX IF NOT EXISTS "users_image_idx" ON "users" USING btree ("image_id");
   CREATE INDEX IF NOT EXISTS "users_updated_at_idx" ON "users" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "users_created_at_idx" ON "users" USING btree ("created_at");
   CREATE UNIQUE INDEX IF NOT EXISTS "users_email_idx" ON "users" USING btree ("email");

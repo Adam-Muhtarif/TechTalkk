@@ -15,7 +15,6 @@ export const JobPosts: CollectionConfig = {
     delete: admins,
   },
 
-  
   fields: [
     {
       name: 'title',
@@ -39,7 +38,13 @@ export const JobPosts: CollectionConfig = {
       name: 'company_logo',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'company_logo_remote',
+      type: 'text',
+      required: false,
       admin: { position: 'sidebar' },
     },
     {
@@ -79,13 +84,13 @@ export const JobPosts: CollectionConfig = {
       validate: validateURL,
     },
     {
-      name: 'postedAt',
+      name: 'posted_at',
       type: 'date',
       admin: { position: 'sidebar' },
       defaultValue: () => new Date().toISOString(),
     },
     {
-      name: 'expiresAt',
+      name: 'expires_at',
       type: 'date',
       required: true,
       admin: { position: 'sidebar' },
