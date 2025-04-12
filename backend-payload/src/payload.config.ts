@@ -19,10 +19,11 @@ import { Instructors } from './collections/Instructors'
 import { Videos } from './collections/Videos'
 import { JobPosts } from './collections/Jobs'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const corsOrigins = process.env.CORS_ORIGINS?.split(',') || '*'
+const corsOrigins = process.env.CORS_ORIGINS?.split(',') || []
 
 export default buildConfig({
   serverURL: process.env.PAYLOAD_URL || 'http://localhost:8000',
@@ -74,7 +75,6 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
-    migrationDir: './migrations',
     idType: 'uuid',
   }),
   sharp,

@@ -226,4 +226,4 @@ export const seed = async () => {
   payload.logger.info('✅ DONE SEEDING ALL COLLECTIONS.')
 }
 
-seed()
+await seed()
