@@ -30,7 +30,7 @@ export const enum_leaderboard_socials_platform = pgEnum('enum_leaderboard_social
   'Website',
   'Facebook',
 ])
-export const enum_blog_status = pgEnum('enum_blog_status', ['draft', 'published'])
+export const enum_blogs_status = pgEnum('enum_blogs_status', ['draft', 'published'])
 export const enum_events_host_socials_platform = pgEnum('enum_events_host_socials_platform', [
   'LinkedIn',
   'GitHub',
@@ -43,12 +43,8 @@ export const enum_instructors_instructor_socials_platform = pgEnum(
   'enum_instructors_instructor_socials_platform',
   ['LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook'],
 )
-export const enum_job_posts_location = pgEnum('enum_job_posts_location', [
-  'remote',
-  'hybrid',
-  'onsite',
-])
-export const enum_job_posts_job_type = pgEnum('enum_job_posts_job_type', [
+export const enum_jobs_location = pgEnum('enum_jobs_location', ['remote', 'hybrid', 'onsite'])
+export const enum_jobs_job_type = pgEnum('enum_jobs_job_type', [
   'full-time',
   'part-time',
   'contract',
@@ -61,9 +57,10 @@ export const users = pgTable(
     id: uuid('id').defaultRandom().primaryKey(),
     fullName: varchar('full_name').notNull(),
     role: enum_users_role('role').notNull().default('editor'),
-    avatar: uuid('avatar_id').references(() => media.id, {
+    image: uuid('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
+    image_remote: varchar('image_remote'),
     isActive: boolean('is_active').default(false),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -80,11 +77,13 @@ export const users = pgTable(
     }),
     salt: varchar('salt'),
     hash: varchar('hash'),
+    _verified: boolean('_verified'),
+    _verificationToken: varchar('_verificationtoken'),
     loginAttempts: numeric('login_attempts').default('0'),
     lockUntil: timestamp('lock_until', { mode: 'string', withTimezone: true, precision: 3 }),
   },
   (columns) => ({
-    users_avatar_idx: index('users_avatar_idx').on(columns.avatar),
+    users_image_idx: index('users_image_idx').on(columns.image),
     users_updated_at_idx: index('users_updated_at_idx').on(columns.updatedAt),
     users_created_at_idx: index('users_created_at_idx').on(columns.createdAt),
     users_email_idx: uniqueIndex('users_email_idx').on(columns.email),
@@ -125,11 +124,10 @@ export const sponsors = pgTable(
     id: uuid('id').defaultRandom().primaryKey(),
     company: varchar('company').notNull(),
     company_link: varchar('company_link').notNull(),
-    company_logo: uuid('company_logo_id')
-      .notNull()
-      .references(() => media.id, {
-        onDelete: 'set null',
-      }),
+    company_logo: uuid('company_logo_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    company_logo_remote: varchar('company_logo_remote'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -170,11 +168,10 @@ export const leaderboard = pgTable(
     id: uuid('id').defaultRandom().primaryKey(),
     name: varchar('name').notNull(),
     title: varchar('title'),
-    image: uuid('image_id')
-      .notNull()
-      .references(() => media.id, {
-        onDelete: 'set null',
-      }),
+    image: uuid('image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    image_remote: varchar('image_remote'),
     rank: numeric('rank').notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
@@ -231,8 +228,8 @@ export const video_tags = pgTable(
   }),
 )
 
-export const blog = pgTable(
-  'blog',
+export const blogs = pgTable(
+  'blogs',
   {
     id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title').notNull(),
@@ -242,7 +239,8 @@ export const blog = pgTable(
     cover_image: uuid('cover_image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    status: enum_blog_status('status').notNull().default('draft'),
+    cover_image_remote: varchar('cover_image_remote'),
+    status: enum_blogs_status('status').notNull().default('draft'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -251,15 +249,15 @@ export const blog = pgTable(
       .notNull(),
   },
   (columns) => ({
-    blog_slug_idx: uniqueIndex('blog_slug_idx').on(columns.slug),
-    blog_cover_image_idx: index('blog_cover_image_idx').on(columns.cover_image),
-    blog_updated_at_idx: index('blog_updated_at_idx').on(columns.updatedAt),
-    blog_created_at_idx: index('blog_created_at_idx').on(columns.createdAt),
+    blogs_slug_idx: uniqueIndex('blogs_slug_idx').on(columns.slug),
+    blogs_cover_image_idx: index('blogs_cover_image_idx').on(columns.cover_image),
+    blogs_updated_at_idx: index('blogs_updated_at_idx').on(columns.updatedAt),
+    blogs_created_at_idx: index('blogs_created_at_idx').on(columns.createdAt),
   }),
 )
 
-export const blog_rels = pgTable(
-  'blog_rels',
+export const blogs_rels = pgTable(
+  'blogs_rels',
   {
     id: serial('id').primaryKey(),
     order: integer('order'),
@@ -268,19 +266,19 @@ export const blog_rels = pgTable(
     'blog-tagsID': uuid('blog_tags_id'),
   },
   (columns) => ({
-    order: index('blog_rels_order_idx').on(columns.order),
-    parentIdx: index('blog_rels_parent_idx').on(columns.parent),
-    pathIdx: index('blog_rels_path_idx').on(columns.path),
-    blog_rels_blog_tags_id_idx: index('blog_rels_blog_tags_id_idx').on(columns['blog-tagsID']),
+    order: index('blogs_rels_order_idx').on(columns.order),
+    parentIdx: index('blogs_rels_parent_idx').on(columns.parent),
+    pathIdx: index('blogs_rels_path_idx').on(columns.path),
+    blogs_rels_blog_tags_id_idx: index('blogs_rels_blog_tags_id_idx').on(columns['blog-tagsID']),
     parentFk: foreignKey({
       columns: [columns['parent']],
-      foreignColumns: [blog.id],
-      name: 'blog_rels_parent_fk',
+      foreignColumns: [blogs.id],
+      name: 'blogs_rels_parent_fk',
     }).onDelete('cascade'),
     'blog-tagsIdFk': foreignKey({
       columns: [columns['blog-tagsID']],
       foreignColumns: [blog_tags.id],
-      name: 'blog_rels_blog_tags_fk',
+      name: 'blogs_rels_blog_tags_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -289,7 +287,6 @@ export const videos = pgTable(
   'videos',
   {
     id: uuid('id').defaultRandom().primaryKey(),
-    title: varchar('title').notNull(),
     youtube_link: varchar('youtube_link').notNull(),
     instructor: uuid('instructor_id')
       .notNull()
@@ -365,16 +362,16 @@ export const events = pgTable(
   {
     id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title').notNull(),
-    description: jsonb('description').notNull(),
+    description: varchar('description').notNull(),
     image: uuid('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
+    image_remote: varchar('image_remote'),
     host_name: varchar('host_name').notNull(),
-    host_image: uuid('host_image_id')
-      .notNull()
-      .references(() => media.id, {
-        onDelete: 'set null',
-      }),
+    host_image: uuid('host_image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    host_image_remote: varchar('host_image_remote'),
     location: varchar('location').notNull(),
     location_icon: uuid('location_icon_id').references(() => media.id, {
       onDelete: 'set null',
@@ -384,7 +381,7 @@ export const events = pgTable(
       withTimezone: true,
       precision: 3,
     }).notNull(),
-    duration: varchar('duration'),
+    period: varchar('period'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -458,6 +455,7 @@ export const instructors = pgTable(
     image: uuid('image_id').references(() => media.id, {
       onDelete: 'set null',
     }),
+    image_remote: varchar('image_remote'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
       .defaultNow()
       .notNull(),
@@ -472,24 +470,23 @@ export const instructors = pgTable(
   }),
 )
 
-export const job_posts = pgTable(
-  'job_posts',
+export const jobs = pgTable(
+  'jobs',
   {
     id: uuid('id').defaultRandom().primaryKey(),
     title: varchar('title').notNull(),
-    company: varchar('company').notNull(),
-    company_logo: uuid('company_logo_id')
-      .notNull()
-      .references(() => media.id, {
-        onDelete: 'set null',
-      }),
-    location: enum_job_posts_location('location').notNull(),
-    job_type: enum_job_posts_job_type('job_type').notNull(),
+    company_name: varchar('company_name').notNull(),
+    company_link: varchar('company_link'),
+    company_logo: uuid('company_logo_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    company_logo_remote: varchar('company_logo_remote'),
+    location: enum_jobs_location('location').notNull(),
+    job_type: enum_jobs_job_type('job_type').notNull(),
     salary: numeric('salary'),
-    description: jsonb('description').notNull(),
     apply_link: varchar('apply_link').notNull(),
-    postedAt: timestamp('posted_at', { mode: 'string', withTimezone: true, precision: 3 }),
-    expiresAt: timestamp('expires_at', {
+    posted_at: timestamp('posted_at', { mode: 'string', withTimezone: true, precision: 3 }),
+    expires_at: timestamp('expires_at', {
       mode: 'string',
       withTimezone: true,
       precision: 3,
@@ -502,9 +499,9 @@ export const job_posts = pgTable(
       .notNull(),
   },
   (columns) => ({
-    job_posts_company_logo_idx: index('job_posts_company_logo_idx').on(columns.company_logo),
-    job_posts_updated_at_idx: index('job_posts_updated_at_idx').on(columns.updatedAt),
-    job_posts_created_at_idx: index('job_posts_created_at_idx').on(columns.createdAt),
+    jobs_company_logo_idx: index('jobs_company_logo_idx').on(columns.company_logo),
+    jobs_updated_at_idx: index('jobs_updated_at_idx').on(columns.updatedAt),
+    jobs_created_at_idx: index('jobs_created_at_idx').on(columns.createdAt),
   }),
 )
 
@@ -546,11 +543,11 @@ export const payload_locked_documents_rels = pgTable(
     leaderboardID: uuid('leaderboard_id'),
     'blog-tagsID': uuid('blog_tags_id'),
     'video-tagsID': uuid('video_tags_id'),
-    blogID: uuid('blog_id'),
+    blogsID: uuid('blogs_id'),
     videosID: uuid('videos_id'),
     eventsID: uuid('events_id'),
     instructorsID: uuid('instructors_id'),
-    'job-postsID': uuid('job_posts_id'),
+    jobsID: uuid('jobs_id'),
   },
   (columns) => ({
     order: index('payload_locked_documents_rels_order_idx').on(columns.order),
@@ -574,9 +571,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_video_tags_id_idx: index(
       'payload_locked_documents_rels_video_tags_id_idx',
     ).on(columns['video-tagsID']),
-    payload_locked_documents_rels_blog_id_idx: index(
-      'payload_locked_documents_rels_blog_id_idx',
-    ).on(columns.blogID),
+    payload_locked_documents_rels_blogs_id_idx: index(
+      'payload_locked_documents_rels_blogs_id_idx',
+    ).on(columns.blogsID),
     payload_locked_documents_rels_videos_id_idx: index(
       'payload_locked_documents_rels_videos_id_idx',
     ).on(columns.videosID),
@@ -586,9 +583,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_instructors_id_idx: index(
       'payload_locked_documents_rels_instructors_id_idx',
     ).on(columns.instructorsID),
-    payload_locked_documents_rels_job_posts_id_idx: index(
-      'payload_locked_documents_rels_job_posts_id_idx',
-    ).on(columns['job-postsID']),
+    payload_locked_documents_rels_jobs_id_idx: index(
+      'payload_locked_documents_rels_jobs_id_idx',
+    ).on(columns.jobsID),
     parentFk: foreignKey({
       columns: [columns['parent']],
       foreignColumns: [payload_locked_documents.id],
@@ -624,10 +621,10 @@ export const payload_locked_documents_rels = pgTable(
       foreignColumns: [video_tags.id],
       name: 'payload_locked_documents_rels_video_tags_fk',
     }).onDelete('cascade'),
-    blogIdFk: foreignKey({
-      columns: [columns['blogID']],
-      foreignColumns: [blog.id],
-      name: 'payload_locked_documents_rels_blog_fk',
+    blogsIdFk: foreignKey({
+      columns: [columns['blogsID']],
+      foreignColumns: [blogs.id],
+      name: 'payload_locked_documents_rels_blogs_fk',
     }).onDelete('cascade'),
     videosIdFk: foreignKey({
       columns: [columns['videosID']],
@@ -644,10 +641,10 @@ export const payload_locked_documents_rels = pgTable(
       foreignColumns: [instructors.id],
       name: 'payload_locked_documents_rels_instructors_fk',
     }).onDelete('cascade'),
-    'job-postsIdFk': foreignKey({
-      columns: [columns['job-postsID']],
-      foreignColumns: [job_posts.id],
-      name: 'payload_locked_documents_rels_job_posts_fk',
+    jobsIdFk: foreignKey({
+      columns: [columns['jobsID']],
+      foreignColumns: [jobs.id],
+      name: 'payload_locked_documents_rels_jobs_fk',
     }).onDelete('cascade'),
   }),
 )
@@ -729,10 +726,10 @@ export const payload_migrations = pgTable(
 )
 
 export const relations_users = relations(users, ({ one }) => ({
-  avatar: one(media, {
-    fields: [users.avatar],
+  image: one(media, {
+    fields: [users.image],
     references: [media.id],
-    relationName: 'avatar',
+    relationName: 'image',
   }),
 }))
 export const relations_media = relations(media, () => ({}))
@@ -762,25 +759,25 @@ export const relations_leaderboard = relations(leaderboard, ({ one, many }) => (
 }))
 export const relations_blog_tags = relations(blog_tags, () => ({}))
 export const relations_video_tags = relations(video_tags, () => ({}))
-export const relations_blog_rels = relations(blog_rels, ({ one }) => ({
-  parent: one(blog, {
-    fields: [blog_rels.parent],
-    references: [blog.id],
+export const relations_blogs_rels = relations(blogs_rels, ({ one }) => ({
+  parent: one(blogs, {
+    fields: [blogs_rels.parent],
+    references: [blogs.id],
     relationName: '_rels',
   }),
   'blog-tagsID': one(blog_tags, {
-    fields: [blog_rels['blog-tagsID']],
+    fields: [blogs_rels['blog-tagsID']],
     references: [blog_tags.id],
     relationName: 'blog-tags',
   }),
 }))
-export const relations_blog = relations(blog, ({ one, many }) => ({
+export const relations_blogs = relations(blogs, ({ one, many }) => ({
   cover_image: one(media, {
-    fields: [blog.cover_image],
+    fields: [blogs.cover_image],
     references: [media.id],
     relationName: 'cover_image',
   }),
-  _rels: many(blog_rels, {
+  _rels: many(blogs_rels, {
     relationName: '_rels',
   }),
 }))
@@ -854,7 +851,7 @@ export const relations_instructors_instructor_socials = relations(
     _parentID: one(instructors, {
       fields: [instructors_instructor_socials._parentID],
       references: [instructors.id],
-      relationName: 'instructor-socials',
+      relationName: 'instructor_socials',
     }),
   }),
 )
@@ -864,13 +861,13 @@ export const relations_instructors = relations(instructors, ({ one, many }) => (
     references: [media.id],
     relationName: 'image',
   }),
-  'instructor-socials': many(instructors_instructor_socials, {
-    relationName: 'instructor-socials',
+  instructor_socials: many(instructors_instructor_socials, {
+    relationName: 'instructor_socials',
   }),
 }))
-export const relations_job_posts = relations(job_posts, ({ one }) => ({
+export const relations_jobs = relations(jobs, ({ one }) => ({
   company_logo: one(media, {
-    fields: [job_posts.company_logo],
+    fields: [jobs.company_logo],
     references: [media.id],
     relationName: 'company_logo',
   }),
@@ -913,10 +910,10 @@ export const relations_payload_locked_documents_rels = relations(
       references: [video_tags.id],
       relationName: 'video-tags',
     }),
-    blogID: one(blog, {
-      fields: [payload_locked_documents_rels.blogID],
-      references: [blog.id],
-      relationName: 'blog',
+    blogsID: one(blogs, {
+      fields: [payload_locked_documents_rels.blogsID],
+      references: [blogs.id],
+      relationName: 'blogs',
     }),
     videosID: one(videos, {
       fields: [payload_locked_documents_rels.videosID],
@@ -933,10 +930,10 @@ export const relations_payload_locked_documents_rels = relations(
       references: [instructors.id],
       relationName: 'instructors',
     }),
-    'job-postsID': one(job_posts, {
-      fields: [payload_locked_documents_rels['job-postsID']],
-      references: [job_posts.id],
-      relationName: 'job-posts',
+    jobsID: one(jobs, {
+      fields: [payload_locked_documents_rels.jobsID],
+      references: [jobs.id],
+      relationName: 'jobs',
     }),
   }),
 )
@@ -973,11 +970,11 @@ export const relations_payload_migrations = relations(payload_migrations, () => 
 type DatabaseSchema = {
   enum_users_role: typeof enum_users_role
   enum_leaderboard_socials_platform: typeof enum_leaderboard_socials_platform
-  enum_blog_status: typeof enum_blog_status
+  enum_blogs_status: typeof enum_blogs_status
   enum_events_host_socials_platform: typeof enum_events_host_socials_platform
   enum_instructors_instructor_socials_platform: typeof enum_instructors_instructor_socials_platform
-  enum_job_posts_location: typeof enum_job_posts_location
-  enum_job_posts_job_type: typeof enum_job_posts_job_type
+  enum_jobs_location: typeof enum_jobs_location
+  enum_jobs_job_type: typeof enum_jobs_job_type
   users: typeof users
   media: typeof media
   sponsors: typeof sponsors
@@ -985,8 +982,8 @@ type DatabaseSchema = {
   leaderboard: typeof leaderboard
   blog_tags: typeof blog_tags
   video_tags: typeof video_tags
-  blog: typeof blog
-  blog_rels: typeof blog_rels
+  blogs: typeof blogs
+  blogs_rels: typeof blogs_rels
   videos: typeof videos
   videos_rels: typeof videos_rels
   events_host_socials: typeof events_host_socials
@@ -994,7 +991,7 @@ type DatabaseSchema = {
   events_rels: typeof events_rels
   instructors_instructor_socials: typeof instructors_instructor_socials
   instructors: typeof instructors
-  job_posts: typeof job_posts
+  jobs: typeof jobs
   payload_locked_documents: typeof payload_locked_documents
   payload_locked_documents_rels: typeof payload_locked_documents_rels
   payload_preferences: typeof payload_preferences
@@ -1007,8 +1004,8 @@ type DatabaseSchema = {
   relations_leaderboard: typeof relations_leaderboard
   relations_blog_tags: typeof relations_blog_tags
   relations_video_tags: typeof relations_video_tags
-  relations_blog_rels: typeof relations_blog_rels
-  relations_blog: typeof relations_blog
+  relations_blogs_rels: typeof relations_blogs_rels
+  relations_blogs: typeof relations_blogs
   relations_videos_rels: typeof relations_videos_rels
   relations_videos: typeof relations_videos
   relations_events_host_socials: typeof relations_events_host_socials
@@ -1016,7 +1013,7 @@ type DatabaseSchema = {
   relations_events: typeof relations_events
   relations_instructors_instructor_socials: typeof relations_instructors_instructor_socials
   relations_instructors: typeof relations_instructors
-  relations_job_posts: typeof relations_job_posts
+  relations_jobs: typeof relations_jobs
   relations_payload_locked_documents_rels: typeof relations_payload_locked_documents_rels
   relations_payload_locked_documents: typeof relations_payload_locked_documents
   relations_payload_preferences_rels: typeof relations_payload_preferences_rels
