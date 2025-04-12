@@ -17,6 +17,7 @@ const Pagination = ({ slug, limit }: PaginationProps) => {
   const [hasNextPage, setHasNextPage] = useState<boolean>(true)
   const [hasPrevPage, setHasPrevPage] = useState<boolean>(false)
   const [tagId, setTagId] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(true)
 
   const fetchVideos = useCallback(
     async (overridePage = currentPage, newTagId = tagId) => {
@@ -31,6 +32,7 @@ const Pagination = ({ slug, limit }: PaginationProps) => {
         setItems(data.docs)
         setHasNextPage(data.hasNextPage)
         setHasPrevPage(data.hasPrevPage)
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching videos:', error)
       }
@@ -69,26 +71,32 @@ const Pagination = ({ slug, limit }: PaginationProps) => {
         }}
       />
 
-      <section
-        aria-label={`${slug} items`}
-        className="w-full mb-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
-      >
-        {slug === 'videos' &&
-          items.map((course: Course, i: number) => (
-            <CourseCard
-              key={i}
-              youtubeLink={course.youtube_link}
-              tags={course.tags}
-              instructorName={course.instructor.name}
-              instructorImage={
-                course.instructor?.image_remote ||
-                course.instructor?.image ||
-                '/images/member-test.png'
-              }
-              instructorSocials={course.instructor.instructor_socials}
-            />
-          ))}
-      </section>
+      {loading ? (
+        <div className="flex items-center justify-center w-full h-full py-20">
+          <div className="w-12 h-12 border-4 border-t-transparent border-[#4C0BF7] rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <section
+          aria-label={`${slug} items`}
+          className="w-full mb-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
+        >
+          {slug === 'videos' &&
+            items.map((course: Course, i: number) => (
+              <CourseCard
+                key={i}
+                youtubeLink={course.youtube_link}
+                tags={course.tags}
+                instructorName={course.instructor.name}
+                instructorImage={
+                  course.instructor?.image_remote ||
+                  course.instructor?.image ||
+                  '/images/member-test.png'
+                }
+                instructorSocials={course.instructor.instructor_socials}
+              />
+            ))}
+        </section>
+      )}
 
       {/* Pagination controls */}
       <div className="flex justify-center items-center gap-4 mb-10">
