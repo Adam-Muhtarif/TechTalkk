@@ -1,7 +1,7 @@
 import React from 'react'
-import HeroPage from '@/components/ui/about-us/hero-page'
-import ContactCards from '@/components/ui/contacts/contactCards'
-import ContactForm from '@/components/ui/contacts/contact-form'
+import HeroPage from '@/components/about/hero-page'
+import ContactCards from '@/components/contacts/contactCards'
+import ContactForm from '@/components/contacts/contact-form'
 
 // this is the contact page
 // this is a server component

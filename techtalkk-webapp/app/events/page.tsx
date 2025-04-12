@@ -1,8 +1,8 @@
-import HeroPage from '@/components/ui/about-us/hero-page'
-import JoinUs from '@/components/ui/about-us/join-us'
+import HeroPage from '@/components/about/hero-page'
+import JoinUs from '@/components/about/join-us'
 import { Button } from '@/components/ui/button'
-import EventCard from '@/components/ui/events/event-card'
-import PaginationComponent from '@/components/ui/events/pagination'
+import EventCard from '@/components/events/event-card'
+import PaginationComponent from '@/components/events/pagination'
 import React from 'react'
 
 export default function page() {
@@ -19,7 +19,7 @@ export default function page() {
         {/* conatiner */}
         <div className="flex gap-3 items-center justify-start">
           {/* button upcoming*/}
-          <Button variant="upcoming">Upcoming</Button>
+          <Button variant="secondary">Upcoming</Button>
 
           {/* button Nearby*/}
           <Button variant="ghost" className="text-[#686868] bg-[#F2EEFF]">
