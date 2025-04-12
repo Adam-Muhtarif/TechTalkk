@@ -20,8 +20,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 type CourseCardProps = {
-  youtubeLink: string
   tags: Tag[]
+  youtubeLink: string
   instructorName: string
   instructorImage: string
   instructorSocials: InstructorSocials[]
