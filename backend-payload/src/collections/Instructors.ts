@@ -1,11 +1,20 @@
 import type { CollectionConfig } from 'payload'
 import { validateURL } from './utils'
+import adminsAndEditors from './access/adminsAndEditors'
+import { admins } from './access/admins'
 
 export const Instructors: CollectionConfig = {
   slug: 'instructors',
   labels: { singular: 'Instructor', plural: 'Instructors'},
   admin: {
     useAsTitle: 'name',
+  },
+
+  access: {
+    read: () => true,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
   },
 
   fields: [
@@ -29,10 +38,14 @@ export const Instructors: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: false,
-      localized: true,
     },
     {
-      name: 'instructor-socials',
+      name: 'image_remote',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'instructor_socials',
       type: 'array',
       fields: [
         {

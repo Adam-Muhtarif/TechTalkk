@@ -1,15 +1,18 @@
 import { CollectionConfig } from 'payload'
 import { admins } from './access/admins'
 import { validateURL } from './utils'
+import adminsAndEditors from './access/adminsAndEditors'
 
 export const JobPosts: CollectionConfig = {
-  slug: 'job-posts',
+  slug: 'jobs',
   labels: { singular: 'Job Post', plural: 'Job Posts' },
   admin: { useAsTitle: 'title' },
+
   access: {
-    read: () => true, // Publicly readable
-    create: admins,
-    update: admins,
+    read: () => true,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
   },
 
   fields: [
@@ -20,16 +23,28 @@ export const JobPosts: CollectionConfig = {
       admin: { position: 'sidebar' },
     },
     {
-      name: 'company',
+      name: 'company_name',
       type: 'text',
       required: true,
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'company_link',
+      type: 'text',
+      required: false,
       admin: { position: 'sidebar' },
     },
     {
       name: 'company_logo',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'company_logo_remote',
+      type: 'text',
+      required: false,
       admin: { position: 'sidebar' },
     },
     {
@@ -57,14 +72,9 @@ export const JobPosts: CollectionConfig = {
     },
     {
       name: 'salary',
-      type: 'text',
+      type: 'number',
       required: false,
       admin: { position: 'sidebar' },
-    },
-    {
-      name: 'description',
-      type: 'richText',
-      required: true,
     },
     {
       name: 'apply_link',
@@ -74,13 +84,13 @@ export const JobPosts: CollectionConfig = {
       validate: validateURL,
     },
     {
-      name: 'postedAt',
+      name: 'posted_at',
       type: 'date',
       admin: { position: 'sidebar' },
       defaultValue: () => new Date().toISOString(),
     },
     {
-      name: 'expiresAt',
+      name: 'expires_at',
       type: 'date',
       required: true,
       admin: { position: 'sidebar' },

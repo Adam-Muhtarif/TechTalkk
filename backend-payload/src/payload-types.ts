@@ -72,11 +72,11 @@ export interface Config {
     leaderboard: Leaderboard;
     'blog-tags': BlogTag;
     'video-tags': VideoTag;
-    blog: Blog;
+    blogs: Blog;
     videos: Video;
     events: Event;
     instructors: Instructor;
-    'job-posts': JobPost;
+    jobs: Job;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,11 +89,11 @@ export interface Config {
     leaderboard: LeaderboardSelect<false> | LeaderboardSelect<true>;
     'blog-tags': BlogTagsSelect<false> | BlogTagsSelect<true>;
     'video-tags': VideoTagsSelect<false> | VideoTagsSelect<true>;
-    blog: BlogSelect<false> | BlogSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     instructors: InstructorsSelect<false> | InstructorsSelect<true>;
-    'job-posts': JobPostsSelect<false> | JobPostsSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -138,7 +138,8 @@ export interface User {
   id: string;
   fullName: string;
   role: 'admin' | 'editor';
-  avatar?: (string | null) | Media;
+  image?: (string | null) | Media;
+  image_remote?: string | null;
   isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -147,6 +148,8 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
@@ -178,7 +181,8 @@ export interface Sponsor {
   id: string;
   company: string;
   company_link: string;
-  company_logo: string | Media;
+  company_logo?: (string | null) | Media;
+  company_logo_remote?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -190,7 +194,8 @@ export interface Leaderboard {
   id: string;
   name: string;
   title?: string | null;
-  image: string | Media;
+  image?: (string | null) | Media;
+  image_remote?: string | null;
   socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Facebook') | null;
@@ -226,7 +231,7 @@ export interface VideoTag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog".
+ * via the `definition` "blogs".
  */
 export interface Blog {
   id: string;
@@ -250,6 +255,7 @@ export interface Blog {
   author: string;
   tags: (string | BlogTag)[];
   cover_image?: (string | null) | Media;
+  cover_image_remote?: string | null;
   status: 'draft' | 'published';
   updatedAt: string;
   createdAt: string;
@@ -260,10 +266,9 @@ export interface Blog {
  */
 export interface Video {
   id: string;
-  title: string;
   youtube_link: string;
   instructor: string | Instructor;
-  tags?: (string | VideoTag)[] | null;
+  tags: (string | VideoTag)[];
   updatedAt: string;
   createdAt: string;
 }
@@ -277,7 +282,8 @@ export interface Instructor {
   title?: string | null;
   bio?: string | null;
   image?: (string | null) | Media;
-  'instructor-socials'?:
+  image_remote?: string | null;
+  instructor_socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
         url: string;
@@ -294,24 +300,12 @@ export interface Instructor {
 export interface Event {
   id: string;
   title: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  description: string;
   image?: (string | null) | Media;
+  image_remote?: string | null;
   host_name: string;
-  host_image: string | Media;
+  host_image?: (string | null) | Media;
+  host_image_remote?: string | null;
   host_socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
@@ -323,40 +317,27 @@ export interface Event {
   location_icon?: (string | null) | Media;
   sponsors?: (string | Sponsor)[] | null;
   start_time: string;
-  duration?: string | null;
+  period?: string | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-posts".
+ * via the `definition` "jobs".
  */
-export interface JobPost {
+export interface Job {
   id: string;
   title: string;
-  company: string;
-  company_logo: string | Media;
+  company_name: string;
+  company_link?: string | null;
+  company_logo?: (string | null) | Media;
+  company_logo_remote?: string | null;
   location: 'remote' | 'hybrid' | 'onsite';
   job_type: 'full-time' | 'part-time' | 'contract' | 'internship';
-  salary?: string | null;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  salary?: number | null;
   apply_link: string;
-  postedAt?: string | null;
-  expiresAt: string;
+  posted_at?: string | null;
+  expires_at: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -392,7 +373,7 @@ export interface PayloadLockedDocument {
         value: string | VideoTag;
       } | null)
     | ({
-        relationTo: 'blog';
+        relationTo: 'blogs';
         value: string | Blog;
       } | null)
     | ({
@@ -408,8 +389,8 @@ export interface PayloadLockedDocument {
         value: string | Instructor;
       } | null)
     | ({
-        relationTo: 'job-posts';
-        value: string | JobPost;
+        relationTo: 'jobs';
+        value: string | Job;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -460,7 +441,8 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   fullName?: T;
   role?: T;
-  avatar?: T;
+  image?: T;
+  image_remote?: T;
   isActive?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -469,6 +451,8 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  _verified?: T;
+  _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
 }
@@ -498,6 +482,7 @@ export interface SponsorsSelect<T extends boolean = true> {
   company?: T;
   company_link?: T;
   company_logo?: T;
+  company_logo_remote?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -509,6 +494,7 @@ export interface LeaderboardSelect<T extends boolean = true> {
   name?: T;
   title?: T;
   image?: T;
+  image_remote?: T;
   socials?:
     | T
     | {
@@ -542,15 +528,16 @@ export interface VideoTagsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog_select".
+ * via the `definition` "blogs_select".
  */
-export interface BlogSelect<T extends boolean = true> {
+export interface BlogsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   content?: T;
   author?: T;
   tags?: T;
   cover_image?: T;
+  cover_image_remote?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -560,7 +547,6 @@ export interface BlogSelect<T extends boolean = true> {
  * via the `definition` "videos_select".
  */
 export interface VideosSelect<T extends boolean = true> {
-  title?: T;
   youtube_link?: T;
   instructor?: T;
   tags?: T;
@@ -575,8 +561,10 @@ export interface EventsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
+  image_remote?: T;
   host_name?: T;
   host_image?: T;
+  host_image_remote?: T;
   host_socials?:
     | T
     | {
@@ -588,7 +576,7 @@ export interface EventsSelect<T extends boolean = true> {
   location_icon?: T;
   sponsors?: T;
   start_time?: T;
-  duration?: T;
+  period?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -601,7 +589,8 @@ export interface InstructorsSelect<T extends boolean = true> {
   title?: T;
   bio?: T;
   image?: T;
-  'instructor-socials'?:
+  image_remote?: T;
+  instructor_socials?:
     | T
     | {
         platform?: T;
@@ -613,19 +602,20 @@ export interface InstructorsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-posts_select".
+ * via the `definition` "jobs_select".
  */
-export interface JobPostsSelect<T extends boolean = true> {
+export interface JobsSelect<T extends boolean = true> {
   title?: T;
-  company?: T;
+  company_name?: T;
+  company_link?: T;
   company_logo?: T;
+  company_logo_remote?: T;
   location?: T;
   job_type?: T;
   salary?: T;
-  description?: T;
   apply_link?: T;
-  postedAt?: T;
-  expiresAt?: T;
+  posted_at?: T;
+  expires_at?: T;
   updatedAt?: T;
   createdAt?: T;
 }

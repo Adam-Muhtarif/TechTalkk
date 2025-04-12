@@ -1,12 +1,22 @@
 import { CollectionConfig } from 'payload'
 import { beforeChangeHook } from './hooks'
+import adminsAndEditors from './access/adminsAndEditors'
+import { admins } from './access/admins'
 
 export const Blogs: CollectionConfig = {
-  slug: 'blog',
+  slug: 'blogs',
   labels: { singular: 'Blog', plural: 'Blogs' },
   admin: {
     useAsTitle: 'title',
   },
+
+  access: {
+    read: () => true,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
+    delete: admins,
+  },
+  
 
   fields: [
     {
@@ -54,7 +64,14 @@ export const Blogs: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: false,
-      localized: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'cover_image_remote',
+      type: 'text',
+      required: false,
       admin: {
         position: 'sidebar',
       },

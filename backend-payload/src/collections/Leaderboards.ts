@@ -1,13 +1,21 @@
 import type { CollectionConfig } from 'payload'
 import { validateURL } from './utils'
+import { admins } from './access/admins'
 
-export const Leaderboards: CollectionConfig = {
+export const Leaderboard: CollectionConfig = {
   slug: 'leaderboard',
   labels: { singular: 'Leaderboard', plural: 'Leaderboards' },
   admin: {
     useAsTitle: 'name',
   },
 
+
+  access: {
+    read: () => true,
+    create: admins,
+    update: admins,
+    delete: admins,
+  },
   fields: [
     {
       name: 'name',
@@ -23,8 +31,12 @@ export const Leaderboards: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-      required: true,
-      localized: true,
+      required: false,
+    },
+    {
+      name: 'image_remote',
+      type: 'text',
+      required: false,
     },
     {
       name: 'socials',
