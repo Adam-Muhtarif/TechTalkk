@@ -3,7 +3,7 @@
 import { Button } from '../ui/button'
 import { Video, Tag } from '@/types/videos'
 import { DataLoading } from './loadings'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import FilterSection from '../videos/filterSection'
