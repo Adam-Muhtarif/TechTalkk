@@ -1,15 +1,21 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { InstructorSocials, Tag } from '@/app/courses/page'
-import { extractYouTubeVideoID, formatDuration } from '@/lib/utils'
+import { InstructorSocials, Tag } from '@/types/videos'
+import { AvatarLoading, CardLoading } from '../shared/loadings'
+import {
+  extractYouTubeVideoID,
+  formatVideoDuration,
+  formatVideoLikes,
+  formatVideoViews,
+} from '@/lib/utils'
 import {
   EyeIcon,
   BookIcon,
   GlobeIcon,
   TimerIcon,
   ThumbsUpIcon,
-  FacebookIcon,
+  FacebookIcon, // Brand icons are deprecated in lucide-react use another package
   GithubIcon,
   LinkedinIcon,
   TwitterIcon,
@@ -25,6 +31,28 @@ type CourseCardProps = {
   instructorName: string
   instructorImage: string
   instructorSocials: InstructorSocials[]
+}
+
+type VideoData = {
+  items: {
+    snippet: {
+      thumbnails: {
+        medium: {
+          url: string
+        }
+      }
+      title: string
+      description: string
+    }
+    contentDetails: {
+      duration: string
+      itemCount: string
+    }
+    statistics: {
+      likeCount: string
+      viewCount: string
+    }
+  }[]
 }
 
 function getPlatformIcon(platform: string) {
@@ -46,120 +74,117 @@ function getPlatformIcon(platform: string) {
   }
 }
 
-export default function CourseCard(props: CourseCardProps) {
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState({
-    items: [
-      {
-        snippet: { thumbnails: { medium: { url: '' } }, title: '', description: '' },
-        contentDetails: { duration: '', itemCount: '' },
-        statistics: { likeCount: '', viewCount: '' },
-      },
-    ],
-  })
+export default function CourseCard({
+  tags,
+  youtubeLink,
+  instructorName,
+  instructorImage,
+  instructorSocials,
+}: CourseCardProps) {
+  const [data, setData] = useState<VideoData | null>(null)
 
   useEffect(() => {
     try {
       const fetchVideoFromYoutube = async () => {
-        const videoId = extractYouTubeVideoID(props.youtubeLink)
+        const videoId = extractYouTubeVideoID(youtubeLink)
         const res = await fetch(
           `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`,
           {
             cache: 'no-store',
           },
         )
-        const jsonData = await res.json()
-        setData(jsonData)
-        setLoading(false)
+        setData(await res.json())
       }
 
       fetchVideoFromYoutube()
     } catch (error) {
       console.error('Error fetching video data from youtube:', error)
     }
-  }, [props.youtubeLink])
+  }, [youtubeLink])
 
   return (
     <div className="w-full bg-gray-100 py-5 px-3 rounded-2xl flex flex-col items-center justify-center">
-      {/* Image */}
-      <Link href={props.youtubeLink} target="_blank" className="w-full">
-        {!loading ? (
+      {/* Thumbnail */}
+      <Link href={youtubeLink} target="_blank" className="w-full">
+        {!data ? (
+          <CardLoading />
+        ) : (
           <Image
             src={data.items[0].snippet.thumbnails.medium.url}
             alt={data.items[0].snippet.title}
             width={400}
             height={100}
-            loading="lazy"
+            priority
             className="rounded"
           />
-        ) : (
-          <div className="w-full h-50 bg-gray-300 animate-pulse rounded"></div>
         )}
       </Link>
 
       {/* Tags */}
       <div className="self-start mt-4 flex flex-wrap gap-2">
-        {props.tags.map((tag) => (
+        {tags.map((tag) => (
           <p key={tag.id} className="uppercase text-xs font-bold text-[#4C0BF7]">
             #{tag.slug}
           </p>
         ))}
       </div>
 
-      {/* Title Desc */}
+      {/* Title & Desc */}
       <div className="w-full my-5">
-        <Link href={props.youtubeLink} target="_blank">
+        <Link href={youtubeLink} target="_blank">
           <h3
             className="font-bold text-black uppercase w-fit h-12 hover:underline line-clamp-2"
-            title={data.items[0].snippet.title}
+            title={data?.items[0].snippet.title}
           >
-            {data.items[0].snippet.title}
+            {data?.items[0].snippet.title}
           </h3>
         </Link>
         <p className="mt-1 text-gray-500 text-sm line-clamp-2">
-          {data.items[0].snippet.description}
+          {data?.items[0].snippet.description}
         </p>
       </div>
 
       {/* Ratings */}
       <div className="flex items-center justify-center gap-8 text-sm font-bold">
         <span className="flex items-center justify-center gap-1">
-          <ThumbsUpIcon size={15} /> {data.items[0].statistics.likeCount}
+          <ThumbsUpIcon size={15} /> {formatVideoLikes(data?.items[0].statistics.likeCount || 0)}
         </span>
         <span className="flex items-center justify-center gap-1">
-          <TimerIcon size={15} /> {formatDuration(data.items[0].contentDetails.duration)}
+          <TimerIcon size={15} />{' '}
+          {formatVideoDuration(data?.items[0].contentDetails.duration || '')}
         </span>
         <span className="flex items-center justify-center gap-1">
-          <EyeIcon size={15} /> {data.items[0].statistics.viewCount}
+          <EyeIcon size={15} /> {formatVideoViews(data?.items[0].statistics.viewCount || 0)}
         </span>
-        {props.youtubeLink.includes('playlist') ?? (
+        {youtubeLink.includes('playlist') ?? (
           <span className="flex items-center justify-center gap-1">
-            <BookIcon size={15} /> {data.items[0].contentDetails.itemCount}
+            <BookIcon size={15} /> {data?.items[0].contentDetails.itemCount}
           </span>
         )}
       </div>
 
+      {/* Divider */}
       <div className="w-full border-1 border-gray-300 my-4"></div>
 
       {/* Instructor */}
       <div className="flex gap-3 items-center self-start mx-5">
-        {!loading ? (
+        {instructorImage ? (
           <Image
-            src={props.instructorImage}
-            alt=""
+            src={instructorImage}
+            alt={instructorName}
             width={60}
             height={100}
             loading="lazy"
             className="w-15 h-15 rounded-full"
           />
         ) : (
-          <div className="w-15 h-15 bg-gray-300 animate-pulse rounded-full"></div>
+          <AvatarLoading />
         )}
         <div>
-          <h4 className="font-bold">{props.instructorName}</h4>
+          <h4 className="font-bold">{instructorName}</h4>
           <div className="flex items-center gap-2">
-            {props.instructorSocials.map((social) => (
-              <Link key={social.id} href={social.url} target="_blank" title={social.url}>
+            {instructorSocials.map((social) => (
+              <Link key={social.id} href={social.url} target="_blank" title={social.platform}>
                 <span className="text-sm text-gray-500">{getPlatformIcon(social.platform)}</span>
               </Link>
             ))}
