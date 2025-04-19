@@ -1,104 +1,101 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { Course } from '@/app/courses/page'
 import { Button } from '../ui/button'
-import CourseCard from '../courses/courseCard'
-import FilterSection from '../courses/filterSection'
+import { Video, Tag } from '@/types/videos'
+import { DataLoading } from './loadings'
+import { useCallback, useMemo } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+
+import FilterSection from '../videos/filterSection'
+import VideoCard from '../videos/videoCard'
 
 type PaginationProps = {
-  slug: string
-  limit: number
+  slug: 'videos' | 'blogs'
+  page: number
+  where: string
+  tags?: Tag[]
+  data: Video[]
+  hasNextPage: boolean
+  hasPrevPage: boolean
 }
 
-const Pagination = ({ slug, limit }: PaginationProps) => {
-  const [items, setItems] = useState<Course[]>([])
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [hasNextPage, setHasNextPage] = useState<boolean>(true)
-  const [hasPrevPage, setHasPrevPage] = useState<boolean>(false)
-  const [tagId, setTagId] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(true)
+const Pagination = ({
+  slug,
+  page,
+  where,
+  data,
+  tags,
+  hasNextPage,
+  hasPrevPage,
+}: PaginationProps) => {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-  const fetchVideos = useCallback(
-    async (overridePage = currentPage, newTagId = tagId) => {
-      try {
-        const url = newTagId
-          ? `${process.env.NEXT_PUBLIC_SERVER_URL}/api/${slug}?page=${overridePage}&limit=${limit}&where[tags][in]=${newTagId}`
-          : `${process.env.NEXT_PUBLIC_SERVER_URL}/api/${slug}?page=${overridePage}&limit=${limit}`
+  const createQueryString = useCallback(
+    (newPage: number = page, selectedTagId: string = where) => {
+      const params = new URLSearchParams(searchParams)
 
-        const res = await fetch(url, { cache: 'no-store' })
-        const data = await res.json()
+      params.set('page', newPage.toString())
 
-        setItems(data.docs)
-        setHasNextPage(data.hasNextPage)
-        setHasPrevPage(data.hasPrevPage)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching videos:', error)
+      if (selectedTagId) {
+        params.set('where[tags][in]', selectedTagId)
+      } else {
+        params.delete('where[tags][in]')
       }
-    },
-    [slug, currentPage, limit, tagId],
-  )
 
-  useEffect(() => {
-    fetchVideos()
-  }, [fetchVideos])
+      router.push(`${pathname}?${params.toString()}`)
+    },
+    [page, where, searchParams, router, pathname],
+  )
 
   const goToNextPage = () => {
     if (hasNextPage) {
-      const next = currentPage + 1
-      setCurrentPage(next)
-      fetchVideos(next)
+      createQueryString(page + 1)
     }
   }
 
   const goToPrevPage = () => {
-    if (hasPrevPage && currentPage > 1) {
-      const prev = currentPage - 1
-      setCurrentPage(prev)
-      fetchVideos(prev)
+    if (hasPrevPage && page > 1) {
+      createQueryString(page - 1)
     }
   }
 
   return (
     <div>
-      <FilterSection
-        slug={slug}
-        fetchVideos={(selectedTagId: string) => {
-          setTagId(selectedTagId)
-          setCurrentPage(1)
-          fetchVideos(1, selectedTagId)
-        }}
-      />
+      {/* Filter */}
+      {/* Todo needs to be dynamic */}
+      {slug === 'videos' || slug === 'blogs' ? (
+        <FilterSection tags={tags || []} currentPage={page} createQueryString={createQueryString} />
+      ) : null}
 
-      {loading ? (
-        <div className="flex items-center justify-center w-full h-full py-20">
-          <div className="w-12 h-12 border-4 border-t-transparent border-[#4C0BF7] rounded-full animate-spin"></div>
-        </div>
+      {/* List data | cards */}
+      {!data.length ? (
+        <DataLoading />
       ) : (
         <section
+          aria-live="polite"
           aria-label={`${slug} items`}
           className="w-full mb-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
         >
           {slug === 'videos' &&
-            items.map((course: Course, i: number) => (
-              <CourseCard
-                key={i}
-                youtubeLink={course.youtube_link}
-                tags={course.tags}
-                instructorName={course.instructor.name}
+            data.map((vidoeVideo: Video) => (
+              <VideoCard
+                key={vidoeVideo.id}
+                youtubeLink={vidoeVideo.youtube_link}
+                tags={vidoeVideo.tags}
+                instructorName={vidoeVideo.instructor.name}
                 instructorImage={
-                  course.instructor?.image_remote ||
-                  course.instructor?.image ||
-                  '/images/member-test.png'
+                  vidoeVideo.instructor?.image_remote ||
+                  vidoeVideo.instructor?.image ||
+                  '/images/member-test.png' // Needs a proper default image
                 }
-                instructorSocials={course.instructor.instructor_socials}
+                instructorSocials={vidoeVideo.instructor.instructor_socials}
               />
             ))}
         </section>
       )}
 
-      {/* Pagination controls */}
       <div className="flex justify-center items-center gap-4 mb-10">
         <Button
           disabled={!hasPrevPage}
@@ -107,7 +104,7 @@ const Pagination = ({ slug, limit }: PaginationProps) => {
         >
           ← Prev
         </Button>
-        <span className="text-xl font-semibold">page {currentPage}</span>
+        <span className="text-xl font-semibold">page {page}</span>
         <Button
           disabled={!hasNextPage}
           className="text-lg px-6 py-3 bg-[#4C0BF7]"
