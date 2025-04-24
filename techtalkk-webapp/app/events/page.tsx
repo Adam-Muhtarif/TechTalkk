@@ -3,8 +3,11 @@ import EventCard from '@/components/events/event-card'
 import PaginationComponent from '@/components/events/pagination'
 import LandingSection from '@/components/shared/landingSection'
 import { Button } from '@/components/ui/button'
+import axios from "axios"
 
-export default function page() {
+export default async function page() {
+  const events = await axios.get("http://localhost:5000/api/events")
+  console.log(events.data)
   return (
     <div className="overflow-x-hidden font-geist-sans">
       {/* <HeroPage
