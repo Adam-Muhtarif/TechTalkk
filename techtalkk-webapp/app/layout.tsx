@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import {
   Geist, Geist_Mono, Poppins,
-  Archivo
+  Archivo, Inter
 } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/shared/footer'
@@ -25,6 +25,12 @@ const poppins = Poppins({
 
 const archivo = Archivo({
   variable: '--font-archivo',
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+})
+
+const interSans = Inter({
+  variable: '--font-inter',
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
 })

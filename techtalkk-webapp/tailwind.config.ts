@@ -7,10 +7,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
-        boxShadow: {
-            "custom": "9px 9px 9px rgba(0, 0, 0, 0.4)",
-            "card":"0px 4px 4px #00000040"
-        },
+      boxShadow: {
+        "custom": "9px 9px 9px rgba(0, 0, 0, 0.4)",
+        "card": "0px 4px 4px #00000040",
+      },
     },
   },
   plugins: [],

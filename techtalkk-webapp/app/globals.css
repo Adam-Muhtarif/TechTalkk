@@ -17,6 +17,10 @@
   --font-archivo: 'Archivo', 'sans-serif';
 }
 
+@theme {
+  --font-inter: 'Inter', 'sans-serif';
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
