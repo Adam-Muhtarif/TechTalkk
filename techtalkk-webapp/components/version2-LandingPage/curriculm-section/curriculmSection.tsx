@@ -1,14 +1,15 @@
 import Image from 'next/image'
 import React from 'react'
+import LogoTicker from './logoTicker';
 
 export default function CurriculmSection() {
     return (
-        <section className='overflow-hidden py-16 px-4 max-w-7xl mx-auto font-archivo mt-12 relative'>
+        <section className='overflow-hidden py-16 px-4 font-archivo relative'>
             {/* container */}
-            <div className='w-full relative'>
+            <div className='w-full relative max-w-7xl mx-auto'>
                 {/* background pattern */}
                 <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0' />
-                <div className='flex flex-col justify-center items-center w-full z-1'>
+                <div className='flex flex-col justify-center items-center w-full z-10'>
                     {/* section title */}
                     <div className='flex gap-1.5 rounded-lg bg-[#F8FAFC] px-2 py-1.5 border-[#DEE5ED] border' >
                         <div className='font-inter text-[12px] text-center'>
@@ -20,7 +21,7 @@ export default function CurriculmSection() {
                         </div>
                     </div>
                     {/* Title Description */}
-                    <h1 className="text-[#7E45F0] text-3xl sm:text-4xl">Learn. Connect. Grow.</h1>
+                    <h1 className="text-[#7E45F0] text-3xl sm:text-4xl font-semibold">Learn. Connect. Grow.</h1>
                     {/* sub discription */}
                     <p className="flex flex-col text-[#5B5966] text-sm sm:text-xl text-center max-w-3xl mx-auto">
                         🚀 Master Full Stack Development: Build, deploy, and scale web apps with hands-on projects and expert guidance.
@@ -29,6 +30,7 @@ export default function CurriculmSection() {
                 {/* cards */}
                 <CardSection />
             </div>
+            <LogoTicker />
         </section>
     )
 }
@@ -59,7 +61,7 @@ const FeatureCard = ({
     bgColor
 }: FeatureCardProps) => (
 
-    <div className={`flex flex-col p-4.5 justify-between rounded-[29px] min-w-[202px] max-w-[202px] max-h-[270px] min-h-[270px] ${bgColor}`}>
+    <div className={`flex flex-col p-4.5 justify-between rounded-[29px] min-w-[202px] max-w-[202px] max-h-[270px] min-h-[270px] ${bgColor} z-10`}>
         <div className={`flex items-center gap-1 rounded-full overflow-clip max-w-fit ${titleBgColor}`}>
             <div className={`rounded-full p-3 ${iconBgColor}`}>
                 <Image src={titleIcon} width={11} height={11} alt={`${title} icon`} />
@@ -79,7 +81,6 @@ const FeatureCard = ({
     </div>
 
 );
-
 
 const CardSection = () => {
     const cardsData = [
@@ -136,7 +137,7 @@ const CardSection = () => {
     ];
 
     return (
-        <div className='flex justify-between flex-wrap gap-2.5 tems-center mt-12 font-inter'>
+        <div className='flex justify-center flex-wrap gap-2.5 tems-center mt-12 font-inter'>
             {cardsData.map((card, index) => (
                 <FeatureCard
                     key={index}

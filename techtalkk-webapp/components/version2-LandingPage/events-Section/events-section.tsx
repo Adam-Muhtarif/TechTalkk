@@ -4,14 +4,14 @@ import React from 'react'
 
 export default function EventsSection() {
     return (
-        <section className='overflow-hidden py-16 px-4 max-w-7xl mx-auto font-archivo mt-12 relative'>
+        <section className='overflow-hidden mt-16 px-4 font-archivo relative'>
             {/* container */}
-            <div className='w-full relative'>
+            <div className='max-w-7xl mx-auto relative'>
                 {/* background pattern */}
                 <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0' />
                 <div className='flex flex-col justify-center items-center w-full z-1 py-12'>
                     {/* section title */}
-                    <div className='flex gap-1.5 rounded-lg bg-[#F8FAFC] px-2 py-1.5 border-[#DEE5ED] border hover:cursor-pointer'>
+                    <div className='flex gap-1.5 rounded-lg bg-[#F8FAFC] px-2 py-1.5 border-[#DEE5ED] border'>
                         <div className='font-inter text-[12px] text-center'>
                             {/* <FamiconsCalender /> */}
                             <Image src="/images/famicons_calendar.png" alt="calendar icon" width={15.78} height={15.78} />
@@ -21,7 +21,7 @@ export default function EventsSection() {
                         </div>
                     </div>
                     {/* Title Description */}
-                    <h1 className="text-[#7E45F0] text-3xl sm:text-4xl">Learn. Connect. Grow.</h1>
+                    <h1 className="text-[#7E45F0] text-3xl sm:text-4xl font-semibold">Learn. Connect. Grow.</h1>
                     {/* sub discription */}
                     <p className="flex flex-col text-[#5B5966] text-sm sm:text-xl text-center">
                         <span>
@@ -32,7 +32,8 @@ export default function EventsSection() {
                         </span>
                     </p>
                 </div>
-                <div className='flex justify-between items-center mt-7 w-full z-1'>
+                {/* Images */}
+                <div className='flex justify-between items-center mt-7 w-full z-1 hover:cursor-pointer'>
                     {
                         Array.from({ length: 5 }, (_, index) => {
                             const imageNumber = index + 1;
