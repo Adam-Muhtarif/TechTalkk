@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono, Poppins } from 'next/font/google'
+import {
+  Geist, Geist_Mono, Poppins,
+  Archivo
+} from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/shared/footer'
 import Header from '@/components/shared/header'
@@ -20,6 +23,12 @@ const poppins = Poppins({
   subsets: ['latin'],
 })
 
+const archivo = Archivo({
+  variable: '--font-archivo',
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+})
+
 export const metadata: Metadata = {
   title: 'TechTalkk',
   description:
@@ -35,7 +44,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
+        className={`${geistSans.variable} ${archivo.variable}} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
         <Header />
         <main className="relative flex min-h-screen mx-auto w-full flex-col overflow-x-hidden font-sans">
