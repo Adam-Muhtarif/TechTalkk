@@ -21,6 +21,10 @@
   --font-inter: 'Inter', 'sans-serif';
 }
 
+@theme {
+  --font-bricolage: 'Bricolage Grotesque', 'serif';
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

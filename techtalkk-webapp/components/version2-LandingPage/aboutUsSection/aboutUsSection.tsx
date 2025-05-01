@@ -1,6 +1,12 @@
 import Image from 'next/image'
 import React from 'react'
 import AboutUsIcon from "../../../public/images/about-us-v2/AboutUsIcon.svg"
+import RocketMission from "../../../public/images/about-us-v2/RocketMission.svg"
+import Binoculars from "../../../public/images/about-us-v2/Binoculars.svg"
+import Card, { CoreValuesCard, EventsCard } from './Card'
+import { MembersCard } from './Card'
+import { JoinOurCommunity } from './Card'
+
 
 export default function AboutUsSection() {
     return (
@@ -28,38 +34,31 @@ export default function AboutUsSection() {
                 </div>
 
                 {/* Cards Layout --- flex Box Used */}
-                <div className='flex justify-center items-center w-full'>
+                <div className='flex justify-center items-center w-full h-full'>
                     {/* left Cards */}
-                    <div className='flex-1 flex-col justify-center items-center'>
+                    <div className='flex-1 gap-1.5 flex-col justify-center items-center'>
                         {/* first top two cards */}
                         <div className='flex items-center gap-3'>
                             {/* 1st top card */}
-                            <div className='flex-1/2 flex-col w-auto h-1 justify-center items-center'>
-                                <div className='bg-blue-500'></div>
-                            </div>
+                            <Card title='Our Misson' description='Empowering tech enthusiasts to connect, learn and grow together on cmummunity focused on innovation and collaboration ' icon={<RocketMission />} />
 
                             {/* 2th top card */}
-                            <div className='flex-1/2 flex-col w-full h-1 justify-center items-center'>
-                                <div className='bg-blue-600'></div>
-                            </div>
+                            <Card title='Our Vision' description='Building the world’s most inclusive and innovative tech community, driving the future of technology together' icon={<Binoculars />} />
                         </div>
 
                         {/* the 1fr card */}
-
+                        <CoreValuesCard />
                     </div>
 
                     {/* right Cards */}
                     <div className='flex-1 flex-col justify-center items-center'>
                         {/* the full width top card */}
-                        <div className='flex flex-col justify-center items-center'>
-                        </div>
+                        <MembersCard />
 
                         {/* two bottom cards */}
-                        <div className='flex items-center gap-3 w-full'>
-                            <div className='flex-1/3 items-center bg-red-400'>
-                            </div>
-                            <div className='flex-1 items-center bg-red-500 '>
-                            </div>
+                        <div className='flex items-center gap-3'>
+                            <EventsCard />
+                            <JoinOurCommunity />
                         </div>
                     </div>
                 </div>

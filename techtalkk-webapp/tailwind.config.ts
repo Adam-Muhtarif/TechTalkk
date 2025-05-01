@@ -10,6 +10,7 @@ const config: Config = {
       boxShadow: {
         "custom": "9px 9px 9px rgba(0, 0, 0, 0.4)",
         "card": "0px 4px 4px #00000040",
+        "aboutCard": "1px 4px 4px rgba(127, 71, 240, 0.2)"
       },
     },
   },

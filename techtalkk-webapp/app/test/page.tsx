@@ -1,4 +1,3 @@
-import AboutUs from '@/components/home/about'
 import AboutUsSection from '@/components/version2-LandingPage/aboutUsSection/aboutUsSection'
 import CurriculmSection from '@/components/version2-LandingPage/curriculm-section/curriculmSection'
 import EventsSection from '@/components/version2-LandingPage/events-Section/events-section'
