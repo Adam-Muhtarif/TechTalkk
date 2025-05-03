@@ -1,13 +1,9 @@
 import Image from 'next/image'
-import React from 'react'
 import AboutUsIcon from "../../../public/images/about-us-v2/AboutUsIcon.svg"
-import RocketMission from "../../../public/images/about-us-v2/RocketMission.svg"
 import Binoculars from "../../../public/images/about-us-v2/Binoculars.svg"
-import Card, { CoreValuesCard, EventsCard } from './Card'
-import { MembersCard } from './Card'
-import { JoinOurCommunity } from './Card'
-import TestimonialsGrid from '../testemonials/testemonials'
+import RocketMission from "../../../public/images/about-us-v2/RocketMission.svg"
 import SectionInfo from '../components/SectionInfo'
+import Card, { CoreValuesCard, EventsCard, JoinOurCommunity, MembersCard } from './Card'
 
 
 export default function AboutUsSection() {
@@ -49,8 +45,6 @@ export default function AboutUsSection() {
                         </div>
                     </div>
                 </div>
-
-                <TestimonialsGrid />
             </div>
         </section>
     )
