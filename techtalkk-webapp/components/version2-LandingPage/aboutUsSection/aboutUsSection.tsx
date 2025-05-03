@@ -7,6 +7,7 @@ import Card, { CoreValuesCard, EventsCard } from './Card'
 import { MembersCard } from './Card'
 import { JoinOurCommunity } from './Card'
 import TestimonialsGrid from '../testemonials/testemonials'
+import SectionInfo from '../components/SectionInfo'
 
 
 export default function AboutUsSection() {
@@ -16,23 +17,8 @@ export default function AboutUsSection() {
             <div className='max-w-7xl mx-auto relative'>
                 {/* background pattern */}
                 <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-999' />
-                <div className='flex flex-col justify-center items-center w-full z-1 py-12'>
-                    {/* section title */}
-                    <div className='flex gap-1.5 rounded-lg bg-[#F8FAFC] px-2 py-1.5 border-[#DEE5ED] border items-center'>
-                        <div className='font-inter text-[12px] text-center'>
-                            <AboutUsIcon />
-                        </div>
-                        <div className='font-inter text-[12px] text-center px-3'>
-                            Events
-                        </div>
-                    </div>
-                    {/* Title Description */}
-                    <h1 className="text-[#7E45F0] text-3xl sm:text-4xl font-semibold">Welcome to Tech Talk</h1>
-                    {/* sub discription */}
-                    <p className="flex flex-col text-[#5B5966] text-sm sm:text-xl text-center">
-                        A Community Where Innovation, Learning, and Collaboration Thrive.
-                    </p>
-                </div>
+                <SectionInfo title="Welcome to Tech Talk" sectionName='About Us' icon={<AboutUsIcon />} description='A Community Where Innovation, Learning, and Collaboration Thrive.
+' />
 
                 {/* Cards Layout --- flex Box Used */}
                 <div className='flex lg:flex lg:flex-row flex-col justify-center items-center w-full h-full'>

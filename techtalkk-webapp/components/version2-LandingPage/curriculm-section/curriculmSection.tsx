@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
 import LogoTicker from './logoTicker';
+import SectionInfo from '../components/SectionInfo';
+import Rocket from "./Rocket.svg"
 
 export default function CurriculmSection() {
     return (
@@ -9,24 +11,9 @@ export default function CurriculmSection() {
             <div className='w-full relative max-w-7xl mx-auto'>
                 {/* background pattern */}
                 <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0' />
-                <div className='flex flex-col justify-center items-center w-full z-10'>
-                    {/* section title */}
-                    <div className='flex gap-1.5 rounded-lg bg-[#F8FAFC] px-2 py-1.5 border-[#DEE5ED] border' >
-                        <div className='font-inter text-[12px] text-center'>
-                            {/* <FamiconsCalender /> */}
-                            <Image src="/images/curriculm-section/rocket-icon.png" alt="calendar icon" width={15.78} height={15.78} />
-                        </div>
-                        <div className='font-inter text-[12px] text-center px-3'>
-                            Full-Stack Curriculum
-                        </div>
-                    </div>
-                    {/* Title Description */}
-                    <h1 className="text-[#7E45F0] text-3xl sm:text-4xl font-semibold">Learn. Connect. Grow.</h1>
-                    {/* sub discription */}
-                    <p className="flex flex-col text-[#5B5966] text-sm sm:text-xl text-center max-w-3xl mx-auto">
-                        🚀 Master Full Stack Development: Build, deploy, and scale web apps with hands-on projects and expert guidance.
-                    </p>
-                </div>
+                <SectionInfo title="Learn. Build. Scale." sectionName='Full-Stack Curriculum' icon={<Rocket />} description='🚀 Master Full Stack Development: Build, deploy, and scale web apps with hands-on projects and expert guidance.
+                ' />
+
                 {/* cards */}
                 <CardSection />
             </div>
