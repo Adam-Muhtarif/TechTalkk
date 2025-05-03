@@ -6,6 +6,7 @@ import Binoculars from "../../../public/images/about-us-v2/Binoculars.svg"
 import Card, { CoreValuesCard, EventsCard } from './Card'
 import { MembersCard } from './Card'
 import { JoinOurCommunity } from './Card'
+import TestimonialsGrid from '../testemonials/testemonials'
 
 
 export default function AboutUsSection() {
@@ -63,6 +64,7 @@ export default function AboutUsSection() {
                     </div>
                 </div>
 
+                <TestimonialsGrid />
             </div>
         </section>
     )
