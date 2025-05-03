@@ -14,7 +14,7 @@ export default function AboutUsSection() {
             {/* container */}
             <div className='max-w-7xl mx-auto relative'>
                 {/* background pattern */}
-                <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0' />
+                <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-999' />
                 <div className='flex flex-col justify-center items-center w-full z-1 py-12'>
                     {/* section title */}
                     <div className='flex gap-1.5 rounded-lg bg-[#F8FAFC] px-2 py-1.5 border-[#DEE5ED] border items-center'>
@@ -34,11 +34,11 @@ export default function AboutUsSection() {
                 </div>
 
                 {/* Cards Layout --- flex Box Used */}
-                <div className='flex justify-center items-center w-full h-full'>
+                <div className='flex lg:flex lg:flex-row flex-col justify-center items-center w-full h-full'>
                     {/* left Cards */}
                     <div className='flex-1 gap-1.5 flex-col justify-center items-center'>
                         {/* first top two cards */}
-                        <div className='flex items-center gap-3'>
+                        <div className='flex flex-col sm:flex sm:flex-row items-center gap-3'>
                             {/* 1st top card */}
                             <Card title='Our Misson' description='Empowering tech enthusiasts to connect, learn and grow together on cmummunity focused on innovation and collaboration ' icon={<RocketMission />} />
 
@@ -56,7 +56,7 @@ export default function AboutUsSection() {
                         <MembersCard />
 
                         {/* two bottom cards */}
-                        <div className='flex items-center gap-3'>
+                        <div className='flex flex-col sm:flex sm:flex-row items-center gap-3'>
                             <EventsCard />
                             <JoinOurCommunity />
                         </div>

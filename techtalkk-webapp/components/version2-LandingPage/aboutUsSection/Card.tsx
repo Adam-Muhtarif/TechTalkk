@@ -33,7 +33,7 @@ export default function Card({ title, description, icon }: CardProps) {
 
 export const MembersCard = function () {
     return (
-        <div className='flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full'>
+        <div className='flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full min-h-[234px] w-full'>
             <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
             <MemberFilled />
             <h1 className='font-semibold text-xl font-bricolage text-[#5E16EC]'>300+</h1>
@@ -92,11 +92,11 @@ export const CoreValuesCard = function () {
 
 export const EventsCard = function () {
     return (
-        <div className='flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full'>
+        <div className='flex-1 w-full sm:w-auto sm:flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full min-h-[282px]'>
             <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
-            <Calender />
+            <Calender className="my-0 mx-auto" />
             {/* 300+ events */}
-            <div className='flex items-center gap-1.5'>
+            <div className='flex items-center justify-center gap-1.5'>
                 <h1 className='font-semibold text-xl font-bricolage text-[#5E16EC]'>300+</h1>
                 <h1>events</h1>
             </div>
@@ -119,7 +119,7 @@ export const EventsCard = function () {
 
 export const JoinOurCommunity = function () {
     return (
-        <div className='flex w-[470px] h-[282px] flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative bg-black overflow-clip'>
+        <div className='flex w-[360px] h-[216px] sm:w-[470px] sm:h-[282px] flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative bg-black overflow-clip'>
 
             {/* Decoration */}
             <TechtalkStar className="absolute -bottom-42 left-44" />
@@ -136,7 +136,7 @@ export const JoinOurCommunity = function () {
                 <h1 className='font-bold text-xl text-white'>
                     Join our community
                 </h1>
-                <p className='text-[#989899] text-[8px] font-medium'>Be part of the fastest-growing Somali-Tech Cmmounity</p>
+                {/* <p className='text-[#989899] text-[8px] font-medium'>Be part of the fastest-growing Somali-Tech Cmmounity</p> */}
 
                 {/* button */}
                 <button className='bg-[#7E45F0] py-2 font-bold text-[7px] text-center justify-center rounded-sm w-full flex relative text-white hover:cursor-pointer before:content-[""] before:absolute before:h-full before:w-full before:border-[1px] before:border-[#7E45F0] before:rounded-sm before:scale-x-[1.03] before:scale-y-[1.2] before:bottom-0 before:left-0'>
