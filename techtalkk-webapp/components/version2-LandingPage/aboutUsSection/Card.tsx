@@ -33,7 +33,7 @@ export default function Card({ title, description, icon }: CardProps) {
 
 export const MembersCard = function () {
     return (
-        <div className='flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full min-h-[234px] w-full'>
+        <div className='flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full sm:min-h-[234px]'>
             <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
             <MemberFilled />
             <h1 className='font-semibold text-xl font-bricolage text-[#5E16EC]'>300+</h1>
@@ -92,7 +92,7 @@ export const CoreValuesCard = function () {
 
 export const EventsCard = function () {
     return (
-        <div className='flex-1 w-full sm:w-auto sm:flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full min-h-[282px]'>
+        <div className='flex-1 w-[94%] sm:w-auto sm:flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full min-h-[282px]'>
             <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
             <Calender className="my-0 mx-auto" />
             {/* 300+ events */}

@@ -21,7 +21,7 @@ export default function SectionInfo({ title, description, secDiscription, icon, 
                 </div>
             </div>
             {/* Title Description */}
-            <h1 className="text-[#7E45F0] text-3xl sm:text-4xl font-semibold">{title}</h1>
+            <h1 className="text-[#7E45F0] text-center text-3xl sm:text-4xl font-semibold">{title}</h1>
 
             <p className="flex flex-col text-[#5B5966] text-sm sm:text-xl text-center max-w-3xl">
                 {description}

@@ -14,10 +14,6 @@ interface Testimonial {
     stars: number
 }
 
-
-
-
-
 export default function TestimonialSection() {
     return (
         <section className='overflow-hidden my-16 px-4 font-archivo relative'>
