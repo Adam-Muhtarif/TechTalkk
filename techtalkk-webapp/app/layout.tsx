@@ -58,7 +58,7 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${archivo.variable}} ${geistMono.variable} ${poppins.variable} ${bricolageGrotesque.variable} antialiased`}
       >
-        <Header />
+        {/* <Header /> */}
         <main className="relative flex min-h-screen mx-auto w-full flex-col overflow-x-hidden font-sans">
           {children}
         </main>
