@@ -92,7 +92,7 @@ export const CoreValuesCard = function () {
 
 export const EventsCard = function () {
     return (
-        <div className='flex-1 w-[94%] sm:w-auto sm:flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full min-h-[282px]'>
+        <div className='flex-1 w-[94%] sm:w-auto sm:flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative max-h-[282px] min-h-[282px]'>
             <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
             <Calender className="my-0 mx-auto" />
             {/* 300+ events */}
@@ -119,32 +119,35 @@ export const EventsCard = function () {
 
 export const JoinOurCommunity = function () {
     return (
-        <div className='flex w-[360px] h-[216px] sm:w-[470px] sm:h-[282px] flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative bg-black overflow-clip'>
+        <div className="flex w-[360px] h-[216px] sm:w-[470px] sm:h-[282px] relative">
+            <div className='w-full flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative bg-black overflow-clip'>
 
-            {/* Decoration */}
-            <TechtalkStar className="absolute -bottom-42 left-44" />
-            <Light className="absolute -top-9 right-0" />
-            <Union className="absolute top-0 right-0 w-full h-full scale-125" />
-            <Dots className="absolute top-0 right-0" />
-            <Dots className="absolute top-0 left-0" />
+                {/* Decoration */}
+                <TechtalkStar className="absolute -bottom-42 left-44" />
+                <Light className="absolute -top-9 right-0" />
+                <Union className="absolute top-0 right-0 w-full h-full scale-125" />
+                <Dots className="absolute top-0 right-0" />
+                <Dots className="absolute top-0 left-0" />
 
-            {/* content */}
-            <div className="flex flex-col justify-center items-center gap-1.5 font-inter z-10">
-                {/* logo */}
-                <TechtalkLogo />
-                {/* title */}
-                <h1 className='font-bold text-xl text-white'>
-                    Join our community
-                </h1>
-                {/* <p className='text-[#989899] text-[8px] font-medium'>Be part of the fastest-growing Somali-Tech Cmmounity</p> */}
+                {/* content */}
+                <div className="flex flex-col justify-center items-center gap-1.5 font-inter z-10">
+                    {/* logo */}
+                    <TechtalkLogo />
+                    {/* title */}
+                    <h1 className='font-bold text-xl text-white'>
+                        Join our community
+                    </h1>
+                    {/* <p className='text-[#989899] text-[8px] font-medium'>Be part of the fastest-growing Somali-Tech Cmmounity</p> */}
 
-                {/* button */}
-                <button className='bg-[#7E45F0] py-2 font-bold text-[7px] text-center justify-center rounded-sm w-full flex relative text-white hover:cursor-pointer before:content-[""] before:absolute before:h-full before:w-full before:border-[1px] before:border-[#7E45F0] before:rounded-sm before:scale-x-[1.03] before:scale-y-[1.2] before:bottom-0 before:left-0'>
-                    <p className='inline text-center'>
-                        Join For Free
-                    </p>
-                </button>
+                    {/* button */}
+                    <button className='bg-[#7E45F0] py-2 font-bold text-[7px] text-center justify-center rounded-sm w-full flex relative text-white hover:cursor-pointer before:content-[""] before:absolute before:h-full before:w-full before:border-[1px] before:border-[#7E45F0] before:rounded-sm before:scale-x-[1.03] before:scale-y-[1.2] before:bottom-0 before:left-0 mt-2'>
+                        <p className='inline text-center text-sm '>
+                            Join For Free
+                        </p>
+                    </button>
+                </div>
             </div>
+            <div className='before:absolute before:top-0 before:left-0 before:h-full before:w-full before:-z-9 before:scale-x-98 before:scale-y-97 before:rounded-2xl before:bg-[#9363F266]/40'></div>
         </div>
     )
 }

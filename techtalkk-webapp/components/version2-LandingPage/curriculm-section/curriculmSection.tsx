@@ -10,7 +10,7 @@ export default function CurriculmSection() {
             {/* container */}
             <div className='w-full relative max-w-7xl mx-auto'>
                 {/* background pattern */}
-                <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0' />
+                <Image src="/images/eventsSection/Background.png" width={907} height={645} alt='background' className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-999' />
                 <SectionInfo title="Learn. Build. Scale." sectionName='Full-Stack Curriculum' icon={<Rocket />} description='🚀 Master Full Stack Development: Build, deploy, and scale web apps with hands-on projects and expert guidance.
                 ' />
 
