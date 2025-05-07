@@ -1,7 +1,7 @@
 "use client"
 import { ComponentType, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import * as motion from "motion/react-client"
 
 export interface SubMenuItem {
     name: string;

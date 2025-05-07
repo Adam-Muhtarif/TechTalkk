@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import UserImage from "../../../public/images/testemonials-v2/UserImage.svg"
-import { motion } from "motion/react"
+import * as motion from "motion/react-client"
 
 interface Testimonial {
     id: number
