@@ -48,7 +48,7 @@ const FeatureCard = ({
     bgColor
 }: FeatureCardProps) => (
 
-    <div className={`flex flex-col p-4.5 justify-between rounded-[29px] min-w-[202px] max-w-[202px] max-h-[270px] min-h-[270px] ${bgColor} z-10`}>
+    <div className={`flex flex-col p-4.5 justify-between rounded-[29px] min-w-[280px] max-w-[280px] max-h-[335px] min-h-[335px]  sm:min-w-[202px] sm:max-w-[202px] sm:max-h-[270px] sm:min-h-[270px] ${bgColor} z-10`}>
         <div className={`flex items-center gap-1 rounded-full overflow-clip max-w-fit ${titleBgColor}`}>
             <div className={`rounded-full p-3 ${iconBgColor}`}>
                 <Image src={titleIcon} width={11} height={11} alt={`${title} icon`} />
