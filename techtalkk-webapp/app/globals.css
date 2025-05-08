@@ -172,4 +172,36 @@
   .flex-center-between {
     @apply flex items-center justify-between;
   }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-pulse-opacity {
+    animation: pulse-opacity 2s infinite;
+  }
+
+  @keyframes pulse-opacity {
+    0% {
+      opacity: 0.2;
+    }
+
+    50% {
+      opacity: 0.8;
+    }
+
+    100% {
+      opacity: 0.2;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }

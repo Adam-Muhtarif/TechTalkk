@@ -20,8 +20,8 @@ export default function Meet() {
                 <div className='flex justify-center items-center'>
                     {
                         Array.from({ length: 4 }).map((_, index) => (
-                            <div>
-                                <StarIcon key={index} />
+                            <div key={index}>
+                                <StarIcon />
                             </div>
                         ))
                     }
