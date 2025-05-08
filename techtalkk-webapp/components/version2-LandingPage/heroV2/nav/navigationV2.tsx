@@ -2,7 +2,7 @@
 import React from 'react'
 import Logo from "./Logo.svg"
 import { Button } from '@/components/ui/button'
-import { Menus } from "../utils/Menu"
+import { Menus } from "../../utils/Menu"
 import DesktopMenu from './DesktopMenu'
 import MobMenu from './MobileMenu'
 
