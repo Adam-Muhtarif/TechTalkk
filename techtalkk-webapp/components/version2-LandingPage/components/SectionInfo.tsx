@@ -16,12 +16,12 @@ export default function SectionInfo({ title, description, secDiscription, icon, 
                 <div className='font-inter text-[12px] text-center'>
                     {icon}
                 </div>
-                <div className='font-inter text-xl text-center px-3'>
+                <div className='font-inter text-sm sm:text-xl text-center px-3'>
                     {sectionName}
                 </div>
             </div>
             {/* Title Description */}
-            <h1 className="text-[#7E45F0] text-center text-3xl sm:text-4xl font-semibold">{title}</h1>
+            <h1 className="text-[#7E45F0] text-center text-2xl sm:text-4xl font-semibold">{title}</h1>
 
             <p className="flex flex-col text-[#5B5966] text-sm sm:text-xl text-center max-w-3xl">
                 {description}

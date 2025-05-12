@@ -54,10 +54,10 @@ function DiscordButton({ href = "https://discord.gg/your-invite-link" }) {
         <div className="flex justify-center items-center">
             <Link
                 href={href}
-                className="group relative flex items-center justify-center gap-4 bg-[#7C3AED] border-2 border-[#6D28D9] text-white font-bold text-lg sm:text-xl p-4 rounded-2xl hover:bg-[#6D28D9] transition-colors duration-300 w-full overflow-hidden"
+                className="group relative flex items-center justify-center gap-4 bg-[#7C3AED] border-2 border-[#6D28D9] text-white font-bold text-sm sm:text-xl px-4 py-3 lg:p-4 rounded-2xl hover:bg-[#6D28D9] transition-colors duration-300 w-full overflow-hidden"
             >
                 {/* Inner border animation */}
-                <span className="absolute inset-0.5 sm:inset-[3px] rounded-2xl border-t-2 border-l-2 border-white/30 animate-pulse-opacity pointer-events-none"></span>
+                <span className="absolute inset-0.5 sm:inset-[1px] lg:inset-0.5 rounded-2xl border-t-2 border-l-2 border-white/30 animate-pulse-opacity pointer-events-none"></span>
 
                 <DiscordIcon />
                 <span className="relative z-10">Join Us</span>
@@ -70,10 +70,10 @@ function WhiteButton() {
     return (
         <div className="flex justify-center items-center">
             <div
-                className="group relative flex items-center justify-center gap-4 bg-transparent text-[#6D28D9] font-bold text-lg sm:text-xl p-4 rounded-2xl transition-colors duration-300 w-full max-w-xl overflow-hidden border-2 border-[#6D28D9]"
+                className="group relative flex items-center justify-center gap-4 bg-transparent text-[#6D28D9] font-bold text-sm sm:text-xl px-4 py-3 lg:p-4 rounded-2xl transition-colors duration-300 w-full max-w-xl overflow-hidden border-2 border-[#6D28D9]"
             >
                 {/* Inner border animation */}
-                <span className="absolute inset-0.5 sm:inset-[3px] rounded-2xl border-t-2 border-l-2 border-[#6D28D9] animate-pulse-opacity pointer-events-none"></span>
+                <span className="absolute inset-0.5 sm:inset-[3px] rounded-2xl border-t-2 border-l-2 border-[#6D28D9]/30 animate-pulse-opacity pointer-events-none"></span>
 
                 <span className="relative z-10">Events</span>
                 <Arrow />
