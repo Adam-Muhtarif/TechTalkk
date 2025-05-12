@@ -62,7 +62,6 @@ export default function RootLayout({
         <main className="relative flex min-h-screen mx-auto w-full flex-col overflow-x-hidden font-sans">
           {children}
         </main>
-        <Footer />
       </body>
     </html>
   )

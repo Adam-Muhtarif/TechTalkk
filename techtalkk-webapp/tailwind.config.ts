@@ -14,6 +14,9 @@ const config: Config = {
         "navigation": "0 1.35px 1.25px 2px rgba(191, 191, 191, 0.35)",
         "navigation-psuedo": "0 -1.35px 1.25px 1px rgba(191, 191, 191, 0.35)",
       },
+      textShadow: {
+        "footer-text": "2px 2px 1px 3px rgba(191, 191, 191, 0.35)",
+      }
     },
   },
   plugins: [],
