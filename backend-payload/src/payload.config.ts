@@ -9,17 +9,16 @@ import path from 'path'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Sponsors } from './collections/Sponsors'
-import { Leaderboard } from './collections/Leaderboards'
-import { BlogTags } from './collections/BlogTags'
-import { VideoTags } from './collections/VideoTags'
 import { Blogs } from './collections/Blogs'
-import { Events } from './collections/Events'
-import { Instructors } from './collections/Instructors'
 import { Videos } from './collections/Videos'
+import { Events } from './collections/Events'
+import { Sponsors } from './collections/Sponsors'
+import { VideoTags } from './collections/Videos/VideoTags'
+import { BlogTags } from './collections/Blogs/BlogTags'
 import { JobPosts } from './collections/Jobs'
+import { Leaderboard } from './collections/Leaderboard'
+import { Instructors } from './collections/Instructors'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
-import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

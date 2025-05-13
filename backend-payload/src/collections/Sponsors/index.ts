@@ -1,6 +1,6 @@
+import { admins } from '../access'
+import { validateURL } from '../Events/hooks'
 import type { CollectionConfig } from 'payload'
-import { validateURL } from './utils'
-import { admins } from './access/admins'
 
 export const Sponsors: CollectionConfig = {
   slug: 'sponsors',
@@ -27,12 +27,6 @@ export const Sponsors: CollectionConfig = {
       type: 'text',
       required: true,
       validate: validateURL,
-    },
-    {
-      name: 'company_logo',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
     },
     {
       name: 'company_logo_remote',

@@ -1,21 +1,21 @@
+import { validateURL } from '../Events/hooks'
 import type { CollectionConfig } from 'payload'
-import { validateURL } from './utils'
-import { admins } from './access/admins'
+import { admins, adminsAndEditors } from '../access'
 
-export const Leaderboard: CollectionConfig = {
-  slug: 'leaderboard',
-  labels: { singular: 'Leaderboard', plural: 'Leaderboards' },
+export const Instructors: CollectionConfig = {
+  slug: 'instructors',
+  labels: { singular: 'Instructor', plural: 'Instructors' },
   admin: {
     useAsTitle: 'name',
   },
 
-
   access: {
     read: () => true,
-    create: admins,
-    update: admins,
+    create: adminsAndEditors,
+    update: adminsAndEditors,
     delete: admins,
   },
+
   fields: [
     {
       name: 'name',
@@ -28,24 +28,18 @@ export const Leaderboard: CollectionConfig = {
       required: false,
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      name: 'bio',
+      type: 'textarea',
       required: false,
     },
     {
-      name: 'image_remote',
-      type: 'text',
-      required: false,
-    },
-    {
-      name: 'socials',
+      name: 'instructor_socials',
       type: 'array',
       fields: [
         {
           name: 'platform',
           type: 'select',
-          options: ['LinkedIn', 'GitHub', 'Twitter', 'Website', 'Facebook'],
+          options: ['LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook'],
           required: false,
         },
         {
@@ -55,11 +49,6 @@ export const Leaderboard: CollectionConfig = {
           validate: validateURL,
         },
       ],
-    },
-    {
-      name: 'rank',
-      type: 'number',
-      required: true,
     },
   ],
 }

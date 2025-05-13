@@ -5,6 +5,7 @@ export const resetPasswordEmail = (
     | {
         req?: PayloadRequest
         token?: string
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         user?: any
       }
     | undefined,
@@ -82,6 +83,7 @@ export const verifyEmail = (
     | {
         req?: PayloadRequest
         token?: string
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         user?: any
       }
     | undefined,

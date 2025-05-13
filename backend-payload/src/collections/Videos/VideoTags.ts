@@ -1,7 +1,6 @@
+import { admins } from '../access'
+import { slugField } from '@/fields/slug'
 import { CollectionConfig } from 'payload'
-import { beforeChangeHook } from './hooks'
-
-import { admins } from './access/admins'
 
 export const VideoTags: CollectionConfig = {
   slug: 'video-tags',
@@ -22,17 +21,11 @@ export const VideoTags: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'slug',
-      type: 'text',
-      unique: true,
-      admin: {
-        readOnly: true,
+    ...slugField('name', {
+      slugOverrides: {
+        index: true,
+        unique: true,
       },
-    },
+    }),
   ],
-
-  hooks: {
-    beforeChange: [beforeChangeHook],
-  },
 }

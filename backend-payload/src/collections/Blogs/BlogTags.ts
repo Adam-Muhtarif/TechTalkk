@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
-import { beforeChangeHook } from './hooks'
-import { admins } from './access/admins'
+
+import { admins } from '../access'
+import { slugField } from '@/fields/slug'
 
 export const BlogTags: CollectionConfig = {
   slug: 'blog-tags',
@@ -14,6 +15,7 @@ export const BlogTags: CollectionConfig = {
     update: admins,
     delete: admins,
   },
+
   fields: [
     {
       name: 'name',
@@ -21,17 +23,11 @@ export const BlogTags: CollectionConfig = {
       unique: true,
       required: true,
     },
-    {
-      name: 'slug',
-      type: 'text',
-      unique: true,
-      admin: {
-        readOnly: true,
+    ...slugField('name', {
+      slugOverrides: {
+        index: true,
+        unique: true,
       },
-    },
+    }),
   ],
-
-  hooks: {
-    beforeChange: [beforeChangeHook],
-  },
 }
