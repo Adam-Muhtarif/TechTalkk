@@ -138,8 +138,6 @@ export interface User {
   id: string;
   fullName: string;
   role: 'admin' | 'editor';
-  image?: (string | null) | Media;
-  image_remote?: string | null;
   isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -300,12 +298,10 @@ export interface Instructor {
 export interface Event {
   id: string;
   title: string;
+  slug?: string | null;
   description: string;
-  image?: (string | null) | Media;
-  image_remote?: string | null;
   host_name: string;
-  host_image?: (string | null) | Media;
-  host_image_remote?: string | null;
+  host_title: string;
   host_socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
@@ -313,9 +309,10 @@ export interface Event {
         id?: string | null;
       }[]
     | null;
+  location_type: 'virtual' | 'on-site';
   location: string;
-  location_icon?: (string | null) | Media;
   sponsors?: (string | Sponsor)[] | null;
+  date: string;
   start_time: string;
   period?: string | null;
   updatedAt: string;
@@ -441,8 +438,6 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   fullName?: T;
   role?: T;
-  image?: T;
-  image_remote?: T;
   isActive?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -559,12 +554,10 @@ export interface VideosSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   description?: T;
-  image?: T;
-  image_remote?: T;
   host_name?: T;
-  host_image?: T;
-  host_image_remote?: T;
+  host_title?: T;
   host_socials?:
     | T
     | {
@@ -572,9 +565,10 @@ export interface EventsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  location_type?: T;
   location?: T;
-  location_icon?: T;
   sponsors?: T;
+  date?: T;
   start_time?: T;
   period?: T;
   updatedAt?: T;

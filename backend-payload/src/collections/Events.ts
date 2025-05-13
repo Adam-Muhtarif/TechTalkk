@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { validateURL } from './utils'
 import adminsAndEditors from './access/adminsAndEditors'
 import { admins } from './access/admins'
+import { slugField } from '@/fields/slug'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -16,61 +17,42 @@ export const Events: CollectionConfig = {
     update: adminsAndEditors,
     delete: admins,
   },
+
   fields: [
     {
       name: 'title',
       type: 'text',
       required: true,
-      admin: {
-        position: 'sidebar',
-      },
     },
+    ...slugField('title', {
+      slugOverrides: {
+        index: true,
+        unique: true,
+        admin: {
+          position: 'sidebar',
+        },
+      },
+    }),
     {
       name: 'description',
       type: 'textarea',
       required: true,
-    },
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
       admin: {
         position: 'sidebar',
       },
     },
-    {
-      name: 'image_remote',
-      type: 'text',
-      required: false,
-      admin: {
-        position: 'sidebar',
-      },
-    },
+
+    // Todo we may add image in future but now haven't space
+
     {
       name: 'host_name',
       type: 'text',
       required: true,
-      admin: {
-        position: 'sidebar',
-      },
     },
     {
-      name: 'host_image',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'host_image_remote',
+      name: 'host_title',
       type: 'text',
-      required: false,
-      admin: {
-        position: 'sidebar',
-      },
+      required: true,
     },
     {
       name: 'host_socials',
@@ -89,53 +71,57 @@ export const Events: CollectionConfig = {
           validate: validateURL,
         },
       ],
-      admin: {
-        position: 'sidebar',
-      },
+    },
+    {
+      name: 'location_type',
+      type: 'select',
+      options: [
+        {
+          label: 'Virtual',
+          value: 'virtual',
+        },
+        {
+          label: 'On-site',
+          value: 'on-site',
+        },
+      ],
+      required: true,
+      defaultValue: 'virtual',
     },
     {
       name: 'location',
-      type: 'text',
+      type: 'textarea',
       required: true,
       admin: {
         position: 'sidebar',
       },
     },
     {
-      name: 'location_icon',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-
-    {
       name: 'sponsors',
       type: 'relationship',
       relationTo: 'sponsors',
-      required: false,
       hasMany: true,
-      admin: {
-        position: 'sidebar',
-      },
+      required: false,
+    },
+    {
+      name: 'date',
+      type: 'date',
+      required: true,
     },
     {
       name: 'start_time',
       type: 'date',
       required: true,
       admin: {
-        position: 'sidebar',
+        date: {
+          pickerAppearance: 'timeOnly',
+        },
       },
     },
     {
       name: 'period',
       type: 'text',
       required: false,
-      admin: {
-        position: 'sidebar',
-      },
     },
   ],
 }

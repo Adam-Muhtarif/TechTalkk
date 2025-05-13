@@ -6,6 +6,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_leaderboard_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Facebook');
   CREATE TYPE "public"."enum_blogs_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_events_host_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook');
+  CREATE TYPE "public"."enum_events_location_type" AS ENUM('virtual', 'on-site');
   CREATE TYPE "public"."enum_instructors_instructor_socials_platform" AS ENUM('LinkedIn', 'GitHub', 'Twitter', 'Website', 'Youtube', 'Facebook');
   CREATE TYPE "public"."enum_jobs_location" AS ENUM('remote', 'hybrid', 'onsite');
   CREATE TYPE "public"."enum_jobs_job_type" AS ENUM('full-time', 'part-time', 'contract', 'internship');
@@ -139,13 +140,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   	"title" varchar NOT NULL,
   	"description" varchar NOT NULL,
-  	"image_id" uuid,
-  	"image_remote" varchar,
   	"host_name" varchar NOT NULL,
-  	"host_image_id" uuid,
-  	"host_image_remote" varchar,
+  	"host_title" varchar NOT NULL,
+  	"location_type" "enum_events_location_type" DEFAULT 'virtual' NOT NULL,
   	"location" varchar NOT NULL,
-  	"location_icon_id" uuid,
+  	"date" timestamp(3) with time zone NOT NULL,
   	"start_time" timestamp(3) with time zone NOT NULL,
   	"period" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -312,24 +311,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   END $$;
   
   DO $$ BEGIN
-   ALTER TABLE "events" ADD CONSTRAINT "events_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "events" ADD CONSTRAINT "events_host_image_id_media_id_fk" FOREIGN KEY ("host_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
-   ALTER TABLE "events" ADD CONSTRAINT "events_location_icon_id_media_id_fk" FOREIGN KEY ("location_icon_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  EXCEPTION
-   WHEN duplicate_object THEN null;
-  END $$;
-  
-  DO $$ BEGIN
    ALTER TABLE "events_rels" ADD CONSTRAINT "events_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."events"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION
    WHEN duplicate_object THEN null;
@@ -483,9 +464,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "videos_rels_video_tags_id_idx" ON "videos_rels" USING btree ("video_tags_id");
   CREATE INDEX IF NOT EXISTS "events_host_socials_order_idx" ON "events_host_socials" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "events_host_socials_parent_id_idx" ON "events_host_socials" USING btree ("_parent_id");
-  CREATE INDEX IF NOT EXISTS "events_image_idx" ON "events" USING btree ("image_id");
-  CREATE INDEX IF NOT EXISTS "events_host_image_idx" ON "events" USING btree ("host_image_id");
-  CREATE INDEX IF NOT EXISTS "events_location_icon_idx" ON "events" USING btree ("location_icon_id");
   CREATE INDEX IF NOT EXISTS "events_updated_at_idx" ON "events" USING btree ("updated_at");
   CREATE INDEX IF NOT EXISTS "events_created_at_idx" ON "events" USING btree ("created_at");
   CREATE INDEX IF NOT EXISTS "events_rels_order_idx" ON "events_rels" USING btree ("order");
@@ -556,6 +534,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_leaderboard_socials_platform";
   DROP TYPE "public"."enum_blogs_status";
   DROP TYPE "public"."enum_events_host_socials_platform";
+  DROP TYPE "public"."enum_events_location_type";
   DROP TYPE "public"."enum_instructors_instructor_socials_platform";
   DROP TYPE "public"."enum_jobs_location";
   DROP TYPE "public"."enum_jobs_job_type";`)

@@ -1,5 +1,5 @@
 {
-  "id": "4b81263a-8359-4110-8c66-537538cb6442",
+  "id": "01f03551-403f-4c9c-b79f-610520e39afc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -28,18 +28,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'editor'"
-        },
-        "image_id": {
-          "name": "image_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "image_remote": {
-          "name": "image_remote",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
         },
         "is_active": {
           "name": "is_active",
@@ -119,21 +107,6 @@
         }
       },
       "indexes": {
-        "users_image_idx": {
-          "name": "users_image_idx",
-          "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "users_updated_at_idx": {
           "name": "users_updated_at_idx",
           "columns": [
@@ -180,21 +153,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "users_image_id_media_id_fk": {
-          "name": "users_image_id_media_id_fk",
-          "tableFrom": "users",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -1513,23 +1472,17 @@
           "primaryKey": false,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "description": {
           "name": "description",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
-        },
-        "image_id": {
-          "name": "image_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "image_remote": {
-          "name": "image_remote",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
         },
         "host_name": {
           "name": "host_name",
@@ -1537,17 +1490,19 @@
           "primaryKey": false,
           "notNull": true
         },
-        "host_image_id": {
-          "name": "host_image_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "host_image_remote": {
-          "name": "host_image_remote",
+        "host_title": {
+          "name": "host_title",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
+        },
+        "location_type": {
+          "name": "location_type",
+          "type": "enum_events_location_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'virtual'"
         },
         "location": {
           "name": "location",
@@ -1555,11 +1510,11 @@
           "primaryKey": false,
           "notNull": true
         },
-        "location_icon_id": {
-          "name": "location_icon_id",
-          "type": "uuid",
+        "date": {
+          "name": "date",
+          "type": "timestamp(3) with time zone",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "start_time": {
           "name": "start_time",
@@ -1589,47 +1544,17 @@
         }
       },
       "indexes": {
-        "events_image_idx": {
-          "name": "events_image_idx",
+        "events_slug_idx": {
+          "name": "events_slug_idx",
           "columns": [
             {
-              "expression": "image_id",
+              "expression": "slug",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             }
           ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "events_host_image_idx": {
-          "name": "events_host_image_idx",
-          "columns": [
-            {
-              "expression": "host_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "events_location_icon_idx": {
-          "name": "events_location_icon_idx",
-          "columns": [
-            {
-              "expression": "location_icon_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
+          "isUnique": true,
           "concurrently": false,
           "method": "btree",
           "with": {}
@@ -1665,47 +1590,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "events_image_id_media_id_fk": {
-          "name": "events_image_id_media_id_fk",
-          "tableFrom": "events",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "events_host_image_id_media_id_fk": {
-          "name": "events_host_image_id_media_id_fk",
-          "tableFrom": "events",
-          "tableTo": "media",
-          "columnsFrom": [
-            "host_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        },
-        "events_location_icon_id_media_id_fk": {
-          "name": "events_location_icon_id_media_id_fk",
-          "tableFrom": "events",
-          "tableTo": "media",
-          "columnsFrom": [
-            "location_icon_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -3114,6 +2999,14 @@
         "Website",
         "Youtube",
         "Facebook"
+      ]
+    },
+    "public.enum_events_location_type": {
+      "name": "enum_events_location_type",
+      "schema": "public",
+      "values": [
+        "virtual",
+        "on-site"
       ]
     },
     "public.enum_instructors_instructor_socials_platform": {

@@ -54,17 +54,6 @@ export const Users: CollectionConfig = {
       defaultValue: 'editor',
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-    },
-    {
-      name: 'image_remote',
-      type: 'text',
-      required: false,
-    },
-    {
       name: 'isActive',
       type: 'checkbox',
       defaultValue: false,
