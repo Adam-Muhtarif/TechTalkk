@@ -1,7 +1,8 @@
+import { admins } from '../access'
 import type { CollectionConfig } from 'payload'
-import { checkRole } from './access/checkRole'
-import { admins } from './access/admins'
-import { resetPasswordEmail, verifyEmail } from './utils'
+import { resetPasswordEmail, verifyEmail } from './emails'
+
+import checkRole from '../access/checkRole'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -26,7 +27,7 @@ export const Users: CollectionConfig = {
   },
 
   access: {
-    admin: ({ req: { user } }) => checkRole(['admin', 'editor'], user ? user : undefined),
+    admin: ({ req: { user } }) => (user ? checkRole(['admin', 'editor'], user) : false),
     read: admins,
     create: admins,
     update: admins,

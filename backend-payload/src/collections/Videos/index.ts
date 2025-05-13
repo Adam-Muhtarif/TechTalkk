@@ -1,7 +1,6 @@
+import { validateYoutubeURL } from './hooks'
 import type { CollectionConfig } from 'payload'
-import { validateYoutubeURL } from './utils'
-import adminsAndEditors from './access/adminsAndEditors'
-import { admins } from './access/admins'
+import { admins, adminsAndEditors } from '../access'
 
 export const Videos: CollectionConfig = {
   slug: 'videos',
@@ -30,7 +29,6 @@ export const Videos: CollectionConfig = {
       type: 'relationship',
       relationTo: 'instructors',
       required: true,
-      localized: true,
     },
     {
       name: 'tags',
@@ -38,7 +36,6 @@ export const Videos: CollectionConfig = {
       relationTo: 'video-tags',
       hasMany: true,
       required: true,
-      localized: true,
     },
   ],
 }

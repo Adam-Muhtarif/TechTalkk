@@ -87,7 +87,6 @@ export const seed = async () => {
         name: instructor.name,
         title: instructor.title,
         bio: instructor.bio,
-        image_remote: instructor.image_remote,
         instructor_socials: instructor.instructor_socials.map((social) => ({
           platform: social.platform as 'GitHub' | 'LinkedIn' | 'Twitter' | 'Website' | 'Facebook',
           url: social.url,
@@ -158,7 +157,6 @@ export const seed = async () => {
         },
         author: blog.author,
         tags: [(await payload.find({ collection: 'blog-tags' })).docs[0]],
-        cover_image_remote: blog.cover_image_remote,
         status: blog.status as 'published' | 'draft',
       },
     })
@@ -197,7 +195,7 @@ export const seed = async () => {
         location_type: 'virtual',
         location: event.location,
         sponsors: [],
-        date: Date.now().toLocaleString(),
+        date: '2025-05-13T22:21:35.226Z',
         start_time: event.start_time,
         period: event.period,
       },
@@ -224,6 +222,7 @@ export const seed = async () => {
   }
 
   payload.logger.info('✅ DONE SEEDING ALL COLLECTIONS.')
+  process.exit()
 }
 
 await seed()

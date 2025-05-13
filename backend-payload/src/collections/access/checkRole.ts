@@ -1,18 +1,13 @@
 import type { User } from '../../payload-types'
 
-export const checkRole = (
-  allRoles: Array<User['role']> = [],
-  user: User | undefined = undefined,
-): boolean => {
-  if (user) {
-    if (
-      allRoles.some((role) => {
-        return user?.role === role
-      })
-    ) {
-      return true
-    }
-  }
+const checkRole = (roles: User['role'] | Array<User['role']> = [], user: User): boolean => {
+  if (!user) return false
+
+  if (typeof roles === 'string') return user.role === roles
+
+  if (Array.isArray(roles) && roles.some((role) => user.role === role)) return true
 
   return false
 }
+
+export default checkRole

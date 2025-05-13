@@ -1,6 +1,7 @@
 import { CollectionBeforeChangeHook } from 'payload'
 
 // Automatically generate the slug
+// Todo remove this we migrated to use custom slug field
 export const beforeChangeHook: CollectionBeforeChangeHook = async ({ data }) => {
   if (data.title) {
     data.slug = data.title

@@ -179,7 +179,6 @@ export interface Sponsor {
   id: string;
   company: string;
   company_link: string;
-  company_logo?: (string | null) | Media;
   company_logo_remote?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -192,7 +191,6 @@ export interface Leaderboard {
   id: string;
   name: string;
   title?: string | null;
-  image?: (string | null) | Media;
   image_remote?: string | null;
   socials?:
     | {
@@ -252,8 +250,6 @@ export interface Blog {
   };
   author: string;
   tags: (string | BlogTag)[];
-  cover_image?: (string | null) | Media;
-  cover_image_remote?: string | null;
   status: 'draft' | 'published';
   updatedAt: string;
   createdAt: string;
@@ -279,8 +275,6 @@ export interface Instructor {
   name: string;
   title?: string | null;
   bio?: string | null;
-  image?: (string | null) | Media;
-  image_remote?: string | null;
   instructor_socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
@@ -327,7 +321,6 @@ export interface Job {
   title: string;
   company_name: string;
   company_link?: string | null;
-  company_logo?: (string | null) | Media;
   company_logo_remote?: string | null;
   location: 'remote' | 'hybrid' | 'onsite';
   job_type: 'full-time' | 'part-time' | 'contract' | 'internship';
@@ -476,7 +469,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface SponsorsSelect<T extends boolean = true> {
   company?: T;
   company_link?: T;
-  company_logo?: T;
   company_logo_remote?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -488,7 +480,6 @@ export interface SponsorsSelect<T extends boolean = true> {
 export interface LeaderboardSelect<T extends boolean = true> {
   name?: T;
   title?: T;
-  image?: T;
   image_remote?: T;
   socials?:
     | T
@@ -531,8 +522,6 @@ export interface BlogsSelect<T extends boolean = true> {
   content?: T;
   author?: T;
   tags?: T;
-  cover_image?: T;
-  cover_image_remote?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -582,8 +571,6 @@ export interface InstructorsSelect<T extends boolean = true> {
   name?: T;
   title?: T;
   bio?: T;
-  image?: T;
-  image_remote?: T;
   instructor_socials?:
     | T
     | {
@@ -602,7 +589,6 @@ export interface JobsSelect<T extends boolean = true> {
   title?: T;
   company_name?: T;
   company_link?: T;
-  company_logo?: T;
   company_logo_remote?: T;
   location?: T;
   job_type?: T;

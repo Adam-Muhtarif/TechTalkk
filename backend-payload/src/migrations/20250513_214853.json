@@ -1,5 +1,5 @@
 {
-  "id": "6e64eb2f-aa67-4006-b7fc-362c097a41fa",
+  "id": "a11ecebc-836d-4f21-a6da-87244dad9b80",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -28,18 +28,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'editor'"
-        },
-        "image_id": {
-          "name": "image_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "image_remote": {
-          "name": "image_remote",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
         },
         "is_active": {
           "name": "is_active",
@@ -119,21 +107,6 @@
         }
       },
       "indexes": {
-        "users_image_idx": {
-          "name": "users_image_idx",
-          "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "users_updated_at_idx": {
           "name": "users_updated_at_idx",
           "columns": [
@@ -180,21 +153,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "users_image_id_media_id_fk": {
-          "name": "users_image_id_media_id_fk",
-          "tableFrom": "users",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -571,12 +530,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "image_id": {
-          "name": "image_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
         "image_remote": {
           "name": "image_remote",
           "type": "varchar",
@@ -605,21 +558,6 @@
         }
       },
       "indexes": {
-        "leaderboard_image_idx": {
-          "name": "leaderboard_image_idx",
-          "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "leaderboard_updated_at_idx": {
           "name": "leaderboard_updated_at_idx",
           "columns": [
@@ -651,21 +589,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "leaderboard_image_id_media_id_fk": {
-          "name": "leaderboard_image_id_media_id_fk",
-          "tableFrom": "leaderboard",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -906,18 +830,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "cover_image_id": {
-          "name": "cover_image_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "cover_image_remote": {
-          "name": "cover_image_remote",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
         "status": {
           "name": "status",
           "type": "enum_blogs_status",
@@ -957,21 +869,6 @@
           "method": "btree",
           "with": {}
         },
-        "blogs_cover_image_idx": {
-          "name": "blogs_cover_image_idx",
-          "columns": [
-            {
-              "expression": "cover_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "blogs_updated_at_idx": {
           "name": "blogs_updated_at_idx",
           "columns": [
@@ -1003,21 +900,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "blogs_cover_image_id_media_id_fk": {
-          "name": "blogs_cover_image_id_media_id_fk",
-          "tableFrom": "blogs",
-          "tableTo": "media",
-          "columnsFrom": [
-            "cover_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -1513,6 +1396,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "description": {
           "name": "description",
           "type": "varchar",
@@ -1579,6 +1468,21 @@
         }
       },
       "indexes": {
+        "events_slug_idx": {
+          "name": "events_slug_idx",
+          "columns": [
+            {
+              "expression": "slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "events_updated_at_idx": {
           "name": "events_updated_at_idx",
           "columns": [
@@ -1866,18 +1770,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "image_id": {
-          "name": "image_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "image_remote": {
-          "name": "image_remote",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
@@ -1894,21 +1786,6 @@
         }
       },
       "indexes": {
-        "instructors_image_idx": {
-          "name": "instructors_image_idx",
-          "columns": [
-            {
-              "expression": "image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "instructors_updated_at_idx": {
           "name": "instructors_updated_at_idx",
           "columns": [
@@ -1940,21 +1817,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "instructors_image_id_media_id_fk": {
-          "name": "instructors_image_id_media_id_fk",
-          "tableFrom": "instructors",
-          "tableTo": "media",
-          "columnsFrom": [
-            "image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -1987,12 +1850,6 @@
         "company_link": {
           "name": "company_link",
           "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "company_logo_id": {
-          "name": "company_logo_id",
-          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
@@ -2056,21 +1913,6 @@
         }
       },
       "indexes": {
-        "jobs_company_logo_idx": {
-          "name": "jobs_company_logo_idx",
-          "columns": [
-            {
-              "expression": "company_logo_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "jobs_updated_at_idx": {
           "name": "jobs_updated_at_idx",
           "columns": [
@@ -2102,21 +1944,7 @@
           "with": {}
         }
       },
-      "foreignKeys": {
-        "jobs_company_logo_id_media_id_fk": {
-          "name": "jobs_company_logo_id_media_id_fk",
-          "tableFrom": "jobs",
-          "tableTo": "media",
-          "columnsFrom": [
-            "company_logo_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

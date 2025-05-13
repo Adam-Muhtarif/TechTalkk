@@ -1,7 +1,6 @@
+import { slugField } from '@/fields/slug'
 import { CollectionConfig } from 'payload'
-import { beforeChangeHook } from './hooks'
-import adminsAndEditors from './access/adminsAndEditors'
-import { admins } from './access/admins'
+import { admins, adminsAndEditors } from '../access'
 
 export const Blogs: CollectionConfig = {
   slug: 'blogs',
@@ -16,7 +15,6 @@ export const Blogs: CollectionConfig = {
     update: adminsAndEditors,
     delete: admins,
   },
-  
 
   fields: [
     {
@@ -27,15 +25,12 @@ export const Blogs: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    {
-      name: 'slug',
-      type: 'text',
-      unique: true,
-      admin: {
-        readOnly: true,
-        position: 'sidebar',
+    ...slugField('title', {
+      slugOverrides: {
+        index: true,
+        unique: true,
       },
-    },
+    }),
     {
       name: 'content',
       type: 'richText',
@@ -60,23 +55,6 @@ export const Blogs: CollectionConfig = {
       },
     },
     {
-      name: 'cover_image',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'cover_image_remote',
-      type: 'text',
-      required: false,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
       name: 'status',
       type: 'select',
       required: true,
@@ -90,8 +68,4 @@ export const Blogs: CollectionConfig = {
       },
     },
   ],
-
-  hooks: {
-    beforeChange: [beforeChangeHook],
-  },
 }

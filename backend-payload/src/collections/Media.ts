@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import adminsAndEditors from './access/adminsAndEditors'
-import { admins } from './access/admins'
+import { admins, adminsAndEditors } from './access'
 
 export const Media: CollectionConfig = {
   slug: 'media',

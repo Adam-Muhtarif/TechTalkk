@@ -1,8 +1,8 @@
-import type { CollectionConfig } from 'payload'
-import { validateURL } from './utils'
-import adminsAndEditors from './access/adminsAndEditors'
-import { admins } from './access/admins'
 import { slugField } from '@/fields/slug'
+import { validateURL } from './hooks'
+import type { CollectionConfig } from 'payload'
+import { admins, adminsAndEditors } from '../access'
+
 
 export const Events: CollectionConfig = {
   slug: 'events',
