@@ -56,17 +56,6 @@ export const seed = async () => {
     })
   }
 
-  // MEDIA – DUMMY FILE OBJECT
-  // for (let i = 0; i < 5; i++) {
-  //   await payload.create({
-  //     collection: 'media',
-  //     data: {
-  //       alt: `Seeded media ${i + 1}`,
-  //     },
-  //     filePath: 'path/to/dummy-image.jpg', // YOU MUST PROVIDE A REAL FILE PATH OR MOCK FILE UPLOAD
-  //   })
-  // }
-
   // SPONSORS
   for (const sponsor of sponsors) {
     await payload.create({

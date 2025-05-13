@@ -1,8 +1,8 @@
 // USERS
 export const users = [
   {
-    email: 'muhtarif.web.dev@gmail.com',
-    fullName: 'Adam',
+    email: 'admin@gmail.com',
+    fullName: 'Adam Samakab',
     password: '123',
     role: 'admin',
     isActive: true,
