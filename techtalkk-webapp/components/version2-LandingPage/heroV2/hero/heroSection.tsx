@@ -40,7 +40,7 @@ export default function HeroSection() {
                 {/* Discord Image */}
                 <div className='relative px-4 pt-7'>
                     <Image className='mt-16' src="/images/herov2/Discord.png" width={1210.43} height={756.52} alt="hero" />
-                    <Image className='mt-16 absolute top-0 right-0 -z-999 scale-x-150 scale-y-100' src="/images/herov2/dots.png" width={1422.54} height={755.72} alt="dots" />
+                    {/* <Image className='mt-16 absolute top-0 right-0 -z-999 scale-x-150 scale-y-100' src="/images/herov2/dots.png" width={1422.54} height={755.72} alt="dots" /> */}
                     <Image className='mt-16 absolute -top-16 lg:-top-[300px] right-0 -z-999 scale-75' src="/images/herov2/glows.png" width={1886.13} height={1168.51} alt="dots" />
                 </div>
             </div>
