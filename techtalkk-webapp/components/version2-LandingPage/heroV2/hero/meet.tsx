@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
 import StarIcon from "./StarIcon.svg"
-
+import StarIconHalf from "./StarIconHalf.svg"
+import { Star } from 'lucide-react';
 export default function Meet() {
     const overlapAmount = "-ml-3"; // Adjusting value to control the overlap
 
@@ -19,10 +20,10 @@ export default function Meet() {
             <div className='flex flex-col justify-start sm:items-start ml-2'>
                 <div className='flex justify-center items-center'>
                     {
-                        Array.from({ length: 4 }).map((_, index) => (
-                            <div key={index}>
-                                <StarIcon />
-                            </div>
+                        Array.from({ length: 5 }).map((_, index) => (
+                            <React.Fragment key={index}>
+                                {index < 4 ? <StarIcon /> : <StarIconHalf />}
+                            </React.Fragment>
                         ))
                     }
                     <p className='text-sm text-[#353F48] font-bold font-archivo ml-2'>4.8+</p>

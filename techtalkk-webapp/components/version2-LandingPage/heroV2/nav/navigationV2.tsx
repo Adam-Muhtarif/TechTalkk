@@ -26,7 +26,7 @@ export default function NavigationV2() {
                 </div>
 
                 {/* Buttons */}
-                <Button variant="default" className='hidden lg:flex'>Register</Button>
+                <Button variant="default" className='hidden lg:flex bg-[var(--primary-color)]'>Register</Button>
             </div>
         </div>
     )
