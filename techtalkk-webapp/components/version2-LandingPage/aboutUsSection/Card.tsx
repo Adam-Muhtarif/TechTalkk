@@ -10,7 +10,9 @@ import Light from "../../../public/images/about-us-v2/Light.svg"
 import Union from "../../../public/images/about-us-v2/Union.svg"
 import TechtalkLogo from "../../../public/images/about-us-v2/TechTalk-Logo.svg"
 import { Share, Lightbulb, Users, TrendingUp } from "lucide-react"
+import Rectangle from "./Rectangle.svg"
 import Link from 'next/link'
+import Image from 'next/image'
 
 // prop types 
 
@@ -23,10 +25,11 @@ interface CardProps {
 export default function Card({ title, description, icon }: CardProps) {
     return (
         <div className='flex flex-col px-9 py-6 gap-1.5 justify-start shadow-about-card rounded-2xl m-3 relative'>
-            <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
+            {/*  */}
             {icon}
             <h1 className='font-semibold text-xl'>{title}</h1>
             <p className='text-sm text-[#464553]'>{description}</p>
+            <Image src="/images/about-us-v2/Rectangle.png" width={280} height={161} alt="rectangle" className="absolute bottom-1.5 right-1.5" />
         </div>
     )
 }
@@ -34,7 +37,7 @@ export default function Card({ title, description, icon }: CardProps) {
 export const MembersCard = function () {
     return (
         <div className='flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative h-full sm:min-h-[214px]'>
-            <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
+            <Image src="/images/about-us-v2/Rectangle.png" width={280} height={161} alt="rectangle" className="absolute bottom-1.5 right-1.5" />
             <MemberFilled />
             <h1 className='font-semibold text-xl font-bricolage text-[#5E16EC]'>300+</h1>
             <h1>Members</h1>
@@ -45,7 +48,7 @@ export const MembersCard = function () {
 export const CoreValuesCard = function () {
     return (
         <div className='flex flex-col px-9 py-6 gap-1.5 justify-start shadow-about-card rounded-2xl m-3 relative h-full'>
-            <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
+            <Image src="/images/about-us-v2/Rectangle.png" width={280} height={161} alt="rectangle" className="absolute bottom-1.5 right-1.5" />
             <Medal />
             <h1 className='font-semibold text-xl'>Our Core Values</h1>
 
@@ -92,8 +95,8 @@ export const CoreValuesCard = function () {
 
 export const EventsCard = function () {
     return (
-        <div className='flex-1 w-[94%] sm:w-auto sm:flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative max-h-[282px] min-h-[282px]'>
-            <div className='before:content-[""] before:absolute before:h-[100px] before:w-[100px] before:rounded-br-2xl before:bg-transparent before:bottom-2 before:right-2 before:border-r-2 before:border-b-2 before:border-b-[#5E16EC] before:border-r-[#5E16EC]'></div>
+        <div className='flex-1 w-[94%] sm:w-auto sm:flex flex-col px-9 py-6 gap-1.5 justify-center items-center shadow-about-card rounded-2xl m-3 relative max-h-[282px] min-h-[282px] lg:min-h-[269px]'>
+            <Image src="/images/about-us-v2/Rectangle.png" width={280} height={161} alt="rectangle" className="absolute bottom-1.5 right-1.5" />
             <Calender className="my-0 mx-auto" />
             {/* 300+ events */}
             <div className='flex items-center justify-center gap-1.5'>
