@@ -31,8 +31,12 @@ This repository contains two applications:
    ```
 
 3. **Configure the database:**
-   - Ensure PostgreSQL is running.
-   - Update your `.env` file **DATABASE_URI** with your database connection string.
+We use **Docker** to run PostgreSQL [Docker](https://www.docker.com/products/docker-desktop).
+- Ensure Docker is installed and running .
+- Start the PostgreSQL container using the following command:
+
+  ```bash
+  docker compose -f ./docker-compose.yml -p techtalk up -d
 
 4. **Run database migrations:**
    ```sh
