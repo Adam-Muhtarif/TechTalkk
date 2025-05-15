@@ -138,8 +138,6 @@ export interface User {
   id: string;
   fullName: string;
   role: 'admin' | 'editor';
-  image?: (string | null) | Media;
-  image_remote?: string | null;
   isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -181,7 +179,6 @@ export interface Sponsor {
   id: string;
   company: string;
   company_link: string;
-  company_logo?: (string | null) | Media;
   company_logo_remote?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -194,7 +191,6 @@ export interface Leaderboard {
   id: string;
   name: string;
   title?: string | null;
-  image?: (string | null) | Media;
   image_remote?: string | null;
   socials?:
     | {
@@ -254,8 +250,6 @@ export interface Blog {
   };
   author: string;
   tags: (string | BlogTag)[];
-  cover_image?: (string | null) | Media;
-  cover_image_remote?: string | null;
   status: 'draft' | 'published';
   updatedAt: string;
   createdAt: string;
@@ -281,8 +275,6 @@ export interface Instructor {
   name: string;
   title?: string | null;
   bio?: string | null;
-  image?: (string | null) | Media;
-  image_remote?: string | null;
   instructor_socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
@@ -300,12 +292,10 @@ export interface Instructor {
 export interface Event {
   id: string;
   title: string;
+  slug?: string | null;
   description: string;
-  image?: (string | null) | Media;
-  image_remote?: string | null;
   host_name: string;
-  host_image?: (string | null) | Media;
-  host_image_remote?: string | null;
+  host_title: string;
   host_socials?:
     | {
         platform?: ('LinkedIn' | 'GitHub' | 'Twitter' | 'Website' | 'Youtube' | 'Facebook') | null;
@@ -313,9 +303,10 @@ export interface Event {
         id?: string | null;
       }[]
     | null;
+  location_type: 'virtual' | 'on-site';
   location: string;
-  location_icon?: (string | null) | Media;
   sponsors?: (string | Sponsor)[] | null;
+  date: string;
   start_time: string;
   period?: string | null;
   updatedAt: string;
@@ -330,7 +321,6 @@ export interface Job {
   title: string;
   company_name: string;
   company_link?: string | null;
-  company_logo?: (string | null) | Media;
   company_logo_remote?: string | null;
   location: 'remote' | 'hybrid' | 'onsite';
   job_type: 'full-time' | 'part-time' | 'contract' | 'internship';
@@ -441,8 +431,6 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   fullName?: T;
   role?: T;
-  image?: T;
-  image_remote?: T;
   isActive?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -481,7 +469,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface SponsorsSelect<T extends boolean = true> {
   company?: T;
   company_link?: T;
-  company_logo?: T;
   company_logo_remote?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -493,7 +480,6 @@ export interface SponsorsSelect<T extends boolean = true> {
 export interface LeaderboardSelect<T extends boolean = true> {
   name?: T;
   title?: T;
-  image?: T;
   image_remote?: T;
   socials?:
     | T
@@ -536,8 +522,6 @@ export interface BlogsSelect<T extends boolean = true> {
   content?: T;
   author?: T;
   tags?: T;
-  cover_image?: T;
-  cover_image_remote?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -559,12 +543,10 @@ export interface VideosSelect<T extends boolean = true> {
  */
 export interface EventsSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   description?: T;
-  image?: T;
-  image_remote?: T;
   host_name?: T;
-  host_image?: T;
-  host_image_remote?: T;
+  host_title?: T;
   host_socials?:
     | T
     | {
@@ -572,9 +554,10 @@ export interface EventsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  location_type?: T;
   location?: T;
-  location_icon?: T;
   sponsors?: T;
+  date?: T;
   start_time?: T;
   period?: T;
   updatedAt?: T;
@@ -588,8 +571,6 @@ export interface InstructorsSelect<T extends boolean = true> {
   name?: T;
   title?: T;
   bio?: T;
-  image?: T;
-  image_remote?: T;
   instructor_socials?:
     | T
     | {
@@ -608,7 +589,6 @@ export interface JobsSelect<T extends boolean = true> {
   title?: T;
   company_name?: T;
   company_link?: T;
-  company_logo?: T;
   company_logo_remote?: T;
   location?: T;
   job_type?: T;

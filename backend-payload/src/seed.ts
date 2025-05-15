@@ -56,17 +56,6 @@ export const seed = async () => {
     })
   }
 
-  // MEDIA – DUMMY FILE OBJECT
-  // for (let i = 0; i < 5; i++) {
-  //   await payload.create({
-  //     collection: 'media',
-  //     data: {
-  //       alt: `Seeded media ${i + 1}`,
-  //     },
-  //     filePath: 'path/to/dummy-image.jpg', // YOU MUST PROVIDE A REAL FILE PATH OR MOCK FILE UPLOAD
-  //   })
-  // }
-
   // SPONSORS
   for (const sponsor of sponsors) {
     await payload.create({
@@ -87,7 +76,6 @@ export const seed = async () => {
         name: instructor.name,
         title: instructor.title,
         bio: instructor.bio,
-        image_remote: instructor.image_remote,
         instructor_socials: instructor.instructor_socials.map((social) => ({
           platform: social.platform as 'GitHub' | 'LinkedIn' | 'Twitter' | 'Website' | 'Facebook',
           url: social.url,
@@ -158,7 +146,6 @@ export const seed = async () => {
         },
         author: blog.author,
         tags: [(await payload.find({ collection: 'blog-tags' })).docs[0]],
-        cover_image_remote: blog.cover_image_remote,
         status: blog.status as 'published' | 'draft',
       },
     })
@@ -188,16 +175,16 @@ export const seed = async () => {
       data: {
         title: event.title,
         description: event.description,
-        image_remote: event.image_remote,
         host_name: event.host_name,
-        host_image_remote: event.host_image_remote,
+        host_title: 'Software Eng',
         host_socials: event.host_socials.map((social) => ({
           platform: social.platform as 'GitHub' | 'LinkedIn' | 'Twitter' | 'Website' | 'Facebook',
           url: social.url,
         })),
+        location_type: 'virtual',
         location: event.location,
-        location_icon: event.location_icon,
         sponsors: [],
+        date: '2025-05-13T22:21:35.226Z',
         start_time: event.start_time,
         period: event.period,
       },
@@ -224,6 +211,7 @@ export const seed = async () => {
   }
 
   payload.logger.info('✅ DONE SEEDING ALL COLLECTIONS.')
+  process.exit()
 }
 
 await seed()
