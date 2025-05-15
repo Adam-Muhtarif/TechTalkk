@@ -4,7 +4,7 @@
 
 - **Node.js** (LTS version 20+ recomended)
 - **Yarn** you can run this to setup yarn in your machine
-  ```sh
+  ```bash
     npm install --global yarn
   ```
 - **PostgreSQL** (use your preferred way) (like [Neon](https://neon.tech/))
