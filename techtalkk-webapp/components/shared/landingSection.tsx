@@ -18,9 +18,8 @@ export default function LandingSection({ title, info, className }: LandingSectio
         ></div>
       </h1>
       <div
-          className={`absolute hidden sm:block left-1/2 top-[55%] transform -translate-x-1/2 -translate-y-1/2  bg-linear-to-r from-[#4C0BF7] to-[#3105a0] ${props.className}`}
+        className={`absolute hidden sm:block left-1/2 top-[55%] transform -translate-x-1/2 -translate-y-1/2  bg-linear-to-r from-[#4C0BF7] to-[#3105a0] ${className}`}
       ></div>
-      </div>
     </section>
   )
 }
