@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Poppins, Archivo, Bricolage_Grotesque } from 'next/font/google'
 import './globals.css'
 
-import Nav from '@/components/shared/nav/nav'
+import Nav from '@/components/shared/nav'
 import TopLoader from '@/components/shared/topLoader'
 
 const geistSans = Geist({
