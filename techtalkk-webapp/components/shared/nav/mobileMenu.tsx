@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import * as motion from 'motion/react-client'
 import { Menu, X, ChevronDown } from 'lucide-react'
-import { MenuItem } from './DesktopMenu'
 import Link from 'next/link'
+import { MenuItem } from './desktopMenu'
 
 export default function MobMenu({ Menus }: { Menus: MenuItem[] }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -36,12 +36,13 @@ export default function MobMenu({ Menus }: { Menus: MenuItem[] }) {
         animate={{ x: isOpen ? '0%' : '-100%' }}
       >
         <ul>
-          {Menus.map(({ name, subMenu }, i: number) => {
+          {Menus.map(({ name, url, subMenu }, i: number) => {
             const isClicked = clicked === i
             const hasSubMenu = subMenu?.length
             return (
               <li key={name} className="">
-                <span
+                <Link
+                  href={url}
                   className="flex-center-between p-4 hover:bg-white/5 rounded-md cursor-pointer relative"
                   onClick={() => setClicked(isClicked ? null : i)}
                 >
@@ -49,7 +50,7 @@ export default function MobMenu({ Menus }: { Menus: MenuItem[] }) {
                   {hasSubMenu && (
                     <ChevronDown className={`ml-auto ${isClicked && 'rotate-180'} `} />
                   )}
-                </span>
+                </Link>
                 {hasSubMenu && (
                   <motion.ul
                     initial="exit"

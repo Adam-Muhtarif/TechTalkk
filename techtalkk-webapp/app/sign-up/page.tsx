@@ -1,10 +1,10 @@
-import React from 'react'
+import UnderConstructionMessage from '@/components/shared/underConstructionMessage'
 
 // this is the sign up page
 // this server component
 
 export default function page() {
-  return (
-    <div>page</div>
-  )
+  return <UnderConstructionMessage />
+
+  return <div>page</div>
 }

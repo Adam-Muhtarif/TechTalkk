@@ -2,12 +2,15 @@ import { Video, Tag } from '@/types/videos'
 
 import LandingSection from '@/components/shared/landingSection'
 import Pagination from '@/components/shared/pagination'
+import UnderConstructionMessage from '@/components/shared/underConstructionMessage'
 
 export default async function Videos({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  return <UnderConstructionMessage />
+
   const resolvedParams = await searchParams
   const page = Number(resolvedParams.page) || 1
   const limit = Number(resolvedParams.limit) || 8

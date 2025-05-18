@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import UnderConstructionMessage from '@/components/shared/underConstructionMessage'
 
 const blogs = [
   {
@@ -153,6 +154,8 @@ export default function Page() {
     selectedCategory === 'All' ? blogs : blogs.filter((blog) => blog.category === selectedCategory)
   const randomBlog = blogs[Math.floor(Math.random() * blogs.length)]
 
+  return <UnderConstructionMessage />
+
   return (
     <>
       {/* hero secto */}
@@ -206,7 +209,7 @@ export default function Page() {
             </h1>
 
             {/* Recommended Card */}
-            <div className="bg-white rounded-lg gap-10 p-6 flex flex-col md:flex-row gap-6 items-center md:items-start">
+            <div className="bg-white rounded-lg p-6 flex flex-col md:flex-row gap-6 items-center md:items-start">
               <div className="md:h-[300px] md:w-1/2">
                 <Image
                   src={randomBlog.image}
@@ -237,7 +240,7 @@ export default function Page() {
               Latest Article
             </h1>
           </div>
-          <div className="flex flex-wrap gap-4 px-10  mb-8 flex md:justify-end">
+          <div className="flex flex-wrap gap-4 px-10  mb-8 md:justify-end">
             {categories.map((category) => (
               <button
                 key={category}

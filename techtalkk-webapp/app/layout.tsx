@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import {
-  Geist, Geist_Mono, Poppins,
-  Archivo, Inter, Bricolage_Grotesque
-} from 'next/font/google'
+import { Geist, Geist_Mono, Poppins, Archivo, Bricolage_Grotesque } from 'next/font/google'
 import './globals.css'
-import Footer from '@/components/shared/footer'
-import Header from '@/components/shared/header'
+
+import Nav from '@/components/shared/nav/nav'
+import TopLoader from '@/components/shared/topLoader'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -25,12 +23,6 @@ const poppins = Poppins({
 
 const archivo = Archivo({
   variable: '--font-archivo',
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-})
-
-const interSans = Inter({
-  variable: '--font-inter',
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
 })
@@ -58,8 +50,10 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${archivo.variable}} ${geistMono.variable} ${poppins.variable} ${bricolageGrotesque.variable} antialiased`}
       >
-        {/* <Header /> */}
-        <main className="relative flex min-h-screen mx-auto w-full flex-col overflow-x-hidden font-sans">
+        <TopLoader />
+
+        <Nav />
+        <main className="-z-50 relative min-h-screen min-w-screen mx-auto overflow-x-hidden">
           {children}
         </main>
       </body>
