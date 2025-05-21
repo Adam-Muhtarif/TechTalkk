@@ -53,7 +53,7 @@ export default function RootLayout({
         <TopLoader />
 
         <Nav />
-        <main className="-z-50 relative min-h-screen min-w-screen mx-auto overflow-x-hidden">
+        <main className="relative min-h-screen min-w-screen mx-auto overflow-x-hidden">
           {children}
         </main>
       </body>
