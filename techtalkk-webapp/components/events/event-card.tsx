@@ -18,30 +18,26 @@ export default function EventCard() {
 
         <h1 className="text-2xl font-bold mb-3">Mighty Introduction — Courses Plan Intro</h1>
 
-        <div className="flex items-center text-gray-500 mb-6">
-          <Play size={16} className="mr-2" />
-          <span>Live Video</span>
+        <div className="flex items-center text-gray-500 mb-6 max-w-2xl">
+          <span>Calling all JavaScript enthusiasts! Join us for JS Hargeisa: Code & Connect, a meetup dedicated to all things JavaScript. </span>
         </div>
 
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className="flex -space-x-2">
-              {[1, 2, 3].map((i) => (
                 <div
-                  key={i}
                   className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative"
                 >
                   <Image
                     src={`/placeholder.svg?height=32&width=32`}
-                    alt={`Attendee ${i}`}
+                    alt={`host image`}
                     width={32}
                     height={32}
                     className="object-cover"
                   />
                 </div>
-              ))}
             </div>
-            <span className="text-sm text-gray-500 ml-3">5 going</span>
+            <span className="text-sm text-gray-500 ml-3">host name</span>
           </div>
 
           <div className="flex items-center">

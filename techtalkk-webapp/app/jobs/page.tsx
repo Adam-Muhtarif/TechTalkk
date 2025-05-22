@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button'
 
-import LandingSection from '@/components/shared/landingSection'
 import JobCard from '@/components/jobs/jobCard'
+import LandingSection from '@/components/shared/landingSection'
+import UnderConstructionMessage from '@/components/shared/underConstructionMessage'
 
 export default function Jobs() {
+  return <UnderConstructionMessage />
+
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-30 overflow-x-hidden">
       <LandingSection

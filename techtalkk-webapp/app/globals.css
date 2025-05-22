@@ -13,6 +13,18 @@
   --font-geist-sans: 'Geist Sans', 'sans-serif';
 }
 
+@theme {
+  --font-archivo: 'Archivo', 'sans-serif';
+}
+
+@theme {
+  --font-inter: 'Inter', 'sans-serif';
+}
+
+@theme {
+  --font-bricolage: 'Bricolage Grotesque', 'serif';
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -54,7 +66,7 @@
 }
 
 :root {
-  --primary-color: #5e16ec;
+  --primary-color: #7E45F0;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -127,6 +139,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -142,5 +155,53 @@
     .container {
       max-width: 1400px;
     }
+  }
+}
+
+@layer components {
+  .sub-menu {
+    @apply absolute top-[4.2rem] p-[15px] rounded-[6px] origin-[50%_-170px] backdrop-blur-md bg-white;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center;
+  }
+
+  .flex-center-between {
+    @apply flex items-center justify-between;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-pulse-opacity {
+    animation: pulse-opacity 2s infinite;
+  }
+
+  @keyframes pulse-opacity {
+    0% {
+      opacity: 0.2;
+    }
+
+    50% {
+      opacity: 0.8;
+    }
+
+    100% {
+      opacity: 0.2;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }

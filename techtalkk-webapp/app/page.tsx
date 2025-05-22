@@ -1,20 +1,19 @@
-import AboutUs from '@/components/home/about'
-import ContactForm from '@/components/home/contactForm'
-import Courses from '@/components/home/courses'
-// import Blogs from "@/components/home/blogs";
 import Hero from '@/components/home/hero'
-import MeetUps from '@/components/home/meetUps'
+import About from '@/components/home/about'
+import Footer from '@/components/version2-LandingPage/footer/footer'
+import CurriculmSection from '@/components/version2-LandingPage/curriculm-section/curriculmSection'
+import TestimonialSection from '@/components/version2-LandingPage/testemonials/testemonials'
+// import EventsSection from '@/components/version2-LandingPage/events-Section/events-section'
 
-const HomePage = () => {
+export default function page() {
   return (
-    <div className="mx-auto container overflow-x-hidden">
+    <>
       <Hero />
-      <AboutUs />
-      <MeetUps />
-      {/* <Blogs /> */}
-      <Courses />
-      <ContactForm />
-    </div>
+      <About />
+      {/* <EventsSection /> */}
+      <CurriculmSection />
+      <TestimonialSection />
+      <Footer />
+    </>
   )
 }
-export default HomePage
