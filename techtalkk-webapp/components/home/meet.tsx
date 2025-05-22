@@ -38,7 +38,7 @@ export default function Meet() {
   )
 
   return (
-    <div className="mt-15 flex flex-col sm:flex-row items-center justify-center">
+    <div className="flex flex-col sm:flex-row items-center justify-center">
       <div className="flex items-center">
         {MEMBERS.map((_, index) => (
           <MemberAvatar key={index} index={index} />
@@ -48,7 +48,7 @@ export default function Meet() {
       <div className="flex flex-col justify-start sm:items-start ml-2">
         <Rating />
         <p className="text-sm text-[#353F48] font-medium">
-          Meet <span className="font-semibold font-bricolage text-[#5E16EC]">300+</span> Somali
+          Meet <span className="font-semibold font-bricolage text-[#5E16EC]">700+</span> Somali
           Dev&apos;s
         </p>
       </div>

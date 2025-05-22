@@ -22,10 +22,10 @@ export default function Nav() {
   return (
     <div className="max-w-7xl mx-auto w-full">
       <nav
-        className={`fixed z-50 top-0 left-0 right-0 px-4 py-4 lg:mx-32 xl:mx-52 flex items-center lg:mt-7 lg:py-1 lg:rounded-md shadow-navigation transition-all duration-300
+        className={`fixed z-50 top-0 left-0 right-0 px-4 py-4 lg:mx-32 xl:mx-52 flex items-center lg:mt-7 lg:py-1 lg:rounded-md shadow-navigation transition-all
               ${
                 scrolled
-                  ? 'bg-white/40 backdrop-blur-xl shadow-lg border border-white/30 hover:bg-white/50'
+                  ? 'bg-white/40 backdrop-blur-xl shadow-lg'
                   : 'bg-transparent'
               }`}
       >

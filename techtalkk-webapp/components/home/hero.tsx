@@ -10,18 +10,17 @@ import DiscordIcon from './icons/discordIcon.svg'
 
 export default function Hero() {
   return (
-    <section className="overflow-hidden py-16  font-archivo relative">
-      <div className="w-full relative max-w-7xl mx-auto">
+    <section className="overflow-hidden mt-32 mb-16 font-archivo ">
+      <div className="w-full max-w-7xl mx-auto">
         <Meet />
 
         {/* background pattern */}
-        <Vector className="absolute -left-28 top-1/2 transform -translate-y-1/2 -z-999" />
-        <Vector className="absolute -right-28 top-1/2 transform -translate-y-1/2 -z-999 scale-x-[-1]" />
+        <Vector className="absolute left-0 top-20 transform -z-50 " />
+        <Vector className="absolute right-0 top-20 transform -z-50 scale-x-[-1]" />
 
-        {/* Contants */}
         <div className="flex flex-col justify-center mt-8 px-4">
           {/* header */}
-          <div className="flex items-center justify-center gap-x-0.5 text-2xl sm:text-4xl lg:text-7xl font-bold">
+          <h1 className="flex items-center justify-center gap-x-0.5 text-2xl sm:text-4xl lg:text-7xl font-bold">
             <h1 className="text-black relative">
               Code.
               <span className="absolute hidden lg:block top-3 right-0">
@@ -40,43 +39,46 @@ export default function Hero() {
                 <Innovate />
               </span>
             </h1>
-          </div>
+          </h1>
+
           {/* Sub header */}
-          <h2 className="text-center text-[#353F48] text-sm sm:text-xl max-w-3xl mx-auto mt-1.5">
-            Join Somalia&apos;s leading tech community — where developers, designers,AI innovators,
-            and cybersecurity minds come together to learn, build, and grow. Connect. Collaborate.
-            Create impact. 🚀
+          <h2 className="text-center text-[#353F48] text-sm sm:text-xl max-w-3xl mx-auto mt-3">
+            Join Somalia&apos;s leading tech community — where developers, designers,
+            <br />
+            AI innovators, and cybersecurity minds come together to learn, build, and grow.
+            <br />
+            Connect. Collaborate. Create impact. 🚀
           </h2>
         </div>
 
         {/* buttons */}
-        <div className="flex items-cente justify-center gap-2.5 mt-8 px-4">
+        <div className="flex items-center justify-center gap-2.5 mt-8 px-4">
           <DiscordButton />
           <WhiteButton />
         </div>
 
         {/* Discord Image */}
-        <div className="relative px-4 pt-7">
+        <div className="w-fit relative mt-32 bg-red-300">
           <Image
-            className="mt-16"
-            src="/images/home/discord.png"
-            width={1210.43}
-            height={756.52}
             alt="hero"
+            src="/images/home/discord.png"
+            className="bg-blue-400"
+            width={1211}
+            height={758}
           />
           <Image
-            className="mt-16 absolute top-0 right-0 -z-999 scale-x-150 scale-y-100"
             src="/images/home/dots.png"
-            width={1422.54}
-            height={755.72}
             alt="dots"
+            className="absolute  bottom-0 right-0 left-0 -z-50 scale-y-135 scale-x-150"
+            width={1423}
+            height={757}
           />
           <Image
-            className="mt-16 absolute -top-16 lg:-top-[300px] right-0 -z-999 scale-75"
+            className="absolute -top-60 right-0 left-0 -z-50 "
             src="/images/home/glows.png"
+            alt="dots"
             width={1886.13}
             height={1168.51}
-            alt="dots"
           />
         </div>
       </div>
