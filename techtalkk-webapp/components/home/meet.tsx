@@ -18,7 +18,7 @@ export default function Meet() {
       style={{ zIndex: 6 - index }}
     >
       <Image
-        src={`/images/herov2/member${index + 1}.jpeg`}
+        src={`/images/home/member${index + 1}.jpeg`}
         alt={`Member ${index + 1}`}
         className="rounded-full border-2 border-white"
         width={32}
@@ -38,7 +38,7 @@ export default function Meet() {
   )
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center">
+    <div className="mt-15 flex flex-col sm:flex-row items-center justify-center">
       <div className="flex items-center">
         {MEMBERS.map((_, index) => (
           <MemberAvatar key={index} index={index} />

@@ -43,8 +43,8 @@ export default function Hero() {
           </div>
           {/* Sub header */}
           <h2 className="text-center text-[#353F48] text-sm sm:text-xl max-w-3xl mx-auto mt-1.5">
-            Join Somalia’s leading tech community — where developers, designers,AI innovators, and
-            cybersecurity minds come together to learn, build, and grow. Connect. Collaborate.
+            Join Somalia&apos;s leading tech community — where developers, designers,AI innovators,
+            and cybersecurity minds come together to learn, build, and grow. Connect. Collaborate.
             Create impact. 🚀
           </h2>
         </div>
@@ -59,15 +59,21 @@ export default function Hero() {
         <div className="relative px-4 pt-7">
           <Image
             className="mt-16"
-            src="/images/herov2/Discord.png"
+            src="/images/home/discord.png"
             width={1210.43}
             height={756.52}
             alt="hero"
           />
-          {/* <Image className='mt-16 absolute top-0 right-0 -z-999 scale-x-150 scale-y-100' src="/images/herov2/dots.png" width={1422.54} height={755.72} alt="dots" /> */}
+          <Image
+            className="mt-16 absolute top-0 right-0 -z-999 scale-x-150 scale-y-100"
+            src="/images/home/dots.png"
+            width={1422.54}
+            height={755.72}
+            alt="dots"
+          />
           <Image
             className="mt-16 absolute -top-16 lg:-top-[300px] right-0 -z-999 scale-75"
-            src="/images/herov2/glows.png"
+            src="/images/home/glows.png"
             width={1886.13}
             height={1168.51}
             alt="dots"
