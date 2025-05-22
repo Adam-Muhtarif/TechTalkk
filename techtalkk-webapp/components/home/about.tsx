@@ -1,14 +1,19 @@
 import Image from 'next/image'
-import AboutUsIcon from '../../../public/images/about-us-v2/AboutUsIcon.svg'
-import Binoculars from '../../../public/images/about-us-v2/Binoculars.svg'
-import RocketMission from '../../../public/images/about-us-v2/RocketMission.svg'
-import SectionInfo from '../components/SectionInfo'
-import Card, { CoreValuesCard, EventsCard, JoinOurCommunity, MembersCard } from './Card'
+import AboutIcon from './icons/about.svg'
+import BinocularsIcon from './icons/binoculars.svg'
+import RocketIcon from './icons/rocket.svg'
+import SectionInfo from '../version2-LandingPage/components/SectionInfo'
+import Card, {
+  CoreValuesCard,
+  EventsCard,
+  JoinOurCommunity,
+  MembersCard,
+} from '../version2-LandingPage/aboutUsSection/Card'
+import SectionHeader from './sectionHeader'
 
-export default function AboutUsSection() {
+export default function About() {
   return (
     <section className="overflow-hidden mt-16 px-4 font-archivo relative">
-      {/* container */}
       <div className="max-w-7xl mx-auto relative">
         {/* background pattern */}
         <Image
@@ -18,12 +23,12 @@ export default function AboutUsSection() {
           alt="background"
           className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-999"
         />
-        <SectionInfo
+
+        <SectionHeader
           title="Welcome to Tech Talk"
           sectionName="About Us"
-          icon={<AboutUsIcon />}
-          description="A Community Where Innovation, Learning, and Collaboration Thrive.
-"
+          icon={<AboutIcon />}
+          description="A Community Where Innovation, Learning, and Collaboration Thrive."
         />
 
         {/* Cards Layout --- flex Box Used */}
@@ -36,14 +41,14 @@ export default function AboutUsSection() {
               <Card
                 title="Our Misson"
                 description="Empowering tech enthusiasts to connect, learn and grow together on cmummunity focused on innovation and collaboration "
-                icon={<RocketMission />}
+                icon={<RocketIcon />}
               />
 
               {/* 2th top card */}
               <Card
                 title="Our Vision"
                 description="Building the world’s most inclusive and innovative tech community, driving the future of technology together"
-                icon={<Binoculars />}
+                icon={<BinocularsIcon />}
               />
             </div>
 

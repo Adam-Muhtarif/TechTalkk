@@ -20,25 +20,25 @@ export default function Hero() {
 
         <div className="flex flex-col justify-center mt-8 px-4">
           {/* header */}
-          <h1 className="flex items-center justify-center gap-x-0.5 text-2xl sm:text-4xl lg:text-7xl font-bold">
-            <h1 className="text-black relative">
+          <h1 className="text-center text-2xl sm:text-4xl lg:text-7xl font-bold">
+            <span className="text-black relative">
               Code.
               <span className="absolute hidden lg:block top-3 right-0">
                 <Code />
               </span>
-            </h1>
-            <h1 className="text-[#FECC33] relative">
+            </span>
+            <span className="text-[#FECC33] relative">
               Collaborate.
               <span className="absolute hidden lg:block top-3 right-0">
                 <Collaborate />
               </span>
-            </h1>
-            <h1 className="text-[#5E16EC] relative">
+            </span>
+            <span className="text-[#5E16EC] relative">
               Innovate.
               <span className="absolute hidden lg:block top-3 right-0">
                 <Innovate />
               </span>
-            </h1>
+            </span>
           </h1>
 
           {/* Sub header */}
@@ -58,7 +58,7 @@ export default function Hero() {
         </div>
 
         {/* Discord Image */}
-        <div className="w-fit relative mt-32 bg-red-300">
+        <div className="w-fit relative mt-32">
           <Image
             alt="hero"
             src="/images/home/discord.png"
@@ -81,6 +81,9 @@ export default function Hero() {
             height={1168.51}
           />
         </div>
+
+        <Vector className="absolute left-30 top-300 transform -z-50 scale-y-70" />
+        <Vector className="absolute right-30 top-300 transform -z-50 scale-y-70 scale-x-[-1]" />
       </div>
     </section>
   )
